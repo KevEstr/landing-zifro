@@ -6,7 +6,7 @@ export function Footer() {
   const { ref, isVisible } = useScrollReveal(0.1)
 
   return (
-    <footer ref={ref} className="relative bg-secondary text-foreground overflow-hidden border-t border-border/20">
+    <footer ref={ref} className="relative bg-background text-foreground overflow-hidden border-t border-border/20">
       {/* Decorative SVG background */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-10">
         <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">

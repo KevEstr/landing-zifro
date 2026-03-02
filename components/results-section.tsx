@@ -114,7 +114,7 @@ function CaseCard({
     >
       <div className="group relative overflow-hidden rounded-[2rem] bg-card border border-border cursor-pointer transition-all duration-500 hover:shadow-2xl hover:-translate-y-2">
         {/* Visual */}
-        <div className="relative aspect-[4/3] overflow-hidden bg-secondary/30">
+        <div className="relative aspect-[4/3] overflow-hidden bg-background/30">
           <CaseVisual type={caseData.visualType} className="w-full h-full" />
           <div
             className={`absolute inset-0 transition-opacity duration-500 ${hovered ? "opacity-80" : "opacity-30"}`}

@@ -3,7 +3,6 @@
 import { useState } from "react"
 import { useScrollReveal } from "@/hooks/use-scroll-reveal"
 import { Send } from "lucide-react"
-import { MatrixRain } from "./matrix-rain"
 
 export function ContactSection() {
   const { ref: titleRef, isVisible: titleVisible } = useScrollReveal()
@@ -25,12 +24,9 @@ export function ContactSection() {
   }
 
   return (
-    <section id="contacto" className="relative bg-background overflow-hidden">
-      {/* Matrix rain background */}
-      <div className="relative w-full h-[40vh] lg:h-[45vh] overflow-hidden bg-muted/20">
-        <MatrixRain density={0.98} />
-        <div className="absolute inset-0 bg-gradient-to-b from-muted/40 via-background/60 to-background" />
-
+    <section id="contacto" className="relative bg-black overflow-hidden">
+      {/* Header area */}
+      <div className="relative w-full h-[40vh] lg:h-[45vh] overflow-hidden bg-black">
         {/* Floating text over illustration */}
         <div
           ref={titleRef}
@@ -38,11 +34,11 @@ export function ContactSection() {
             titleVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
           }`}
         >
-          <span className="inline-block text-xs font-bold uppercase tracking-[0.3em] text-primary mb-4 bg-secondary/90 backdrop-blur-xl px-4 py-1.5 rounded-full border border-primary/30">
+          <span className="inline-block text-xs font-bold uppercase tracking-[0.3em] text-primary mb-4 bg-black/90 backdrop-blur-xl px-4 py-1.5 rounded-full border border-primary/30">
             Contacto
           </span>
           <h2 className="text-5xl font-bold text-foreground sm:text-6xl lg:text-7xl text-balance leading-tight" style={{ fontFamily: "var(--font-display)" }}>
-            <span className="bg-secondary/90 backdrop-blur-xl px-6 py-2 rounded-2xl inline-block border border-border/30">
+            <span className="bg-black/90 backdrop-blur-xl px-6 py-2 rounded-2xl inline-block border border-border/30">
               Hablemos de tu{" "}
               <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">proyecto.</span>
             </span>
@@ -82,7 +78,7 @@ export function ContactSection() {
                   ].map((pill) => (
                     <div
                       key={pill.text}
-                      className="flex items-center gap-2 rounded-full bg-secondary px-5 py-2.5 border border-border"
+                      className="flex items-center gap-2 rounded-full bg-background px-5 py-2.5 border border-border"
                     >
                       <div className={`h-2 w-2 rounded-full bg-${pill.color}`} />
                       <span className="text-sm font-semibold text-foreground">{pill.text}</span>
@@ -103,9 +99,9 @@ export function ContactSection() {
                       onFocus={() => setFocusedField("name")}
                       onBlur={() => setFocusedField(null)}
                       onChange={(e) => setFormState({ ...formState, name: e.target.value })}
-                      className={`rounded-2xl border-2 bg-secondary/80 backdrop-blur-sm px-5 py-4 text-sm text-foreground placeholder:text-muted-foreground transition-all duration-300 outline-none ${
+                      className={`rounded-2xl border-2 bg-background/80 backdrop-blur-sm px-5 py-4 text-sm text-foreground placeholder:text-muted-foreground transition-all duration-300 outline-none ${
                         focusedField === "name"
-                          ? "border-primary shadow-lg shadow-primary/10 bg-secondary"
+                          ? "border-primary shadow-lg shadow-primary/10 bg-background"
                           : "border-border/30 hover:border-primary/30"
                       }`}
                       placeholder="Juan Perez"
@@ -123,9 +119,9 @@ export function ContactSection() {
                       onFocus={() => setFocusedField("email")}
                       onBlur={() => setFocusedField(null)}
                       onChange={(e) => setFormState({ ...formState, email: e.target.value })}
-                      className={`rounded-2xl border-2 bg-secondary/80 backdrop-blur-sm px-5 py-4 text-sm text-foreground placeholder:text-muted-foreground transition-all duration-300 outline-none ${
+                      className={`rounded-2xl border-2 bg-background/80 backdrop-blur-sm px-5 py-4 text-sm text-foreground placeholder:text-muted-foreground transition-all duration-300 outline-none ${
                         focusedField === "email"
-                          ? "border-primary shadow-lg shadow-primary/10 bg-secondary"
+                          ? "border-primary shadow-lg shadow-primary/10 bg-background"
                           : "border-border/30 hover:border-primary/30"
                       }`}
                       placeholder="juan@empresa.com"
@@ -145,9 +141,9 @@ export function ContactSection() {
                     onFocus={() => setFocusedField("company")}
                     onBlur={() => setFocusedField(null)}
                     onChange={(e) => setFormState({ ...formState, company: e.target.value })}
-                    className={`rounded-2xl border-2 bg-secondary/80 backdrop-blur-sm px-5 py-4 text-sm text-foreground placeholder:text-muted-foreground transition-all duration-300 outline-none ${
+                    className={`rounded-2xl border-2 bg-background/80 backdrop-blur-sm px-5 py-4 text-sm text-foreground placeholder:text-muted-foreground transition-all duration-300 outline-none ${
                       focusedField === "company"
-                        ? "border-accent shadow-lg shadow-accent/10 bg-secondary"
+                        ? "border-accent shadow-lg shadow-accent/10 bg-background"
                         : "border-border/30 hover:border-accent/30"
                     }`}
                     placeholder="Tu empresa"
@@ -166,9 +162,9 @@ export function ContactSection() {
                     onFocus={() => setFocusedField("message")}
                     onBlur={() => setFocusedField(null)}
                     onChange={(e) => setFormState({ ...formState, message: e.target.value })}
-                    className={`rounded-2xl border-2 bg-secondary/80 backdrop-blur-sm px-5 py-4 text-sm text-foreground placeholder:text-muted-foreground transition-all duration-300 outline-none resize-none ${
+                    className={`rounded-2xl border-2 bg-background/80 backdrop-blur-sm px-5 py-4 text-sm text-foreground placeholder:text-muted-foreground transition-all duration-300 outline-none resize-none ${
                       focusedField === "message"
-                        ? "border-accent shadow-lg shadow-accent/10 bg-secondary"
+                        ? "border-accent shadow-lg shadow-accent/10 bg-background"
                         : "border-border/30 hover:border-accent/30"
                     }`}
                     placeholder="Ejemplo: Necesito un chatbot para mi tienda online que atienda consultas de productos..."
@@ -197,7 +193,7 @@ export function ContactSection() {
         <div className="mt-12 flex flex-wrap items-center justify-center gap-8 text-center">
           <a
             href="mailto:hola@zifro.dev"
-            className="group flex items-center gap-3 rounded-full bg-card px-6 py-3 border border-border shadow-sm transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
+            className="group flex items-center gap-3 rounded-full bg-background px-6 py-3 border border-border shadow-sm transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
           >
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="transition-transform duration-300 group-hover:scale-110">
               <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
@@ -205,7 +201,7 @@ export function ContactSection() {
             </svg>
             <span className="text-sm font-semibold text-foreground">hola@zifro.dev</span>
           </a>
-          <div className="flex items-center gap-3 rounded-full bg-card px-6 py-3 border border-border shadow-sm">
+          <div className="flex items-center gap-3 rounded-full bg-background px-6 py-3 border border-border shadow-sm">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <circle cx="12" cy="12" r="10"></circle>
               <line x1="2" y1="12" x2="22" y2="12"></line>
@@ -213,7 +209,7 @@ export function ContactSection() {
             </svg>
             <span className="text-sm font-semibold text-foreground">Remoto - Global</span>
           </div>
-          <div className="flex items-center gap-3 rounded-full bg-card px-6 py-3 border border-border shadow-sm">
+          <div className="flex items-center gap-3 rounded-full bg-background px-6 py-3 border border-border shadow-sm">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
             </svg>

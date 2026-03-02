@@ -31,12 +31,12 @@ export function HeroSection() {
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
         <img
-          src="/images/hero-landscape.jpg"
+          src="/images/prueba.jpg"
           alt=""
           className="w-full h-full object-cover"
-          style={{ filter: 'brightness(0.25) contrast(1.1)' }}
+          style={{ filter: 'brightness(0.4) contrast(1.1)' }}
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-background/70 via-background/50 to-background" />
+        <div className="absolute inset-0 bg-gradient-to-b from-background/60 via-background/40 to-background" />
       </div>
 
       {/* Animated agent network overlay */}
@@ -61,9 +61,8 @@ export function HeroSection() {
       <div className="relative z-10 mx-auto max-w-6xl px-6 text-center pt-32 lg:pt-40">
         {/* Main heading with rotating words */}
         <h1
-          className={`text-5xl font-bold leading-[1.15] tracking-tight sm:text-6xl lg:text-7xl transition-all duration-1000 delay-200 ${
-            isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
-          }`}
+          className={`text-5xl font-bold leading-[1.15] tracking-tight sm:text-6xl lg:text-7xl transition-all duration-1000 delay-200 ${isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
+            }`}
           style={{ fontFamily: "var(--font-display)" }}
         >
           <span className="text-foreground block">Creamos</span>
@@ -71,13 +70,12 @@ export function HeroSection() {
             {rotatingWords.map((word, idx) => (
               <span
                 key={word}
-                className={`absolute inset-x-0 flex items-center justify-center font-bold transition-all duration-500 px-4 ${
-                  idx === currentWord
+                className={`absolute inset-x-0 flex items-center justify-center font-bold transition-all duration-500 px-4 ${idx === currentWord
                     ? "opacity-100 translate-y-0 scale-100"
                     : idx === (currentWord - 1 + rotatingWords.length) % rotatingWords.length
-                    ? "opacity-0 -translate-y-full scale-95"
-                    : "opacity-0 translate-y-full scale-95"
-                }`}
+                      ? "opacity-0 -translate-y-full scale-95"
+                      : "opacity-0 translate-y-full scale-95"
+                  }`}
                 style={{
                   color: idx === 0 ? "#FF4D00" : idx === 1 ? "#0EA5E9" : idx === 2 ? "#8B5CF6" : "#FF4D00",
                 }}
@@ -91,18 +89,16 @@ export function HeroSection() {
 
         {/* Subtitle */}
         <p
-          className={`mx-auto mt-8 max-w-2xl text-lg leading-relaxed text-foreground/70 sm:text-xl transition-all duration-1000 delay-500 ${
-            isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
-          }`}
+          className={`mx-auto mt-8 max-w-2xl text-lg leading-relaxed text-foreground/70 sm:text-xl transition-all duration-1000 delay-500 ${isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
+            }`}
         >
           Desarrollamos agentes de inteligencia artificial que trabajan 24/7, creamos sitios web que convierten visitantes en clientes, y automatizamos procesos para que tu negocio crezca sin límites.
         </p>
 
         {/* CTAs */}
         <div
-          className={`mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center transition-all duration-1000 delay-700 ${
-            isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
-          }`}
+          className={`mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center transition-all duration-1000 delay-700 ${isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
+            }`}
         >
           <a
             href="#contacto"
@@ -123,9 +119,8 @@ export function HeroSection() {
 
         {/* Scroll indicator */}
         <div
-          className={`mt-16 transition-all duration-1000 delay-1000 ${
-            isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-          }`}
+          className={`mt-16 transition-all duration-1000 delay-1000 ${isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+            }`}
         >
           <a href="#servicios" className="inline-flex flex-col items-center gap-2 text-foreground/50 hover:text-primary transition-colors" aria-label="Scroll a servicios">
             <span className="text-xs font-medium uppercase tracking-widest">Explora</span>

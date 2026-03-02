@@ -258,7 +258,7 @@ export function ServicesSection() {
   ]
 
   return (
-    <section id="servicios" className="relative bg-secondary py-24 lg:py-32 overflow-hidden">
+    <section id="servicios" className="relative bg-background py-24 lg:py-32 overflow-hidden">
       {/* Decorative floating orbs across section */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute w-96 h-96 rounded-full bg-primary/5 -top-48 -right-48 blur-3xl animate-blob" />

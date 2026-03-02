@@ -384,7 +384,7 @@ export function ProcessSection() {
   }, [])
 
   return (
-    <section className="relative bg-secondary py-24 lg:py-32 overflow-hidden">
+    <section className="relative bg-background py-24 lg:py-32 overflow-hidden">
       {/* Top wave */}
       <div className="absolute -top-1 left-0 right-0">
         <svg viewBox="0 0 1440 80" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full rotate-180">
