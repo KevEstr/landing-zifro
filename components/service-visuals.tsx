@@ -251,47 +251,68 @@ export function AgentVisual({ className = "" }: { className?: string }) {
 
       {/* Floating capability badges */}
       {[
-        { x: 150, y: 180, text: "24/7", color: "#E8654A" },
-        { x: 650, y: 200, text: "AI", color: "#4A7C6F" },
-        { x: 180, y: 400, text: "∞", color: "#D4A853" },
-        { x: 620, y: 380, text: "⚡", color: "#E8654A" },
-      ].map((badge, i) => (
-        <g key={i}>
-          <circle
-            cx={badge.x}
-            cy={badge.y}
-            r="35"
-            fill={badge.color}
-            opacity="0.15"
-          >
-            <animate
-              attributeName="r"
-              values="30;40;30"
-              dur="3s"
-              repeatCount="indefinite"
-              begin={`${i * 0.5}s`}
-            />
-          </circle>
-          <text
-            x={badge.x}
-            y={badge.y + 8}
-            fontSize="28"
-            fontWeight="bold"
-            fill={badge.color}
-            opacity="0.6"
-            textAnchor="middle"
-          >
-            {badge.text}
-            <animate
-              attributeName="opacity"
-              values="0.4;0.8;0.4"
-              dur="3s"
-              repeatCount="indefinite"
-              begin={`${i * 0.5}s`}
-            />
-          </text>
-        </g>
-      ))}
+        { x: 150, y: 180, text: "24/7", color: "#E8654A", type: "text" },
+        { x: 650, y: 200, text: "AI", color: "#4A7C6F", type: "text" },
+        { x: 180, y: 400, text: "∞", color: "#D4A853", type: "text" },
+        { x: 620, y: 380, icon: "zap", color: "#E8654A", type: "icon" },
+      ].map((badge, i) => {
+        const icons = {
+          zap: "M13 2L3 14h9l-1 8 10-12h-9l1-8z",
+        }
+        
+        return (
+          <g key={i}>
+            <circle
+              cx={badge.x}
+              cy={badge.y}
+              r="35"
+              fill={badge.color}
+              opacity="0.15"
+            >
+              <animate
+                attributeName="r"
+                values="30;40;30"
+                dur="3s"
+                repeatCount="indefinite"
+                begin={`${i * 0.5}s`}
+              />
+            </circle>
+            {badge.type === "text" ? (
+              <text
+                x={badge.x}
+                y={badge.y + 8}
+                fontSize="28"
+                fontWeight="bold"
+                fill={badge.color}
+                opacity="0.6"
+                textAnchor="middle"
+              >
+                {badge.text}
+                <animate
+                  attributeName="opacity"
+                  values="0.4;0.8;0.4"
+                  dur="3s"
+                  repeatCount="indefinite"
+                  begin={`${i * 0.5}s`}
+                />
+              </text>
+            ) : (
+              <g transform={`translate(${badge.x - 14}, ${badge.y - 14})`}>
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke={badge.color} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" opacity="0.6">
+                  <path d={icons[badge.icon as keyof typeof icons]} />
+                  <animate
+                    attributeName="opacity"
+                    values="0.4;0.8;0.4"
+                    dur="3s"
+                    repeatCount="indefinite"
+                    begin={`${i * 0.5}s`}
+                  />
+                </svg>
+              </g>
+            )}
+          </g>
+        )
+      })}
 
       {/* Decorative corner elements */}
       <g opacity="0.2">

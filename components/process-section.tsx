@@ -8,7 +8,7 @@ const steps = [
     number: "01",
     title: "Te escuchamos",
     shortDesc: "Entendemos tu negocio",
-    color: "#E8654A",
+    color: "#FF6B35",
     visual: (
       <svg viewBox="0 0 200 200" className="w-full h-full">
         {/* Sound waves */}
@@ -86,7 +86,7 @@ const steps = [
     number: "02",
     title: "Diseñamos la solucion",
     shortDesc: "Plan personalizado",
-    color: "#4A7C6F",
+    color: "#00D9FF",
     visual: (
       <svg viewBox="0 0 200 200" className="w-full h-full">
         {/* Grid pattern */}
@@ -126,7 +126,7 @@ const steps = [
     number: "03",
     title: "Desarrollamos",
     shortDesc: "Convertimos ideas en realidad",
-    color: "#D4A853",
+    color: "#8B5CF6",
     visual: (
       <svg viewBox="0 0 200 200" className="w-full h-full">
         {/* Code brackets */}
@@ -202,7 +202,7 @@ const steps = [
     number: "04",
     title: "Crecemos juntos",
     shortDesc: "Soporte y mejora continua",
-    color: "#E8654A",
+    color: "#10B981",
     visual: (
       <svg viewBox="0 0 200 200" className="w-full h-full">
         {/* Growth chart */}
@@ -279,15 +279,10 @@ const steps = [
                 begin={`${star.delay}s`}
               />
             </circle>
-            <text
-              x={star.x}
-              y={star.y + 4}
-              textAnchor="middle"
-              fill="#4A7C6F"
-              fontSize="12"
-              opacity="0"
-            >
-              ✓
+            <g transform={`translate(${star.x - 6}, ${star.y - 6})`} opacity="0">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#10B981" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M20 6L9 17l-5-5" />
+              </svg>
               <animate
                 attributeName="opacity"
                 values="0;0.8;0.8"
@@ -295,7 +290,7 @@ const steps = [
                 repeatCount="indefinite"
                 begin={`${star.delay}s`}
               />
-            </text>
+            </g>
           </g>
         ))}
 
@@ -351,7 +346,7 @@ function ProcessStep({
             >
               Paso {step.number}
             </span>
-            <h3 className="text-xl font-bold text-foreground font-serif leading-tight mb-2">{step.title}</h3>
+            <h3 className="text-xl font-bold text-foreground leading-tight mb-2" style={{ fontFamily: "var(--font-display)" }}>{step.title}</h3>
             <p className="text-sm text-muted-foreground">{step.shortDesc}</p>
           </div>
           <div
@@ -407,12 +402,12 @@ export function ProcessSection() {
           ref={titleRef}
           className={`mb-20 text-center transition-all duration-1000 ${titleVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"}`}
         >
-          <span className="inline-block text-xs font-bold uppercase tracking-[0.3em] text-[#D4A853] mb-6">
+          <span className="inline-block text-xs font-bold uppercase tracking-[0.3em] text-accent mb-6">
             Como trabajamos
           </span>
-          <h2 className="text-5xl font-bold text-foreground sm:text-6xl lg:text-7xl text-balance leading-tight">
+          <h2 className="text-5xl font-bold text-foreground sm:text-6xl lg:text-7xl text-balance leading-tight" style={{ fontFamily: "var(--font-display)" }}>
             De tu idea a{" "}
-            <span className="font-serif italic text-[#D4A853]">resultados medibles.</span>
+            <span className="bg-gradient-to-r from-accent to-primary bg-clip-text text-transparent">resultados medibles.</span>
           </h2>
         </div>
 

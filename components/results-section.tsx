@@ -67,7 +67,7 @@ const cases = [
     visualType: "ecommerce" as const,
     stat: { value: 80, suffix: "%", label: "atendidas por IA" },
     result: "Pasaron de 500 consultas diarias sin responder a atención automatizada en 3 segundos. Su equipo ahora se enfoca en ventas estratégicas.",
-    color: "#E8654A",
+    color: "#FF6B35",
   },
   {
     company: "Clinica Salud+",
@@ -75,7 +75,7 @@ const cases = [
     visualType: "health" as const,
     stat: { value: 60, suffix: "%", label: "menos cancelaciones" },
     result: "Sistema de agendamiento inteligente 24/7. Los pacientes reservan cuando quieren y los doctores optimizan su tiempo.",
-    color: "#4A7C6F",
+    color: "#00D9FF",
   },
   {
     company: "LogiMax",
@@ -83,7 +83,7 @@ const cases = [
     visualType: "logistics" as const,
     stat: { value: 3, suffix: "x", label: "mas cotizaciones" },
     result: "Nuevo sitio web + automatización de cotizaciones. Triplicaron leads calificados y recuperaron la inversión en 2 meses.",
-    color: "#D4A853",
+    color: "#8B5CF6",
   },
 ]
 
@@ -146,7 +146,7 @@ function CaseCard({
 
         {/* Content */}
         <div className="p-6">
-          <h4 className="text-xl font-bold text-foreground font-serif">{caseData.company}</h4>
+          <h4 className="text-xl font-bold text-foreground" style={{ fontFamily: "var(--font-display)" }}>{caseData.company}</h4>
           <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{caseData.result}</p>
         </div>
       </div>
@@ -179,10 +179,10 @@ export function ResultsSection() {
             <span className="inline-block text-xs font-bold uppercase tracking-[0.3em] text-accent mb-6">
               Casos de exito
             </span>
-            <h2 className="text-5xl font-bold text-foreground sm:text-6xl lg:text-7xl text-balance leading-tight">
+            <h2 className="text-5xl font-bold text-foreground sm:text-6xl lg:text-7xl text-balance leading-tight" style={{ fontFamily: "var(--font-display)" }}>
               Resultados reales de
               <br />
-              <span className="font-serif italic text-accent">clientes reales.</span>
+              <span className="bg-gradient-to-r from-accent to-primary bg-clip-text text-transparent">clientes reales.</span>
             </h2>
           </div>
 

@@ -2,7 +2,7 @@
 
 import { useScrollReveal } from "@/hooks/use-scroll-reveal"
 import { useEffect, useState, useRef } from "react"
-import { AgentVisual, WebVisual, AutomationVisual } from "./service-visuals"
+import { AgentVisual, WebVisual, AutomationVisual } from "./service-visuals-new"
 
 function FloatingCard({
   children,
@@ -111,26 +111,42 @@ function ServiceShowcase({
             <div className="absolute inset-0 hidden lg:block">
               {features.map((f, i) => {
                 const positions = [
-                  { top: "15%", left: "10%" },
-                  { top: "25%", right: "8%" },
-                  { bottom: "25%", left: "12%" },
-                  { bottom: "15%", right: "10%" },
+                  { top: "15%", left: "10%" },      // Flujos personalizados
+                  { top: "12%", right: "8%" },      // Triggers inteligentes
+                  { bottom: "25%", left: "12%" },   // ROI medible
+                  { top: "68%", right: "2%" },      // Escalado automático - MÁS A LA DERECHA
                 ]
                 const pos = positions[i] || positions[0]
 
                 return (
                   <div
                     key={f.text}
-                    className="absolute animate-float"
+                    className="absolute animate-float group"
                     style={{
                       ...pos,
                       animationDelay: `${i * 0.8}s`,
                       animationDuration: `${5 + i}s`,
                     } as React.CSSProperties}
                   >
-                    <div className="flex items-center gap-2 rounded-full bg-card/90 backdrop-blur-md px-4 py-2.5 shadow-xl border border-border/50 transition-transform duration-300 hover:scale-110 cursor-default">
-                      <div className="h-2 w-2 rounded-full" style={{ backgroundColor: accentColor }} />
-                      <span className="text-xs font-bold text-foreground">{f.text}</span>
+                    <div className="relative">
+                      {/* Hexagonal background */}
+                      <div 
+                        className="absolute inset-0 opacity-20 blur-sm"
+                        style={{
+                          clipPath: 'polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%)',
+                          backgroundColor: accentColor,
+                        }}
+                      />
+                      <div 
+                        className="relative flex items-center justify-center px-3 py-1.5 backdrop-blur-md border transition-all duration-300 group-hover:scale-110"
+                        style={{ 
+                          backgroundColor: `${accentColor}10`,
+                          borderColor: `${accentColor}40`,
+                          clipPath: 'polygon(8% 0%, 92% 0%, 100% 25%, 100% 75%, 92% 100%, 8% 100%, 0% 75%, 0% 25%)',
+                        }}
+                      >
+                        <span className="text-[10px] font-bold text-foreground tracking-wider uppercase">{f.text}</span>
+                      </div>
                     </div>
                   </div>
                 )
@@ -157,7 +173,7 @@ function ServiceShowcase({
           >
             {subtitle}
           </div>
-          <h3 className="text-4xl font-bold text-foreground lg:text-5xl font-serif text-balance leading-tight">
+          <h3 className="text-4xl font-bold text-foreground lg:text-5xl text-balance leading-tight" style={{ fontFamily: "var(--font-display)" }}>
             {title}
           </h3>
           <p className="text-base leading-relaxed text-muted-foreground lg:text-lg">
@@ -203,12 +219,12 @@ export function ServicesSection() {
       description:
         "Creamos agentes inteligentes que atienden a tus clientes las 24 horas, responden preguntas al instante y aprenden de cada conversación para mejorar continuamente.",
       VisualComponent: AgentVisual,
-      accentColor: "#E8654A",
+      accentColor: "#FF6B35",
       features: [
-        { text: "Disponible 24/7" },
-        { text: "Aprendizaje continuo" },
-        { text: "Respuesta instantanea" },
-        { text: "Multiples idiomas" },
+        { text: "Contexto de negocio" },
+        { text: "Memoria de clientes" },
+        { text: "Acciones automaticas" },
+        { text: "Integracion total" },
       ],
     },
     {
@@ -217,12 +233,12 @@ export function ServicesSection() {
       description:
         "Diseñamos y desarrollamos sitios web modernos, rapidos y optimizados para convertir visitantes en clientes. Cada pixel tiene un proposito.",
       VisualComponent: WebVisual,
-      accentColor: "#4A7C6F",
+      accentColor: "#00D9FF",
       features: [
-        { text: "Diseño profesional" },
-        { text: "Carga ultrarapida" },
-        { text: "Responsive total" },
-        { text: "SEO optimizado" },
+        { text: "Conversion optimizada" },
+        { text: "Analytics integrado" },
+        { text: "A/B testing incluido" },
+        { text: "CRO estrategico" },
       ],
     },
     {
@@ -231,12 +247,12 @@ export function ServicesSection() {
       description:
         "Eliminamos tareas repetitivas conectando tus herramientas favoritas. Tu equipo se dedica a lo importante mientras la tecnologia trabaja por ti.",
       VisualComponent: AutomationVisual,
-      accentColor: "#D4A853",
+      accentColor: "#8B5CF6",
       features: [
-        { text: "Procesos automaticos" },
-        { text: "Integraciones faciles" },
-        { text: "Ahorra tiempo y dinero" },
-        { text: "Crece sin limites" },
+        { text: "Flujos personalizados" },
+        { text: "Triggers inteligentes" },
+        { text: "ROI medible" },
+        { text: "Escalado automatico" },
       ],
     },
   ]
@@ -265,10 +281,10 @@ export function ServicesSection() {
           <span className="inline-block text-xs font-bold uppercase tracking-[0.3em] text-primary mb-6">
             Nuestros servicios
           </span>
-          <h2 className="text-5xl font-bold text-foreground sm:text-6xl lg:text-7xl text-balance leading-tight">
+          <h2 className="text-5xl font-bold text-foreground sm:text-6xl lg:text-7xl text-balance leading-tight" style={{ fontFamily: "var(--font-display)" }}>
             Tecnologia que impulsa
             <br />
-            <span className="font-serif italic text-primary">tu crecimiento.</span>
+            <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">tu crecimiento.</span>
           </h2>
         </div>
 

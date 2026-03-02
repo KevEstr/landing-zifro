@@ -1,18 +1,19 @@
 import type { Metadata, Viewport } from 'next'
-import { DM_Sans, Playfair_Display } from 'next/font/google'
+import { Inter, Space_Grotesk } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
 
-const dmSans = DM_Sans({
+const inter = Inter({
   subsets: ['latin'],
-  variable: '--font-dm-sans',
+  variable: '--font-inter',
   display: 'swap',
 })
 
-const playfair = Playfair_Display({
+const spaceGrotesk = Space_Grotesk({
   subsets: ['latin'],
-  variable: '--font-playfair',
+  variable: '--font-space-grotesk',
   display: 'swap',
+  weight: ['400', '500', '600', '700'],
 })
 
 export const metadata: Metadata = {
@@ -28,7 +29,7 @@ export const metadata: Metadata = {
 }
 
 export const viewport: Viewport = {
-  themeColor: '#FBF7F2',
+  themeColor: '#0A0A0A',
   width: 'device-width',
   initialScale: 1,
 }
@@ -39,7 +40,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="es" className={`${dmSans.variable} ${playfair.variable}`}>
+    <html lang="es" className={`${inter.variable} ${spaceGrotesk.variable}`}>
       <body className="font-sans antialiased">
         {children}
         <Analytics />

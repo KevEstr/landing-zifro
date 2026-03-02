@@ -6,7 +6,7 @@ export function Footer() {
   const { ref, isVisible } = useScrollReveal(0.1)
 
   return (
-    <footer ref={ref} className="relative bg-foreground text-card overflow-hidden">
+    <footer ref={ref} className="relative bg-secondary text-foreground overflow-hidden border-t border-border/20">
       {/* Decorative SVG background */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-10">
         <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
@@ -29,10 +29,10 @@ export function Footer() {
       >
         {/* Big CTA section */}
         <div className="mb-16 text-center">
-          <h3 className="text-4xl font-bold lg:text-6xl font-serif text-balance leading-tight">
+          <h3 className="text-4xl font-bold lg:text-6xl text-balance leading-tight" style={{ fontFamily: "var(--font-display)" }}>
             Transforma tu negocio con
             <br />
-            <span className="italic" style={{ color: "#E8654A" }}>
+            <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
               inteligencia artificial.
             </span>
           </h3>
@@ -48,7 +48,7 @@ export function Footer() {
         </div>
 
         {/* Logo + links */}
-        <div className="flex flex-col gap-10 border-t border-card/10 pt-12 lg:flex-row lg:items-start lg:justify-between">
+        <div className="flex flex-col gap-10 border-t border-border/20 pt-12 lg:flex-row lg:items-start lg:justify-between">
           <div className="flex flex-col gap-4">
             <div className="flex items-center gap-3">
               <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-primary">
@@ -104,7 +104,7 @@ export function Footer() {
         </div>
 
         {/* Bottom line */}
-        <div className="mt-12 flex flex-col items-center justify-between gap-3 border-t border-card/10 pt-8 sm:flex-row">
+        <div className="mt-12 flex flex-col items-center justify-between gap-3 border-t border-border/20 pt-8 sm:flex-row">
           <p className="text-xs opacity-30">© 2026 Zifro. Todos los derechos reservados.</p>
           <p className="text-xs opacity-30">Desarrollado con tecnología de vanguardia.</p>
         </div>

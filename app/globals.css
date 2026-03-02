@@ -4,46 +4,46 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  /* Zifro Warm Creative Palette */
-  --background: #FBF7F2;
-  --foreground: #1A1A1A;
-  --card: #FFFFFF;
-  --card-foreground: #1A1A1A;
-  --popover: #FFFFFF;
-  --popover-foreground: #1A1A1A;
-  --primary: #E8654A;
+  /* Zifro Professional Dark Palette - Sophisticated & Modern */
+  --background: #0A0A0A;
+  --foreground: #F5F5F5;
+  --card: #151515;
+  --card-foreground: #F5F5F5;
+  --popover: #151515;
+  --popover-foreground: #F5F5F5;
+  --primary: #FF4D00;
   --primary-foreground: #FFFFFF;
-  --secondary: #F5EDE4;
-  --secondary-foreground: #1A1A1A;
-  --muted: #F0E8DE;
-  --muted-foreground: #6B6560;
-  --accent: #4A7C6F;
+  --secondary: #1A1A1A;
+  --secondary-foreground: #F5F5F5;
+  --muted: #262626;
+  --muted-foreground: #A3A3A3;
+  --accent: #0EA5E9;
   --accent-foreground: #FFFFFF;
-  --destructive: #D94F4F;
+  --destructive: #EF4444;
   --destructive-foreground: #FFFFFF;
-  --border: #E8DFD4;
-  --input: #E8DFD4;
-  --ring: #E8654A;
-  --chart-1: #E8654A;
-  --chart-2: #4A7C6F;
-  --chart-3: #D4A853;
-  --chart-4: #C7856B;
-  --chart-5: #7BA497;
-  --radius: 0.75rem;
-  --sidebar: #F5EDE4;
-  --sidebar-foreground: #1A1A1A;
-  --sidebar-primary: #E8654A;
+  --border: #262626;
+  --input: #262626;
+  --ring: #FF4D00;
+  --chart-1: #FF4D00;
+  --chart-2: #0EA5E9;
+  --chart-3: #8B5CF6;
+  --chart-4: #10B981;
+  --chart-5: #F59E0B;
+  --radius: 1rem;
+  --sidebar: #1A1A1A;
+  --sidebar-foreground: #F5F5F5;
+  --sidebar-primary: #FF4D00;
   --sidebar-primary-foreground: #FFFFFF;
-  --sidebar-accent: #F0E8DE;
-  --sidebar-accent-foreground: #1A1A1A;
-  --sidebar-border: #E8DFD4;
-  --sidebar-ring: #E8654A;
+  --sidebar-accent: #262626;
+  --sidebar-accent-foreground: #F5F5F5;
+  --sidebar-border: #262626;
+  --sidebar-ring: #FF4D00;
 }
 
 @theme inline {
-  --font-sans: var(--font-dm-sans), 'DM Sans', sans-serif;
-  --font-serif: var(--font-playfair), 'Playfair Display', Georgia, serif;
-  --font-mono: 'Geist Mono', 'Geist Mono Fallback';
+  --font-sans: var(--font-inter), 'Inter', system-ui, sans-serif;
+  --font-display: var(--font-space-grotesk), 'Space Grotesk', sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -134,6 +134,11 @@
   75% { border-radius: 60% 40% 60% 30% / 60% 40% 30% 60%; }
 }
 
+@keyframes gradient {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
 @keyframes typewriter {
   from { width: 0; }
   to { width: 100%; }
@@ -166,6 +171,11 @@
 
 .animate-blob {
   animation: blob 8s ease-in-out infinite;
+}
+
+.animate-gradient {
+  background-size: 200% 200%;
+  animation: gradient 3s ease infinite;
 }
 
 .animate-draw-line {
