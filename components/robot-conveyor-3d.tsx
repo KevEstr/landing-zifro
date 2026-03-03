@@ -44,6 +44,86 @@ function easeOutElastic(t: number) {
 function clamp(v: number, lo: number, hi: number) { return Math.max(lo, Math.min(hi, v)) }
 function lerp(a: number, b: number, t: number) { return a + (b - a) * t }
 
+// ── IA Badge Texture (Canvas2D → Three.js texture) ──────────────────────
+function createIABadgeTexture(): THREE.CanvasTexture {
+  const canvas = document.createElement('canvas')
+  canvas.width = 256
+  canvas.height = 128
+  const ctx = canvas.getContext('2d')!
+  ctx.clearRect(0, 0, 256, 128)
+
+  // Rounded badge background
+  const bx = 12, by = 8, bw = 232, bh = 112, br = 14
+  ctx.beginPath()
+  ctx.moveTo(bx + br, by)
+  ctx.lineTo(bx + bw - br, by)
+  ctx.quadraticCurveTo(bx + bw, by, bx + bw, by + br)
+  ctx.lineTo(bx + bw, by + bh - br)
+  ctx.quadraticCurveTo(bx + bw, by + bh, bx + bw - br, by + bh)
+  ctx.lineTo(bx + br, by + bh)
+  ctx.quadraticCurveTo(bx, by + bh, bx, by + bh - br)
+  ctx.lineTo(bx, by + br)
+  ctx.quadraticCurveTo(bx, by, bx + br, by)
+  ctx.closePath()
+  ctx.fillStyle = 'rgba(10, 10, 10, 0.95)'
+  ctx.fill()
+  ctx.strokeStyle = '#FF4D00'
+  ctx.lineWidth = 3
+  ctx.stroke()
+
+  // Glow pass
+  ctx.save()
+  ctx.shadowColor = '#FF4D00'
+  ctx.shadowBlur = 25
+  ctx.fillStyle = '#FF4D00'
+  ctx.font = 'bold 72px "Segoe UI", "Arial Black", Arial, sans-serif'
+  ctx.textAlign = 'center'
+  ctx.textBaseline = 'middle'
+  ctx.fillText('IA', 128, 68)
+  ctx.restore()
+
+  // Crisp text on top
+  ctx.fillStyle = '#FF4D00'
+  ctx.font = 'bold 72px "Segoe UI", "Arial Black", Arial, sans-serif'
+  ctx.textAlign = 'center'
+  ctx.textBaseline = 'middle'
+  ctx.fillText('IA', 128, 68)
+
+  const tex = new THREE.CanvasTexture(canvas)
+  tex.colorSpace = THREE.SRGBColorSpace
+  return tex
+}
+
+function createIAFaceTexture(): THREE.CanvasTexture {
+  const canvas = document.createElement('canvas')
+  canvas.width = 128
+  canvas.height = 48
+  const ctx = canvas.getContext('2d')!
+  ctx.clearRect(0, 0, 128, 48)
+
+  // Glow pass
+  ctx.save()
+  ctx.shadowColor = '#FF4D00'
+  ctx.shadowBlur = 10
+  ctx.fillStyle = '#FF4D00'
+  ctx.font = 'bold 34px "Segoe UI", Arial, sans-serif'
+  ctx.textAlign = 'center'
+  ctx.textBaseline = 'middle'
+  ctx.fillText('IA', 64, 25)
+  ctx.restore()
+
+  // Crisp text
+  ctx.fillStyle = '#FF4D00'
+  ctx.font = 'bold 34px "Segoe UI", Arial, sans-serif'
+  ctx.textAlign = 'center'
+  ctx.textBaseline = 'middle'
+  ctx.fillText('IA', 64, 25)
+
+  const tex = new THREE.CanvasTexture(canvas)
+  tex.colorSpace = THREE.SRGBColorSpace
+  return tex
+}
+
 // ── Robot Head Builder (clean, friendly AI agent) ────────────────────────
 function createAssemblyRobot(scene: THREE.Scene) {
   const root = new THREE.Group()
@@ -54,15 +134,60 @@ function createAssemblyRobot(scene: THREE.Scene) {
   // Head – a clean rounded box (the iconic robot head shape)
   const headGeo = new THREE.BoxGeometry(1.1, 0.9, 0.9)
   headGeo.translate(0, 0, 0)
-  // Soften the edges with a subtle bevel feel via scale
-  const headMat = new THREE.MeshStandardMaterial({
-    color: 0xd0d0d0, metalness: 0.45, roughness: 0.28,
+  const headMat = new THREE.MeshPhysicalMaterial({
+    color: 0xd8d8d8, metalness: 0.65, roughness: 0.12,
     transparent: true, opacity: 1,
+    clearcoat: 0.15, clearcoatRoughness: 0.08,
+    envMapIntensity: 1.4,
   })
   const body = new THREE.Mesh(headGeo, headMat)
   body.castShadow = true
   body.receiveShadow = true
   bodyGroup.add(body)
+
+  // ── Edge chamfer highlights (premium beveled look) ──
+  const edgeHLMat = new THREE.MeshStandardMaterial({
+    color: 0xf0f0f0, metalness: 0.8, roughness: 0.05,
+  })
+  const edgeH = new THREE.BoxGeometry(1.12, 0.01, 0.01)
+  const edgeV = new THREE.BoxGeometry(0.01, 0.92, 0.01)
+  const edgeD = new THREE.BoxGeometry(0.01, 0.01, 0.92)
+  const eTop = new THREE.Mesh(edgeH, edgeHLMat)
+  eTop.position.set(0, 0.455, 0.455)
+  bodyGroup.add(eTop)
+  const eBot = new THREE.Mesh(edgeH, edgeHLMat.clone())
+  eBot.position.set(0, -0.455, 0.455)
+  bodyGroup.add(eBot)
+  const eLeft = new THREE.Mesh(edgeV, edgeHLMat.clone())
+  eLeft.position.set(-0.555, 0, 0.455)
+  bodyGroup.add(eLeft)
+  const eRight = new THREE.Mesh(edgeV, edgeHLMat.clone())
+  eRight.position.set(0.555, 0, 0.455)
+  bodyGroup.add(eRight)
+  const eTopR = new THREE.Mesh(edgeD, edgeHLMat.clone())
+  eTopR.position.set(0.555, 0.455, 0)
+  bodyGroup.add(eTopR)
+  const eTopL = new THREE.Mesh(edgeD, edgeHLMat.clone())
+  eTopL.position.set(-0.555, 0.455, 0)
+  bodyGroup.add(eTopL)
+
+  // ── IA Badge on right side ──
+  const iaTex = createIABadgeTexture()
+  const iaBadgeGeo = new THREE.PlaneGeometry(0.38, 0.19)
+  const iaBadgeMat = new THREE.MeshStandardMaterial({
+    map: iaTex, transparent: true, opacity: 1,
+    metalness: 0.2, roughness: 0.5, alphaTest: 0.01,
+  })
+  const iaBadge = new THREE.Mesh(iaBadgeGeo, iaBadgeMat)
+  iaBadge.rotation.y = Math.PI / 2
+  iaBadge.position.set(0.556, -0.05, -0.05)
+  bodyGroup.add(iaBadge)
+
+  // IA Badge on left side (mirrored)
+  const iaBadgeL = new THREE.Mesh(iaBadgeGeo.clone(), iaBadgeMat.clone())
+  iaBadgeL.rotation.y = -Math.PI / 2
+  iaBadgeL.position.set(-0.556, -0.05, 0.05)
+  bodyGroup.add(iaBadgeL)
 
   // Thin side accent strips (orange lines on temples)
   const stripGeo = new THREE.BoxGeometry(0.025, 0.55, 0.04)
@@ -102,9 +227,11 @@ function createAssemblyRobot(scene: THREE.Scene) {
   const topGroup = new THREE.Group()
 
   const topGeo = new THREE.BoxGeometry(0.95, 0.12, 0.78)
-  const topMat = new THREE.MeshStandardMaterial({
-    color: 0xb8b8b8, metalness: 0.5, roughness: 0.22,
+  const topMat = new THREE.MeshPhysicalMaterial({
+    color: 0xc0c0c0, metalness: 0.65, roughness: 0.10,
     transparent: true, opacity: 1,
+    clearcoat: 0.12, clearcoatRoughness: 0.06,
+    envMapIntensity: 1.3,
   })
   const topPanel = new THREE.Mesh(topGeo, topMat)
   topPanel.castShadow = true
@@ -144,8 +271,9 @@ function createAssemblyRobot(scene: THREE.Scene) {
   // Dark face plate – simple rectangle on the front
   const faceGeo = new THREE.BoxGeometry(0.88, 0.52, 0.04)
   const faceMat = new THREE.MeshStandardMaterial({
-    color: 0x1a1a1a, metalness: 0.3, roughness: 0.4,
+    color: 0x141414, metalness: 0.5, roughness: 0.18,
     transparent: true, opacity: 1,
+    envMapIntensity: 0.8,
   })
   const facePlate = new THREE.Mesh(faceGeo, faceMat)
   faceGroup.add(facePlate)
@@ -169,6 +297,17 @@ function createAssemblyRobot(scene: THREE.Scene) {
   const btmLine = new THREE.Mesh(btmGeo, btmMat)
   btmLine.position.set(0, -0.18, 0.025)
   faceGroup.add(btmLine)
+
+  // IA identifier on face plate (between eyes and mouth)
+  const iaFaceTex = createIAFaceTexture()
+  const iaFaceGeo = new THREE.PlaneGeometry(0.18, 0.065)
+  const iaFaceMat = new THREE.MeshBasicMaterial({
+    map: iaFaceTex, transparent: true, opacity: 1,
+    depthWrite: false, blending: THREE.AdditiveBlending,
+  })
+  const iaFaceLabel = new THREE.Mesh(iaFaceGeo, iaFaceMat)
+  iaFaceLabel.position.set(0, -0.08, 0.03)
+  faceGroup.add(iaFaceLabel)
 
   faceGroup.position.set(0, -0.02, 0.47)
   root.add(faceGroup)
@@ -236,7 +375,7 @@ function createAssemblyRobot(scene: THREE.Scene) {
     eyeL, eyeR, pupilL, pupilR,
     ringL, ringR, outerRingL, outerRingR,
     eyeLight, stripL, stripR, circL, circR, btmLine,
-    antennaTip, topAccent, bottomRail,
+    antennaTip, topAccent, bottomRail, iaBadge,
   }
 }
 
@@ -429,6 +568,7 @@ function resetRobot(obj: ReturnType<typeof createAssemblyRobot>) {
   setEI(obj.antennaTip, 0)
   setEI(obj.topAccent, 0)
   setEI(obj.bottomRail, 0)
+  setOp(obj.iaBadge, 0)
 }
 
 // =====================================================================
@@ -457,8 +597,8 @@ export function RobotConveyor3D() {
         // bottom third clear for the text overlay without heavy gradients.
         return { fov: 48, pos: [3.5, 5.0, 6.5] as const, lookAt: [0, 0.6, 0] as const }
       }
-      // Desktop (unchanged)
-      return { fov: 32, pos: [8, 6.0, 10] as const, lookAt: [-1, 0.0, 0] as const }
+      // Desktop
+      return { fov: 32, pos: [8, 6.0, 10] as const, lookAt: [-3, 0.0, 0] as const }
     }
 
     // ── Renderer ──────────────────────────────────────────
@@ -473,7 +613,7 @@ export function RobotConveyor3D() {
     renderer.shadowMap.enabled = true
     renderer.shadowMap.type = mobile ? THREE.BasicShadowMap : THREE.PCFSoftShadowMap
     renderer.toneMapping = THREE.ACESFilmicToneMapping
-    renderer.toneMappingExposure = 0.9
+    renderer.toneMappingExposure = 1.0
     renderer.setClearColor(0x030303, 1)
     container.appendChild(renderer.domElement)
 
@@ -522,6 +662,24 @@ export function RobotConveyor3D() {
     const al2 = new THREE.PointLight(ACCENT_HEX, 0.8, 8)
     al2.position.set(-2, 3, -3)
     scene.add(al2)
+
+    // ── Environment map for polished reflections ──────────
+    const pmremGenerator = new THREE.PMREMGenerator(renderer)
+    const envScene = new THREE.Scene()
+    envScene.background = new THREE.Color(0x080808)
+    const envFill = new THREE.AmbientLight(0x222222, 1)
+    envScene.add(envFill)
+    const envAccent = new THREE.PointLight(ACCENT_HEX, 0.6, 40)
+    envAccent.position.set(5, 5, 5)
+    envScene.add(envAccent)
+    const envCool = new THREE.PointLight(0x334466, 0.3, 40)
+    envCool.position.set(-5, 3, -5)
+    envScene.add(envCool)
+    const envWarm = new THREE.PointLight(0xfff0e0, 0.4, 40)
+    envWarm.position.set(0, 10, 0)
+    envScene.add(envWarm)
+    scene.environment = pmremGenerator.fromScene(envScene, 0.04).texture
+    pmremGenerator.dispose()
 
     // ── Conveyor Belt ─────────────────────────────────────
     const beltLen = 34
@@ -596,7 +754,8 @@ export function RobotConveyor3D() {
     // ── Floor ─────────────────────────────────────────────
     const floorGeo = new THREE.PlaneGeometry(60, 60)
     const floorMat = new THREE.MeshStandardMaterial({
-      color: 0x020202, metalness: 0.9, roughness: 0.35,
+      color: 0x030303, metalness: 0.95, roughness: 0.18,
+      envMapIntensity: 0.5,
     })
     const floor = new THREE.Mesh(floorGeo, floorMat)
     floor.rotation.x = -Math.PI / 2
@@ -734,6 +893,7 @@ export function RobotConveyor3D() {
           obj.bodyGroup.position.y = (1 - ep) * -0.3 // rises gently from just below
           obj.bodyGroup.scale.setScalar(0.85 + ep * 0.15) // subtle 85%→100%, not 0→100%
           ;(obj.body.material as THREE.MeshStandardMaterial).opacity = ep
+          setOp(obj.iaBadge, ep)
 
           obj.topGroup.visible = false
           obj.faceGroup.visible = false
