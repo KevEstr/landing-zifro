@@ -107,14 +107,13 @@ function ServiceShowcase({
             <VisualComponent className="object-cover transition-transform duration-1000 group-hover:scale-105" />
             <div className="absolute inset-0 bg-gradient-to-t from-foreground/20 via-transparent to-transparent" />
 
-            {/* Floating feature pills ON the visual */}
+            {/* Floating feature pills ON the visual - reducido */}
             <div className="absolute inset-0 hidden lg:block">
-              {features.map((f, i) => {
+              {features.slice(0, 3).map((f, i) => {
                 const positions = [
-                  { top: "15%", left: "10%" },      // Flujos personalizados
-                  { top: "12%", right: "8%" },      // Triggers inteligentes
-                  { bottom: "25%", left: "12%" },   // ROI medible
-                  { top: "68%", right: "2%" },      // Escalado automático - MÁS A LA DERECHA
+                  { top: "15%", left: "10%" },
+                  { top: "12%", right: "8%" },
+                  { bottom: "25%", left: "12%" },
                 ]
                 const pos = positions[i] || positions[0]
 
@@ -126,6 +125,7 @@ function ServiceShowcase({
                       ...pos,
                       animationDelay: `${i * 0.8}s`,
                       animationDuration: `${5 + i}s`,
+                      willChange: 'transform',
                     } as React.CSSProperties}
                   >
                     <div className="relative">
@@ -258,17 +258,13 @@ export function ServicesSection() {
   ]
 
   return (
-    <section id="servicios" className="relative bg-background py-24 lg:py-32 overflow-hidden">
-      {/* Decorative floating orbs across section */}
+    <section id="servicios" className="relative bg-background py-12 lg:py-16 overflow-hidden">
+      {/* Decorative floating orbs across section - reducido */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute w-96 h-96 rounded-full bg-primary/5 -top-48 -right-48 blur-3xl animate-blob" />
+        <div className="absolute w-80 h-80 rounded-full bg-primary/4 -top-48 -right-48 blur-3xl animate-blob" style={{ willChange: 'transform' }} />
         <div
-          className="absolute w-80 h-80 rounded-full bg-accent/5 bottom-1/4 -left-40 blur-3xl animate-blob"
-          style={{ animationDelay: "3s" }}
-        />
-        <div
-          className="absolute w-64 h-64 rounded-full bg-[#D4A853]/5 top-1/3 right-1/4 blur-2xl animate-blob"
-          style={{ animationDelay: "6s" }}
+          className="absolute w-64 h-64 rounded-full bg-accent/4 bottom-1/4 -left-40 blur-3xl animate-blob"
+          style={{ animationDelay: "3s", willChange: 'transform' }}
         />
       </div>
 
@@ -276,7 +272,7 @@ export function ServicesSection() {
         {/* Section Header */}
         <div
           ref={titleRef}
-          className={`mb-24 text-center transition-all duration-1000 ${titleVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"}`}
+          className={`mb-12 lg:mb-16 text-center transition-all duration-1000 ${titleVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"}`}
         >
           <span className="inline-block text-xs font-bold uppercase tracking-[0.3em] text-primary mb-6">
             Nuestros servicios
@@ -289,7 +285,7 @@ export function ServicesSection() {
         </div>
 
         {/* Services */}
-        <div className="flex flex-col gap-32 lg:gap-40">
+        <div className="flex flex-col gap-16 lg:gap-20">
           {services.map((service, i) => (
             <ServiceShowcase key={service.title} {...service} index={i} />
           ))}

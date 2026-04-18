@@ -8,20 +8,19 @@ export function AgentNetworkVisual() {
   useEffect(() => {
     const canvas = canvasRef.current
     if (!canvas) return
-    const ctx = canvas.getContext("2d")
+    const ctx = canvas.getContext("2d", { alpha: false })
     if (!ctx) return
 
     const resize = () => {
-      canvas.width = canvas.offsetWidth * window.devicePixelRatio
-      canvas.height = canvas.offsetHeight * window.devicePixelRatio
-      ctx.scale(window.devicePixelRatio, window.devicePixelRatio)
+      canvas.width = canvas.offsetWidth
+      canvas.height = canvas.offsetHeight
     }
 
     resize()
     window.addEventListener("resize", resize)
 
-    // Agent nodes
-    const agents = Array.from({ length: 12 }, (_, i) => ({
+    // Reducir agentes de 12 a 6 para mejor rendimiento
+    const agents = Array.from({ length: 6 }, (_, i) => ({
       x: Math.random() * canvas.offsetWidth,
       y: Math.random() * canvas.offsetHeight,
       vx: (Math.random() - 0.5) * 0.3,
@@ -29,16 +28,28 @@ export function AgentNetworkVisual() {
       radius: 4 + Math.random() * 3,
       activity: Math.random(),
       pulsePhase: Math.random() * Math.PI * 2,
-      type: i % 3, // 0: primary, 1: accent, 2: secondary
+      type: i % 3,
     }))
 
     let frame = 0
+    let lastTime = 0
+    const fps = 30 // Limitar a 30 FPS para mejor rendimiento
+    const fpsInterval = 1000 / fps
 
-    const animate = () => {
-      ctx.fillStyle = "rgba(10, 10, 10, 0.08)"
+    const animate = (currentTime: number) => {
+      const elapsed = currentTime - lastTime
+      
+      if (elapsed < fpsInterval) {
+        requestAnimationFrame(animate)
+        return
+      }
+      
+      lastTime = currentTime - (elapsed % fpsInterval)
+
+      ctx.fillStyle = "rgba(10, 10, 10, 0.15)"
       ctx.fillRect(0, 0, canvas.offsetWidth, canvas.offsetHeight)
 
-      // Update and draw connections
+      // Update and draw connections - optimizado
       agents.forEach((agent, i) => {
         agents.slice(i + 1).forEach((other) => {
           const dx = other.x - agent.x
@@ -54,8 +65,8 @@ export function AgentNetworkVisual() {
             ctx.lineTo(other.x, other.y)
             ctx.stroke()
 
-            // Data packets traveling
-            if (Math.random() > 0.98) {
+            // Data packets - reducir frecuencia
+            if (frame % 60 === 0 && Math.random() > 0.7) {
               const t = Math.random()
               const px = agent.x + dx * t
               const py = agent.y + dy * t
@@ -118,7 +129,7 @@ export function AgentNetworkVisual() {
       requestAnimationFrame(animate)
     }
 
-    animate()
+    requestAnimationFrame(animate)
 
     return () => {
       window.removeEventListener("resize", resize)

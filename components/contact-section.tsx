@@ -46,7 +46,7 @@ export function ContactSection() {
         </div>
       </div>
 
-      <div className="relative -mt-20 mx-auto max-w-4xl px-6 pb-24 lg:pb-32">
+      <div className="relative -mt-20 mx-auto max-w-4xl px-6 pb-12 lg:pb-16">
         <div
           ref={formRef}
           className={`transition-all duration-1000 ${formVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-16"}`}

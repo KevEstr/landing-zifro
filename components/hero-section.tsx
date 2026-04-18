@@ -19,6 +19,8 @@ function FloatingOrb({ className, delay = 0 }: { className?: string; delay?: num
       style={{
         animationDelay: `${delay}s`,
         animationDuration: `${8 + delay}s`,
+        willChange: 'transform',
+        transform: 'translateZ(0)', // Force GPU acceleration
       }}
     />
   )
@@ -33,6 +35,8 @@ function AgentNode({ label, x, y, delay }: { label: string; x: string; y: string
         top: y,
         animationDelay: `${delay}s`,
         animationDuration: `${5 + delay}s`,
+        willChange: 'transform',
+        transform: 'translateZ(0)',
       }}
     >
       <div className="flex items-center gap-2 rounded-full bg-card/90 backdrop-blur-sm px-4 py-2 shadow-lg border border-border">
@@ -60,48 +64,34 @@ export function HeroSection() {
       id="inicio"
       className="relative min-h-screen flex items-center justify-center overflow-hidden"
     >
-      {/* Background Image */}
+      {/* Background Image - optimizada con loading lazy */}
       <div className="absolute inset-0 z-0 overflow-hidden">
         <img
           src="/images/hero-landscape.jpg"
           alt=""
           className="w-full h-full object-cover opacity-35"
-          style={{ filter: 'blur(3px)' }}
+          style={{ filter: 'blur(3px)', willChange: 'transform' }}
+          loading="eager"
         />
       </div>
 
-      {/* Floating decorative orbs - reducidos */}
-      <FloatingOrb className="w-96 h-96 bg-primary/10 -top-32 -left-32 blur-3xl" delay={0} />
-      <FloatingOrb className="w-96 h-96 bg-accent/10 -bottom-48 -right-48 blur-3xl" delay={2} />
+      {/* Floating decorative orbs - reducidos y optimizados */}
+      <FloatingOrb className="w-80 h-80 bg-primary/8 -top-32 -left-32 blur-3xl" delay={0} />
+      <FloatingOrb className="w-80 h-80 bg-accent/8 -bottom-48 -right-48 blur-3xl" delay={2} />
 
       {/* Floating agent nodes - solo 2 */}
       <AgentNode label="Procesando datos..." x="10%" y="30%" delay={0} />
       <AgentNode label="Optimizando resultados..." x="85%" y="65%" delay={1.5} />
 
-      {/* Connection lines SVG */}
-      <svg className="absolute inset-0 w-full h-full z-0 hidden lg:block" xmlns="http://www.w3.org/2000/svg">
+      {/* Connection lines SVG - optimizado */}
+      <svg className="absolute inset-0 w-full h-full z-0 hidden lg:block" xmlns="http://www.w3.org/2000/svg" style={{ willChange: 'auto' }}>
         <line
           x1="12%" y1="28%" x2="50%" y2="45%"
           stroke="var(--accent)"
           strokeWidth="1"
           strokeDasharray="8 4"
           className="opacity-20 animate-draw-line"
-        />
-        <line
-          x1="82%" y1="23%" x2="55%" y2="45%"
-          stroke="var(--primary)"
-          strokeWidth="1"
-          strokeDasharray="8 4"
-          className="opacity-20 animate-draw-line"
-          style={{ animationDelay: "0.5s" }}
-        />
-        <line
-          x1="9%" y1="68%" x2="48%" y2="55%"
-          stroke="var(--accent)"
-          strokeWidth="1"
-          strokeDasharray="8 4"
-          className="opacity-20 animate-draw-line"
-          style={{ animationDelay: "1s" }}
+          style={{ vectorEffect: 'non-scaling-stroke' }}
         />
         <line
           x1="84%" y1="63%" x2="55%" y2="55%"
@@ -109,7 +99,7 @@ export function HeroSection() {
           strokeWidth="1"
           strokeDasharray="8 4"
           className="opacity-20 animate-draw-line"
-          style={{ animationDelay: "1.5s" }}
+          style={{ animationDelay: "1.5s", vectorEffect: 'non-scaling-stroke' }}
         />
       </svg>
 

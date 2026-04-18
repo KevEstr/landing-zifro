@@ -85,10 +85,10 @@ export function CaseVisual({
         {/* Chat bubbles */}
         <g>
           {[
-            { x: 50, y: 50, delay: 0 },
-            { x: 250, y: 80, delay: 0.5 },
-            { x: 80, y: 150, delay: 1 },
-            { x: 280, y: 180, delay: 1.5 },
+            { x: 50, y: 50 },
+            { x: 250, y: 80 },
+            { x: 80, y: 150 },
+            { x: 280, y: 180 },
           ].map((bubble, i) => (
             <g key={i}>
               <rect
@@ -98,16 +98,8 @@ export function CaseVisual({
                 height="40"
                 rx="20"
                 fill="url(#ecomGrad)"
-                opacity="0"
-              >
-                <animate
-                  attributeName="opacity"
-                  values="0;0.6;0.6;0"
-                  dur="4s"
-                  repeatCount="indefinite"
-                  begin={`${bubble.delay}s`}
-                />
-              </rect>
+                opacity="0.6"
+              />
               <circle cx={bubble.x + 20} cy={bubble.y + 20} r="3" fill="#FFFFFF" opacity="0.8" />
               <circle cx={bubble.x + 35} cy={bubble.y + 20} r="3" fill="#FFFFFF" opacity="0.8" />
               <circle cx={bubble.x + 50} cy={bubble.y + 20} r="3" fill="#FFFFFF" opacity="0.8" />
@@ -116,9 +108,7 @@ export function CaseVisual({
         </g>
 
         {/* Bot icon */}
-        <circle cx="200" cy="220" r="40" fill="#E8654A" opacity="0.3">
-          <animate attributeName="r" values="35;45;35" dur="3s" repeatCount="indefinite" />
-        </circle>
+        <circle cx="200" cy="220" r="40" fill="#E8654A" opacity="0.3" />
         <rect x="185" y="210" width="30" height="20" rx="5" fill="#E8654A" opacity="0.8" />
         <circle cx="192" cy="218" r="3" fill="#FFFFFF" />
         <circle cx="208" cy="218" r="3" fill="#FFFFFF" />
@@ -141,7 +131,6 @@ export function CaseVisual({
           Array.from({ length: 7 }).map((_, col) => {
             const seed = row * 7 + col
             const isBooked = seed % 3 !== 0
-            const dur = 2 + (seed % 4) * 0.5
             return (
               <rect
                 key={`${row}-${col}`}
@@ -154,16 +143,7 @@ export function CaseVisual({
                 stroke="#4A7C6F"
                 strokeWidth="2"
                 opacity={isBooked ? 0.6 : 0.2}
-              >
-                {isBooked && (
-                  <animate
-                    attributeName="opacity"
-                    values="0.4;0.8;0.4"
-                    dur={`${dur}s`}
-                    repeatCount="indefinite"
-                  />
-                )}
-              </rect>
+              />
             )
           })
         )}
@@ -181,16 +161,8 @@ export function CaseVisual({
             strokeWidth="3"
             fill="none"
             strokeLinecap="round"
-            opacity="0"
-          >
-            <animate
-              attributeName="opacity"
-              values="0;1;1;0"
-              dur="4s"
-              repeatCount="indefinite"
-              begin={`${i * 0.8}s`}
-            />
-          </path>
+            opacity="0.8"
+          />
         ))}
       </svg>
     )
@@ -214,15 +186,7 @@ export function CaseVisual({
         fill="none"
         strokeDasharray="10 5"
         opacity="0.4"
-      >
-        <animate
-          attributeName="stroke-dashoffset"
-          from="0"
-          to="15"
-          dur="1s"
-          repeatCount="indefinite"
-        />
-      </path>
+      />
 
       {/* Location pins */}
       {[
@@ -235,27 +199,13 @@ export function CaseVisual({
             d={`M ${pin.x} ${pin.y - 20} Q ${pin.x} ${pin.y - 35} ${pin.x + 10} ${pin.y - 35} Q ${pin.x + 20} ${pin.y - 35} ${pin.x + 20} ${pin.y - 20} Q ${pin.x + 20} ${pin.y - 10} ${pin.x + 10} ${pin.y} Q ${pin.x} ${pin.y - 10} ${pin.x} ${pin.y - 20}`}
             fill="#D4A853"
             opacity="0.7"
-          >
-            <animate
-              attributeName="opacity"
-              values="0.5;1;0.5"
-              dur="2s"
-              repeatCount="indefinite"
-              begin={`${i * 0.6}s`}
-            />
-          </path>
+          />
           <circle cx={pin.x + 10} cy={pin.y - 25} r="4" fill="#FFFFFF" />
         </g>
       ))}
 
-      {/* Moving package */}
-      <rect x="0" y="0" width="20" height="20" rx="3" fill="#E8654A" opacity="0.8">
-        <animateMotion
-          path="M 50 150 Q 150 50 250 150 T 450 150"
-          dur="6s"
-          repeatCount="indefinite"
-        />
-      </rect>
+      {/* Package */}
+      <rect x="150" y="80" width="20" height="20" rx="3" fill="#E8654A" opacity="0.8" />
 
       {/* Growth arrow */}
       <path
