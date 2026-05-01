@@ -1,7 +1,7 @@
 "use client"
 
 import { useScrollReveal } from "@/hooks/use-scroll-reveal"
-import { useState } from "react"
+import { useState, useEffect, useRef, forwardRef, useCallback } from "react"
 import Image from "next/image"
 
 const steps = [
@@ -35,22 +35,27 @@ const steps = [
   },
 ]
 
-function ProcessStep({
-  step,
-  index,
-  isActive,
-  onClick,
-}: {
+const ProcessStep = forwardRef<HTMLDivElement, {
   step: (typeof steps)[number]
   index: number
   isActive: boolean
   onClick: () => void
-}) {
-  const { ref, isVisible } = useScrollReveal(0.1)
+}>(function ProcessStep({ step, index, isActive, onClick }, ref) {
+  const { ref: revealRef, isVisible } = useScrollReveal(0.1)
+  
+  // Combine refs
+  const setRefs = useCallback((node: HTMLDivElement | null) => {
+    revealRef(node)
+    if (typeof ref === 'function') {
+      ref(node)
+    } else if (ref) {
+      ref.current = node
+    }
+  }, [ref, revealRef])
 
   return (
     <div
-      ref={ref}
+      ref={setRefs}
       className={`transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-16"}`}
       style={{ willChange: isVisible ? 'transform, opacity' : 'auto' }}
     >
@@ -110,16 +115,55 @@ function ProcessStep({
       </button>
     </div>
   )
-}
+})
 
 export function ProcessSection() {
   const { ref: titleRef, isVisible: titleVisible } = useScrollReveal()
   const [activeStep, setActiveStep] = useState(0)
+  const sectionRef = useRef<HTMLDivElement>(null)
+  const stepRefs = useRef<(HTMLDivElement | null)[]>([])
 
-  // NO auto-cycle - solo manual
+  // Auto-select step based on scroll position
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!sectionRef.current) return
+      
+      const sectionTop = sectionRef.current.getBoundingClientRect().top
+      const sectionHeight = sectionRef.current.offsetHeight
+      const viewportHeight = window.innerHeight
+      
+      // Only activate when section is in view
+      if (sectionTop > viewportHeight || sectionTop + sectionHeight < 0) return
+      
+      // Find which step is most visible
+      let maxVisibility = 0
+      let mostVisibleIndex = 0
+      
+      stepRefs.current.forEach((ref, index) => {
+        if (!ref) return
+        const rect = ref.getBoundingClientRect()
+        const visibleHeight = Math.min(rect.bottom, viewportHeight) - Math.max(rect.top, 0)
+        const visibility = visibleHeight / rect.height
+        
+        if (visibility > maxVisibility) {
+          maxVisibility = visibility
+          mostVisibleIndex = index
+        }
+      })
+      
+      if (maxVisibility > 0.3) { // At least 30% visible
+        setActiveStep(mostVisibleIndex)
+      }
+    }
+    
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    handleScroll() // Check initial position
+    
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
 
   return (
-    <section className="relative bg-background py-8 lg:py-16 overflow-hidden">
+    <section ref={sectionRef} className="relative bg-background py-8 lg:py-16 overflow-hidden">
       {/* Top wave */}
       <div className="absolute -top-1 left-0 right-0">
         <svg viewBox="0 0 1440 80" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full rotate-180">
@@ -153,6 +197,7 @@ export function ProcessSection() {
               index={i}
               isActive={activeStep === i}
               onClick={() => setActiveStep(i)}
+              ref={(el) => (stepRefs.current[i] = el)}
             />
           ))}
         </div>

@@ -169,22 +169,22 @@ export function TestimonialsSection() {
             titleVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
           }`}
         >
-          <div className="inline-flex flex-wrap items-center justify-center gap-8 rounded-2xl border border-border bg-card/50 px-8 py-6 backdrop-blur-sm">
-            <div className="text-center">
+          <div className="inline-flex flex-col sm:flex-row flex-wrap items-center justify-center gap-6 sm:gap-8 rounded-2xl border border-border bg-card/50 px-6 sm:px-8 py-6 backdrop-blur-sm">
+            <div className="text-center min-w-[120px]">
               <div className="text-3xl font-bold text-foreground leading-none mb-2" style={{ fontFamily: "var(--font-display)" }}>
                 50+
               </div>
               <div className="text-sm text-muted-foreground leading-none">Proyectos entregados</div>
             </div>
-            <div className="h-12 w-px bg-border" />
-            <div className="text-center">
+            <div className="hidden sm:block h-12 w-px bg-border" />
+            <div className="text-center min-w-[120px]">
               <div className="text-3xl font-bold text-foreground leading-none mb-2" style={{ fontFamily: "var(--font-display)" }}>
                 99%
               </div>
               <div className="text-sm text-muted-foreground leading-none">Clientes satisfechos</div>
             </div>
-            <div className="h-12 w-px bg-border" />
-            <div className="text-center">
+            <div className="hidden sm:block h-12 w-px bg-border" />
+            <div className="text-center min-w-[120px]">
               <div className="text-3xl font-bold text-foreground leading-none mb-2" style={{ fontFamily: "var(--font-display)" }}>
                 3x
               </div>

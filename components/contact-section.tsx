@@ -37,8 +37,8 @@ export function ContactSection() {
           <span className="inline-block text-xs font-bold uppercase tracking-[0.3em] text-primary mb-4 bg-black/90 backdrop-blur-xl px-4 py-1.5 rounded-full border border-primary/30">
             Contacto
           </span>
-          <h2 className="text-5xl font-bold text-foreground sm:text-6xl lg:text-7xl text-balance leading-tight" style={{ fontFamily: "var(--font-display)" }}>
-            <span className="bg-black/90 backdrop-blur-xl px-6 py-2 rounded-2xl inline-block border border-border/30">
+          <h2 className="text-4xl font-bold text-foreground sm:text-5xl lg:text-7xl text-balance leading-tight px-4" style={{ fontFamily: "var(--font-display)" }}>
+            <span className="bg-black/90 backdrop-blur-xl px-4 sm:px-6 py-2 rounded-2xl inline-block border border-border/30">
               Hablemos de tu{" "}
               <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">proyecto.</span>
             </span>

@@ -125,7 +125,7 @@ function ServiceShowcase({
 
           <a
             href="#contacto"
-            className="group inline-flex items-center gap-3 self-start mt-2 rounded-full px-8 py-4 text-base font-semibold text-card transition-all duration-300 hover:shadow-2xl hover:-translate-y-1"
+            className="group hidden lg:inline-flex items-center gap-3 self-start mt-2 rounded-full px-8 py-4 text-base font-semibold text-card transition-all duration-300 hover:shadow-2xl hover:-translate-y-1"
             style={{ backgroundColor: accentColor }}
           >
             Solicitar informacion
@@ -214,6 +214,19 @@ export function ServicesSection() {
           {services.map((service, i) => (
             <ServiceShowcase key={service.title} {...service} index={i} />
           ))}
+        </div>
+
+        {/* Mobile CTA - Solo visible en móvil, al final de todos los servicios */}
+        <div className="mt-12 flex justify-center lg:hidden">
+          <a
+            href="#contacto"
+            className="group inline-flex items-center gap-3 rounded-full bg-primary px-10 py-5 text-lg font-semibold text-primary-foreground transition-all duration-300 hover:shadow-2xl hover:shadow-primary/30 hover:-translate-y-1"
+          >
+            Solicitar información
+            <svg width="18" height="18" viewBox="0 0 16 16" fill="none" className="transition-transform duration-300 group-hover:translate-x-1">
+              <path d="M1 8h14M9 2l6 6-6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </a>
         </div>
       </div>
 
