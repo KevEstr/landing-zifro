@@ -40,18 +40,23 @@ const ProcessStep = forwardRef<HTMLDivElement, {
   index: number
   isActive: boolean
   onClick: () => void
-}>(function ProcessStep({ step, index, isActive, onClick }, ref) {
+}>(function ProcessStep({ step, index, isActive, onClick }, forwardedRef) {
   const { ref: revealRef, isVisible } = useScrollReveal(0.1)
   
   // Combine refs
   const setRefs = useCallback((node: HTMLDivElement | null) => {
-    revealRef(node)
-    if (typeof ref === 'function') {
-      ref(node)
-    } else if (ref) {
-      ref.current = node
+    // Set the reveal ref
+    if (revealRef && typeof revealRef === 'object' && 'current' in revealRef) {
+      (revealRef as React.MutableRefObject<HTMLDivElement | null>).current = node
     }
-  }, [ref, revealRef])
+    
+    // Set the forwarded ref
+    if (typeof forwardedRef === 'function') {
+      forwardedRef(node)
+    } else if (forwardedRef) {
+      forwardedRef.current = node
+    }
+  }, [forwardedRef, revealRef])
 
   return (
     <div
