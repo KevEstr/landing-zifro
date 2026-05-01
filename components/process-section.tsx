@@ -56,7 +56,7 @@ function ProcessStep({
     >
       <button
         onClick={onClick}
-        className={`group relative w-full h-full text-left rounded-[2rem] border-2 p-4 lg:p-5 transition-all duration-500 flex flex-col ${isActive
+        className={`group relative w-full h-full text-left rounded-2xl border-2 p-3 lg:p-5 transition-all duration-500 flex flex-col ${isActive
           ? "border-current shadow-2xl scale-[1.02] bg-card"
           : "border-border bg-card/50 hover:border-border hover:bg-card hover:shadow-lg"
           }`}
@@ -67,13 +67,13 @@ function ProcessStep({
           className={`w-full flex items-center justify-center mb-2 lg:mb-3 transition-all duration-500 ${isActive ? "opacity-100" : "opacity-60 group-hover:opacity-80"
             }`}
         >
-          <div className="relative w-56 h-56 lg:w-48 lg:h-48">
+          <div className="relative w-32 h-32 sm:w-40 sm:h-40 lg:w-48 lg:h-48">
             <Image
               src={step.image}
               alt={step.title}
               fill
               className="object-contain"
-              sizes="(max-width: 768px) 192px, 208px"
+              sizes="(max-width: 640px) 128px, (max-width: 1024px) 160px, 192px"
             />
           </div>
         </div>
@@ -119,7 +119,7 @@ export function ProcessSection() {
   // NO auto-cycle - solo manual
 
   return (
-    <section className="relative bg-background py-12 lg:py-16 overflow-hidden">
+    <section className="relative bg-background py-8 lg:py-16 overflow-hidden">
       {/* Top wave */}
       <div className="absolute -top-1 left-0 right-0">
         <svg viewBox="0 0 1440 80" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full rotate-180">
@@ -134,18 +134,18 @@ export function ProcessSection() {
       <div className="relative mx-auto max-w-7xl px-6">
         <div
           ref={titleRef}
-          className={`mb-12 lg:mb-16 text-center transition-all duration-700 ${titleVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"}`}
+          className={`mb-8 lg:mb-16 text-center transition-all duration-700 ${titleVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"}`}
         >
           <span className="inline-block text-xs font-bold uppercase tracking-[0.3em] text-accent mb-6">
             Como trabajamos
           </span>
-          <h2 className="text-5xl font-bold text-foreground sm:text-6xl lg:text-7xl text-balance leading-tight" style={{ fontFamily: "var(--font-display)" }}>
+          <h2 className="text-4xl font-bold text-foreground sm:text-5xl lg:text-7xl text-balance leading-tight" style={{ fontFamily: "var(--font-display)" }}>
             De tu idea a{" "}
             <span className="bg-gradient-to-r from-accent to-primary bg-clip-text text-transparent">resultados medibles.</span>
           </h2>
         </div>
 
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
           {steps.map((step, i) => (
             <ProcessStep
               key={step.number}
