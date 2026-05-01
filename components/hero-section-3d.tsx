@@ -26,7 +26,7 @@ export function HeroSection() {
   return (
     <section
       id="inicio"
-      className="relative min-h-screen flex items-end overflow-hidden"
+      className="relative min-h-[85vh] sm:min-h-screen flex items-end overflow-hidden"
       style={{ background: "#050505" }}
     >
       {/* Animated Robot Conveyor Background */}
@@ -36,13 +36,13 @@ export function HeroSection() {
       <div className="absolute inset-0 z-[2] pointer-events-none">
         {/* MOBILE: thin bottom-only gradient so animation stays visible */}
         {/* DESKTOP: wider, richer gradients for the side-layout */}
-        <div className="absolute bottom-0 left-0 right-0 h-[40%] sm:h-[55%] bg-gradient-to-t from-[#050505] via-[#050505]/70 sm:via-[#050505]/80 to-transparent" />
+        <div className="absolute bottom-0 left-0 right-0 h-[35%] sm:h-[55%] bg-gradient-to-t from-[#050505] via-[#050505]/70 sm:via-[#050505]/80 to-transparent" />
         <div className="absolute inset-0 left-0 w-0 sm:w-[50%] bg-gradient-to-r from-[#050505]/70 via-[#050505]/30 to-transparent" />
-        <div className="absolute bottom-0 left-0 w-full sm:w-[60%] h-[30%] sm:h-[60%] bg-gradient-to-tr from-[#050505]/50 sm:from-[#050505]/60 to-transparent" />
+        <div className="absolute bottom-0 left-0 w-full sm:w-[60%] h-[25%] sm:h-[60%] bg-gradient-to-tr from-[#050505]/50 sm:from-[#050505]/60 to-transparent" />
       </div>
 
       {/* Main Content - Positioned at bottom */}
-      <div className="relative z-10 mx-auto w-full max-w-7xl px-4 sm:px-6 pb-4 sm:pb-16 lg:pb-24">
+      <div className="relative z-10 mx-auto w-full max-w-7xl px-4 sm:px-6 pb-6 sm:pb-16 lg:pb-24">
         <div className="max-w-2xl">
           {/* Main heading */}
           <h1
@@ -52,7 +52,7 @@ export function HeroSection() {
             style={{ fontFamily: "var(--font-display)" }}
           >
             <span className="text-foreground block">Creamos</span>
-            <span className="relative mt-1 block min-h-[1.3em] flex items-center">
+            <span className="relative mt-0.5 sm:mt-1 block min-h-[1.3em] flex items-center">
               {rotatingWords.map((word, idx) => (
                 <span
                   key={word}
@@ -80,12 +80,12 @@ export function HeroSection() {
                 </span>
               ))}
             </span>
-            <span className="text-foreground block mt-1">que transforman</span>
+            <span className="text-foreground block mt-0.5 sm:mt-1">que transforman</span>
           </h1>
 
           {/* Subtitle – hidden on small mobile to save space, visible from sm up */}
           <p
-            className={`mt-4 sm:mt-6 max-w-xl hidden sm:block text-sm leading-relaxed text-foreground/60 sm:text-lg transition-all duration-1000 delay-500 ${
+            className={`mt-3 sm:mt-6 max-w-xl hidden sm:block text-sm leading-relaxed text-foreground/60 sm:text-lg transition-all duration-1000 delay-500 ${
               isLoaded
                 ? "opacity-100 translate-y-0"
                 : "opacity-0 translate-y-12"
@@ -98,7 +98,7 @@ export function HeroSection() {
 
           {/* CTAs */}
           <div
-            className={`mt-4 sm:mt-8 flex flex-col gap-2.5 sm:gap-4 sm:flex-row transition-all duration-1000 delay-700 ${
+            className={`mt-3 sm:mt-8 flex flex-col gap-2.5 sm:gap-4 sm:flex-row transition-all duration-1000 delay-700 ${
               isLoaded
                 ? "opacity-100 translate-y-0"
                 : "opacity-0 translate-y-12"

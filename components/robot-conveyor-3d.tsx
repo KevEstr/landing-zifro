@@ -535,7 +535,7 @@ export function RobotConveyor3D() {
         // Portrait: wider FOV, pull camera back further & aim higher so robots
         // visually sit in the upper half of the viewport, leaving the
         // bottom half clear for the text overlay without heavy gradients.
-        return { fov: 42, pos: [4.5, 6.5, 9.0] as const, lookAt: [0, 0.3, 0] as const }
+        return { fov: 45, pos: [4.5, 5.5, 8.5] as const, lookAt: [0, 0.5, 0] as const }
       }
       // Desktop
       return { fov: 32, pos: [8, 6.0, 10] as const, lookAt: [-3, 0.0, 0] as const }
@@ -660,28 +660,28 @@ export function RobotConveyor3D() {
     scene.add(rim)
 
     // Multiple orange accent lights for vibrant glow
-    const al1 = new THREE.PointLight(ACCENT_HEX, 5.0, 18, 2)
+    const al1 = new THREE.PointLight(ACCENT_HEX, mobile ? 0 : 5.0, 18, 2)
     al1.position.set(3, 5, 3)
     al1.castShadow = false
     scene.add(al1)
     
-    const al2 = new THREE.PointLight(ACCENT_HEX, 4.0, 15, 2)
+    const al2 = new THREE.PointLight(ACCENT_HEX, mobile ? 0 : 4.0, 15, 2)
     al2.position.set(-3, 5, -4)
     al2.castShadow = false
     scene.add(al2)
     
-    const al3 = new THREE.PointLight(ACCENT_HEX, 3.5, 12, 2)
+    const al3 = new THREE.PointLight(ACCENT_HEX, mobile ? 0 : 3.5, 12, 2)
     al3.position.set(0, 4, 6)
     al3.castShadow = false
     scene.add(al3)
 
     // Cyan accent for vibrant sci-fi feel
-    const cyanAccent = new THREE.PointLight(0x00ffff, 2.5, 20, 2)
+    const cyanAccent = new THREE.PointLight(0x00ffff, mobile ? 0 : 2.5, 20, 2)
     cyanAccent.position.set(0, 4, -10)
     scene.add(cyanAccent)
     
     // Purple accent for depth
-    const purpleAccent = new THREE.PointLight(0xaa00ff, 2.0, 18, 2)
+    const purpleAccent = new THREE.PointLight(0xaa00ff, mobile ? 0 : 2.0, 18, 2)
     purpleAccent.position.set(-5, 3, 0)
     scene.add(purpleAccent)
 
@@ -936,8 +936,8 @@ export function RobotConveyor3D() {
     const robots = cfgs.map((c) => {
       const obj = createAssemblyRobot(scene)
       obj.root.position.set(c.lane, 0.5, c.z)
-      // Scale down on mobile (45% of original size)
-      const mobileScale = isMobile() ? c.scale * 0.45 : c.scale
+      // Scale down on mobile (55% of original size for better visibility)
+      const mobileScale = isMobile() ? c.scale * 0.55 : c.scale
       obj.root.scale.setScalar(mobileScale)
       obj.root.rotation.y = Math.PI * 0.05
       return { obj, c }
@@ -964,9 +964,16 @@ export function RobotConveyor3D() {
         
         // Update robot scale based on viewport
         robots.forEach(({ obj, c }) => {
-          const mobileScale = nowMobile ? c.scale * 0.45 : c.scale
+          const mobileScale = nowMobile ? c.scale * 0.55 : c.scale
           obj.root.scale.setScalar(mobileScale)
         })
+        
+        // Update accent lights based on viewport
+        al1.intensity = nowMobile ? 0 : 5.0
+        al2.intensity = nowMobile ? 0 : 4.0
+        al3.intensity = nowMobile ? 0 : 3.5
+        cyanAccent.intensity = nowMobile ? 0 : 2.5
+        purpleAccent.intensity = nowMobile ? 0 : 2.0
       }
       camera.updateProjectionMatrix()
       renderer.setSize(container.clientWidth, container.clientHeight)
@@ -1006,17 +1013,19 @@ export function RobotConveyor3D() {
       // Accent lights dramatic movement with higher intensity
       al1.position.x = 3 + Math.sin(t * 0.15) * 0.6
       al1.position.y = 5 + Math.sin(t * 0.2) * 0.5
-      al1.intensity = 5.0 + Math.sin(t * 0.8) * 1.0
+      if (!mobile) al1.intensity = 5.0 + Math.sin(t * 0.8) * 1.0
       
       al2.position.z = -4 + Math.cos(t * 0.12) * 0.6
       al2.position.y = 5 + Math.cos(t * 0.18) * 0.5
-      al2.intensity = 4.0 + Math.cos(t * 0.9) * 0.8
+      if (!mobile) al2.intensity = 4.0 + Math.cos(t * 0.9) * 0.8
       
       al3.position.x = Math.sin(t * 0.1) * 0.8
-      al3.intensity = 3.5 + Math.sin(t * 1.2) * 0.7
+      if (!mobile) al3.intensity = 3.5 + Math.sin(t * 1.2) * 0.7
       
-      cyanAccent.intensity = 2.5 + Math.sin(t * 0.7) * 0.8
-      purpleAccent.intensity = 2.0 + Math.cos(t * 0.6) * 0.6
+      if (!mobile) {
+        cyanAccent.intensity = 2.5 + Math.sin(t * 0.7) * 0.8
+        purpleAccent.intensity = 2.0 + Math.cos(t * 0.6) * 0.6
+      }
       
       // Starfield rotation - very subtle
       stars.rotation.y += dt * 0.01
@@ -1076,7 +1085,7 @@ export function RobotConveyor3D() {
           fadeAlpha = clamp(1 - (z - FADE_OUT_Z) / (BELT_END - FADE_OUT_Z), 0, 1)
         }
         // Apply mobile scale multiplier
-        const baseScale = isMobile() ? c.scale * 0.45 : c.scale
+        const baseScale = isMobile() ? c.scale * 0.55 : c.scale
         const fadeScale = baseScale * (0.3 + 0.7 * fadeAlpha)
         obj.root.scale.setScalar(fadeScale)
 
