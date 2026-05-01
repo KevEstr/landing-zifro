@@ -212,41 +212,145 @@ function createAssemblyRobot(scene: THREE.Scene) {
 // ── Assembly Station (arch over belt) ───────────────────────────────────
 function createStation(scene: THREE.Scene, z: number) {
   const g = new THREE.Group()
-  const darkMetal = new THREE.MeshStandardMaterial({ color: 0x2a2a2a, metalness: 0.92, roughness: 0.08 })
+  
+  // Ultra-premium dark metal material
+  const darkMetal = new THREE.MeshStandardMaterial({ 
+    color: 0x0f0f0f, 
+    metalness: 0.98, 
+    roughness: 0.02,
+    envMapIntensity: 2.0
+  })
 
-  // pillars – placed OUTSIDE the belt width so they never overlap robots
-  const pGeo = new THREE.CylinderGeometry(0.08, 0.11, 3, 8)
-  const pL = new THREE.Mesh(pGeo, darkMetal)
-  pL.position.set(-2.6, 1.0, 0)
+  // Futuristic pillars with multiple segments
+  const pGeo = new THREE.CylinderGeometry(0.05, 0.08, 3.5, 16)
+  const pL = new THREE.Mesh(pGeo, darkMetal.clone())
+  pL.position.set(-2.4, 1.25, 0)
+  pL.castShadow = true
   g.add(pL)
-  const pR = new THREE.Mesh(pGeo, darkMetal)
-  pR.position.set(2.6, 1.0, 0)
+  const pR = new THREE.Mesh(pGeo, darkMetal.clone())
+  pR.position.set(2.4, 1.25, 0)
+  pR.castShadow = true
   g.add(pR)
 
-  // pillar bases
-  const baseGeo = new THREE.CylinderGeometry(0.18, 0.18, 0.05, 12)
-  const baseMat = new THREE.MeshStandardMaterial({ color: 0x222222, metalness: 0.9, roughness: 0.1 })
-  const bL = new THREE.Mesh(baseGeo, baseMat)
-  bL.position.set(-2.6, -0.47, 0)
+  // Glowing rings on pillars
+  for (let i = 0; i < 3; i++) {
+    const ringGeo = new THREE.TorusGeometry(0.09, 0.008, 8, 24)
+    const ringMat = new THREE.MeshStandardMaterial({
+      color: ACCENT_HEX,
+      emissive: ACCENT_HEX,
+      emissiveIntensity: 1.5,
+      metalness: 0.9,
+      roughness: 0.1,
+      toneMapped: false
+    })
+    const ringL = new THREE.Mesh(ringGeo, ringMat.clone())
+    ringL.position.set(-2.4, 0.5 + i * 1.0, 0)
+    ringL.rotation.x = Math.PI / 2
+    g.add(ringL)
+    const ringR = new THREE.Mesh(ringGeo, ringMat.clone())
+    ringR.position.set(2.4, 0.5 + i * 1.0, 0)
+    ringR.rotation.x = Math.PI / 2
+    g.add(ringR)
+  }
+
+  // Octagonal bases with glow
+  const baseGeo = new THREE.CylinderGeometry(0.18, 0.18, 0.06, 8)
+  const baseMat = new THREE.MeshStandardMaterial({ 
+    color: 0x080808, 
+    metalness: 0.98, 
+    roughness: 0.05,
+    envMapIntensity: 2.0
+  })
+  const bL = new THREE.Mesh(baseGeo, baseMat.clone())
+  bL.position.set(-2.4, -0.47, 0)
+  bL.castShadow = true
   g.add(bL)
-  const bR = new THREE.Mesh(baseGeo, baseMat)
-  bR.position.set(2.6, -0.47, 0)
+  const bR = new THREE.Mesh(baseGeo, baseMat.clone())
+  bR.position.set(2.4, -0.47, 0)
+  bR.castShadow = true
   g.add(bR)
 
-  // crossbeam
-  const beamGeo = new THREE.BoxGeometry(5.4, 0.10, 0.10)
-  const beam = new THREE.Mesh(beamGeo, darkMetal)
-  beam.position.set(0, 2.55, 0)
+  // Base glow rings
+  const baseGlowGeo = new THREE.RingGeometry(0.18, 0.25, 32)
+  const baseGlowMat = new THREE.MeshBasicMaterial({
+    color: ACCENT_HEX,
+    transparent: true,
+    opacity: 0.3,
+    side: THREE.DoubleSide,
+    blending: THREE.AdditiveBlending
+  })
+  const baseGlowL = new THREE.Mesh(baseGlowGeo, baseGlowMat.clone())
+  baseGlowL.rotation.x = -Math.PI / 2
+  baseGlowL.position.set(-2.4, -0.44, 0)
+  g.add(baseGlowL)
+  const baseGlowR = new THREE.Mesh(baseGlowGeo, baseGlowMat.clone())
+  baseGlowR.rotation.x = -Math.PI / 2
+  baseGlowR.position.set(2.4, -0.44, 0)
+  g.add(baseGlowR)
+
+  // Multi-layer crossbeam
+  const beamGeo = new THREE.BoxGeometry(5.0, 0.12, 0.12)
+  const beam = new THREE.Mesh(beamGeo, darkMetal.clone())
+  beam.position.set(0, 3.0, 0)
+  beam.castShadow = true
   g.add(beam)
 
-  // neon strip on crossbeam
-  const nsGeo = new THREE.BoxGeometry(5.2, 0.035, 0.035)
-  const nsMat = new THREE.MeshStandardMaterial({ color: ACCENT, emissive: ACCENT, emissiveIntensity: 1.2, toneMapped: false })
-  const neon = new THREE.Mesh(nsGeo, nsMat)
-  neon.position.set(0, 2.62, 0)
-  g.add(neon)
+  // Secondary beam for depth
+  const beam2Geo = new THREE.BoxGeometry(4.8, 0.06, 0.06)
+  const beam2 = new THREE.Mesh(beam2Geo, darkMetal.clone())
+  beam2.position.set(0, 2.94, 0.08)
+  g.add(beam2)
 
-  // Dummy elements for compatibility (no visible arms)
+  // Triple neon strips for premium look
+  const neonStrips = [
+    { y: 3.08, intensity: 3.0, width: 4.8 },
+    { y: 3.02, intensity: 2.0, width: 4.6 },
+    { y: 2.96, intensity: 1.5, width: 4.4 }
+  ]
+  
+  neonStrips.forEach(strip => {
+    const nsGeo = new THREE.BoxGeometry(strip.width, 0.02, 0.02)
+    const nsMat = new THREE.MeshStandardMaterial({ 
+      color: ACCENT, 
+      emissive: ACCENT, 
+      emissiveIntensity: strip.intensity, 
+      toneMapped: false,
+      metalness: 0.95,
+      roughness: 0.05
+    })
+    const neon = new THREE.Mesh(nsGeo, nsMat)
+    neon.position.set(0, strip.y, 0)
+    g.add(neon)
+  })
+
+  // Volumetric glow under neon - larger and more dramatic
+  const neonGlowGeo = new THREE.PlaneGeometry(5.5, 0.4)
+  const neonGlowMat = new THREE.MeshBasicMaterial({
+    color: ACCENT_HEX,
+    transparent: true,
+    opacity: 0.25,
+    side: THREE.DoubleSide,
+    blending: THREE.AdditiveBlending
+  })
+  const neonGlow = new THREE.Mesh(neonGlowGeo, neonGlowMat)
+  neonGlow.rotation.x = -Math.PI / 2
+  neonGlow.position.set(0, 2.95, 0)
+  g.add(neonGlow)
+
+  // Holographic scan plane
+  const scanGeo = new THREE.PlaneGeometry(3.0, 0.05)
+  const scanMat = new THREE.MeshBasicMaterial({
+    color: 0x00ffff,
+    transparent: true,
+    opacity: 0.4,
+    side: THREE.DoubleSide,
+    blending: THREE.AdditiveBlending
+  })
+  const scanPlane = new THREE.Mesh(scanGeo, scanMat)
+  scanPlane.position.set(0, 0.5, 0)
+  g.add(scanPlane)
+
+  // Dummy elements for compatibility
   const armGroup = new THREE.Group()
   armGroup.position.set(0, 2.3, 0)
   armGroup.visible = false
@@ -257,17 +361,37 @@ function createStation(scene: THREE.Scene, z: number) {
   armGroup.add(tip)
   armGroup.add(tLight)
 
-  // subtle ground ring glow
-  const grGeo = new THREE.RingGeometry(0.5, 0.8, 32)
-  const grMat = new THREE.MeshBasicMaterial({ color: ACCENT_HEX, transparent: true, opacity: 0.03, side: THREE.DoubleSide })
+  // Large dramatic ground ring glow
+  const grGeo = new THREE.RingGeometry(1.0, 1.6, 64)
+  const grMat = new THREE.MeshBasicMaterial({ 
+    color: ACCENT_HEX, 
+    transparent: true, 
+    opacity: 0.08, 
+    side: THREE.DoubleSide,
+    blending: THREE.AdditiveBlending
+  })
   const groundRing = new THREE.Mesh(grGeo, grMat)
   groundRing.rotation.x = -Math.PI / 2
-  groundRing.position.y = -0.41
+  groundRing.position.y = -0.42
   g.add(groundRing)
+
+  // Inner ground ring for layered effect
+  const grGeo2 = new THREE.RingGeometry(0.6, 0.9, 48)
+  const grMat2 = new THREE.MeshBasicMaterial({ 
+    color: 0x00ffff, 
+    transparent: true, 
+    opacity: 0.05, 
+    side: THREE.DoubleSide,
+    blending: THREE.AdditiveBlending
+  })
+  const groundRing2 = new THREE.Mesh(grGeo2, grMat2)
+  groundRing2.rotation.x = -Math.PI / 2
+  groundRing2.position.y = -0.41
+  g.add(groundRing2)
 
   g.position.set(0, -0.5, z)
   scene.add(g)
-  return { group: g, armGroup, tip, tLight, ring: groundRing }
+  return { group: g, armGroup, tip, tLight, ring: groundRing, ring2: groundRing2, neonGlow, scanPlane, baseGlowL, baseGlowR }
 }
 
 // ── Spark Particles (warm orange) ───────────────────────────────────────
@@ -429,13 +553,73 @@ export function RobotConveyor3D() {
     renderer.shadowMap.enabled = true
     renderer.shadowMap.type = mobile ? THREE.BasicShadowMap : THREE.PCFSoftShadowMap
     renderer.toneMapping = THREE.ACESFilmicToneMapping
-    renderer.toneMappingExposure = 1.0
+    renderer.toneMappingExposure = 1.3
     renderer.setClearColor(0x030303, 1)
     container.appendChild(renderer.domElement)
 
     // ── Scene ─────────────────────────────────────────────
     const scene = new THREE.Scene()
-    scene.fog = new THREE.FogExp2(0x020202, 0.04)
+    
+    // Create subtle starfield background
+    const starGeometry = new THREE.BufferGeometry()
+    const starCount = 800
+    const starPositions = new Float32Array(starCount * 3)
+    const starColors = new Float32Array(starCount * 3)
+    
+    for (let i = 0; i < starCount; i++) {
+      const i3 = i * 3
+      // Distribute stars in a large sphere
+      const radius = 45 + Math.random() * 15
+      const theta = Math.random() * Math.PI * 2
+      const phi = Math.random() * Math.PI
+      
+      starPositions[i3] = radius * Math.sin(phi) * Math.cos(theta)
+      starPositions[i3 + 1] = radius * Math.sin(phi) * Math.sin(theta) - 10
+      starPositions[i3 + 2] = radius * Math.cos(phi)
+      
+      // Mostly white with occasional orange
+      const colorChoice = Math.random()
+      if (colorChoice < 0.15) {
+        starColors[i3] = 1.0
+        starColors[i3 + 1] = 0.3
+        starColors[i3 + 2] = 0.0
+      } else {
+        starColors[i3] = 1.0
+        starColors[i3 + 1] = 1.0
+        starColors[i3 + 2] = 1.0
+      }
+    }
+    
+    starGeometry.setAttribute('position', new THREE.BufferAttribute(starPositions, 3))
+    starGeometry.setAttribute('color', new THREE.BufferAttribute(starColors, 3))
+    
+    const starMaterial = new THREE.PointsMaterial({
+      size: 0.1,
+      vertexColors: true,
+      transparent: true,
+      opacity: 0.6,
+      blending: THREE.AdditiveBlending,
+      sizeAttenuation: true
+    })
+    
+    const stars = new THREE.Points(starGeometry, starMaterial)
+    scene.add(stars)
+    
+    // Add single subtle nebula
+    const nebulaGeo = new THREE.SphereGeometry(12, 16, 16)
+    const nebulaMat = new THREE.MeshBasicMaterial({
+      color: 0xFF4D00,
+      transparent: true,
+      opacity: 0.02,
+      blending: THREE.AdditiveBlending,
+      side: THREE.BackSide
+    })
+    const nebula = new THREE.Mesh(nebulaGeo, nebulaMat)
+    nebula.position.set(0, 5, -30)
+    scene.add(nebula)
+    
+    scene.fog = new THREE.FogExp2(0x000000, 0.032)
+    scene.background = new THREE.Color(0x000000)
 
     // ── Camera ────────────────────────────────────────────
     const initCam = getCameraParams()
@@ -449,35 +633,57 @@ export function RobotConveyor3D() {
     camera.lookAt(initCam.lookAt[0], initCam.lookAt[1], initCam.lookAt[2])
 
     // ── Lighting ──────────────────────────────────────────
-    scene.add(new THREE.AmbientLight(0xffffff, 0.28))
+    scene.add(new THREE.AmbientLight(0xffffff, 0.25))
 
-    const keyLight = new THREE.DirectionalLight(0xfff8f0, 1.4)
-    keyLight.position.set(6, 12, 6)
+    // Dramatic key light with warm tint
+    const keyLight = new THREE.DirectionalLight(0xffe4cc, 3.0)
+    keyLight.position.set(10, 16, 10)
     keyLight.castShadow = true
     keyLight.shadow.mapSize.set(mobile ? 1024 : 2048, mobile ? 1024 : 2048)
     keyLight.shadow.camera.near = 0.5
-    keyLight.shadow.camera.far = 35
-    keyLight.shadow.camera.left = -12
-    keyLight.shadow.camera.right = 12
-    keyLight.shadow.camera.top = 12
-    keyLight.shadow.camera.bottom = -12
+    keyLight.shadow.camera.far = 50
+    keyLight.shadow.camera.left = -16
+    keyLight.shadow.camera.right = 16
+    keyLight.shadow.camera.top = 16
+    keyLight.shadow.camera.bottom = -16
+    keyLight.shadow.bias = -0.0002
     scene.add(keyLight)
 
-    const fill = new THREE.DirectionalLight(0xaaccff, 0.2)
-    fill.position.set(-5, 5, 3)
+    // Cool blue fill light for contrast
+    const fill = new THREE.DirectionalLight(0x6699ff, 0.6)
+    fill.position.set(-8, 8, 6)
     scene.add(fill)
 
-    const rim = new THREE.DirectionalLight(0xffffff, 0.3)
-    rim.position.set(-3, 4, -5)
+    // Dramatic rim light
+    const rim = new THREE.DirectionalLight(0xffffff, 1.0)
+    rim.position.set(-6, 6, -8)
     scene.add(rim)
 
-    // Orange accent lights (low intensity, contained range)
-    const al1 = new THREE.PointLight(ACCENT_HEX, 1.2, 10)
-    al1.position.set(2, 3, 2)
+    // Multiple orange accent lights for vibrant glow
+    const al1 = new THREE.PointLight(ACCENT_HEX, 5.0, 18, 2)
+    al1.position.set(3, 5, 3)
+    al1.castShadow = false
     scene.add(al1)
-    const al2 = new THREE.PointLight(ACCENT_HEX, 0.8, 8)
-    al2.position.set(-2, 3, -3)
+    
+    const al2 = new THREE.PointLight(ACCENT_HEX, 4.0, 15, 2)
+    al2.position.set(-3, 5, -4)
+    al2.castShadow = false
     scene.add(al2)
+    
+    const al3 = new THREE.PointLight(ACCENT_HEX, 3.5, 12, 2)
+    al3.position.set(0, 4, 6)
+    al3.castShadow = false
+    scene.add(al3)
+
+    // Cyan accent for vibrant sci-fi feel
+    const cyanAccent = new THREE.PointLight(0x00ffff, 2.5, 20, 2)
+    cyanAccent.position.set(0, 4, -10)
+    scene.add(cyanAccent)
+    
+    // Purple accent for depth
+    const purpleAccent = new THREE.PointLight(0xaa00ff, 2.0, 18, 2)
+    purpleAccent.position.set(-5, 3, 0)
+    scene.add(purpleAccent)
 
     // ── Environment map for polished reflections ──────────
     const pmremGenerator = new THREE.PMREMGenerator(renderer)
@@ -501,83 +707,204 @@ export function RobotConveyor3D() {
     const beltLen = 34
     const beltW = 3.8
 
-    const platGeo = new THREE.BoxGeometry(beltW, 0.18, beltLen)
-    const platMat = new THREE.MeshStandardMaterial({ color: 0x111111, metalness: 0.85, roughness: 0.15 })
+    // Main platform - ultra-sleek
+    const platGeo = new THREE.BoxGeometry(beltW, 0.10, beltLen)
+    const platMat = new THREE.MeshStandardMaterial({ 
+      color: 0x050505, 
+      metalness: 0.98, 
+      roughness: 0.05,
+      envMapIntensity: 2.0
+    })
     const plat = new THREE.Mesh(platGeo, platMat)
     plat.position.set(0, -0.5, 0)
     plat.receiveShadow = true
+    plat.castShadow = true
     scene.add(plat)
 
-    const bsGeo = new THREE.BoxGeometry(beltW - 0.35, 0.025, beltLen)
-    const bsMat = new THREE.MeshStandardMaterial({ color: 0x080808, metalness: 0.5, roughness: 0.6 })
+    // Belt surface - matte black with subtle texture
+    const bsGeo = new THREE.BoxGeometry(beltW - 0.45, 0.015, beltLen)
+    const bsMat = new THREE.MeshStandardMaterial({ 
+      color: 0x020202, 
+      metalness: 0.2, 
+      roughness: 0.8,
+    })
     const beltSurf = new THREE.Mesh(bsGeo, bsMat)
-    beltSurf.position.set(0, -0.41, 0)
+    beltSurf.position.set(0, -0.45, 0)
     beltSurf.receiveShadow = true
     scene.add(beltSurf)
 
-    // Side lips
-    const lipGeo = new THREE.BoxGeometry(0.12, 0.22, beltLen)
-    const lipMat = new THREE.MeshStandardMaterial({ color: 0x181818, metalness: 0.85, roughness: 0.15 })
-    const lipL = new THREE.Mesh(lipGeo, lipMat)
-    lipL.position.set(-beltW / 2 + 0.06, -0.41, 0)
-    scene.add(lipL)
-    const lipR = new THREE.Mesh(lipGeo, lipMat)
-    lipR.position.set(beltW / 2 - 0.06, -0.41, 0)
-    scene.add(lipR)
-
-    // Orange neon rails
-    const railGeo = new THREE.BoxGeometry(0.06, 0.1, beltLen)
-    const railMatT = new THREE.MeshStandardMaterial({
-      color: ACCENT_HEX, emissive: ACCENT_HEX, emissiveIntensity: 1.5, toneMapped: false,
+    // Side rails - ultra-premium with edge lighting
+    const railGeo = new THREE.BoxGeometry(0.10, 0.18, beltLen)
+    const railMat = new THREE.MeshStandardMaterial({ 
+      color: 0x0f0f0f, 
+      metalness: 0.98, 
+      roughness: 0.08,
+      envMapIntensity: 2.5
     })
-    const railL = new THREE.Mesh(railGeo, railMatT.clone())
-    railL.position.set(-beltW / 2 + 0.06, -0.37, 0)
+    const railL = new THREE.Mesh(railGeo, railMat.clone())
+    railL.position.set(-beltW / 2 + 0.05, -0.45, 0)
+    railL.castShadow = true
     scene.add(railL)
-    const railR = new THREE.Mesh(railGeo, railMatT.clone())
-    railR.position.set(beltW / 2 - 0.06, -0.37, 0)
+    const railR = new THREE.Mesh(railGeo, railMat.clone())
+    railR.position.set(beltW / 2 - 0.05, -0.45, 0)
+    railR.castShadow = true
     scene.add(railR)
 
-    // Soft glow along rails
-    const glowGeo = new THREE.PlaneGeometry(0.4, beltLen)
+    // Triple-layer accent strips for depth
+    const accentLayers = [
+      { offset: 0, width: 0.04, intensity: 2.5 },
+      { offset: 0.05, width: 0.02, intensity: 1.8 },
+      { offset: -0.05, width: 0.02, intensity: 1.5 }
+    ]
+    
+    accentLayers.forEach(layer => {
+      const accentGeo = new THREE.BoxGeometry(layer.width, 0.08, beltLen)
+      const accentMat = new THREE.MeshStandardMaterial({
+        color: ACCENT_HEX, 
+        emissive: ACCENT_HEX, 
+        emissiveIntensity: layer.intensity, 
+        toneMapped: false,
+        metalness: 0.95,
+        roughness: 0.05
+      })
+      const accentL = new THREE.Mesh(accentGeo, accentMat.clone())
+      accentL.position.set(-beltW / 2 + 0.05, -0.36, layer.offset)
+      scene.add(accentL)
+      const accentR = new THREE.Mesh(accentGeo, accentMat.clone())
+      accentR.position.set(beltW / 2 - 0.05, -0.36, layer.offset)
+      scene.add(accentR)
+    })
+
+    // Dramatic volumetric glow along rails
+    const glowGeo = new THREE.PlaneGeometry(0.5, beltLen)
     const glowMatT = new THREE.MeshBasicMaterial({
-      color: ACCENT_HEX, transparent: true, opacity: 0.04, side: THREE.DoubleSide,
+      color: ACCENT_HEX, 
+      transparent: true, 
+      opacity: 0.18, 
+      side: THREE.DoubleSide,
+      blending: THREE.AdditiveBlending
     })
     const glowL = new THREE.Mesh(glowGeo, glowMatT.clone())
     glowL.rotation.x = -Math.PI / 2
-    glowL.position.set(-beltW / 2 + 0.1, -0.39, 0)
+    glowL.position.set(-beltW / 2 + 0.05, -0.43, 0)
     scene.add(glowL)
     const glowR = new THREE.Mesh(glowGeo, glowMatT.clone())
     glowR.rotation.x = -Math.PI / 2
-    glowR.position.set(beltW / 2 - 0.1, -0.39, 0)
+    glowR.position.set(beltW / 2 - 0.05, -0.43, 0)
     scene.add(glowR)
 
-    // Belt cross-lines
-    const CROSS_SPACING = 1.6
-    const CROSS_COUNT = 22
+    // Secondary cyan glow for sci-fi effect
+    const cyanGlowGeo = new THREE.PlaneGeometry(0.3, beltLen)
+    const cyanGlowMat = new THREE.MeshBasicMaterial({
+      color: 0x00ffff, 
+      transparent: true, 
+      opacity: 0.10, 
+      side: THREE.DoubleSide,
+      blending: THREE.AdditiveBlending
+    })
+    const cyanGlowL = new THREE.Mesh(cyanGlowGeo, cyanGlowMat.clone())
+    cyanGlowL.rotation.x = -Math.PI / 2
+    cyanGlowL.position.set(-beltW / 2 + 0.15, -0.43, 0)
+    scene.add(cyanGlowL)
+    const cyanGlowR = new THREE.Mesh(cyanGlowGeo, cyanGlowMat.clone())
+    cyanGlowR.rotation.x = -Math.PI / 2
+    cyanGlowR.position.set(beltW / 2 - 0.15, -0.43, 0)
+    scene.add(cyanGlowR)
+
+    // Animated cross-lines with gradient effect
+    const CROSS_SPACING = 2.2
+    const CROSS_COUNT = 16
     const crossLines: THREE.Mesh[] = []
     for (let i = 0; i < CROSS_COUNT; i++) {
-      const clGeo = new THREE.BoxGeometry(beltW - 0.5, 0.012, 0.025)
+      const clGeo = new THREE.BoxGeometry(beltW - 0.7, 0.01, 0.03)
       const clMat = new THREE.MeshStandardMaterial({
-        color: ACCENT_HEX, emissive: ACCENT_HEX, emissiveIntensity: 0.12,
-        transparent: true, opacity: 0.08, toneMapped: false,
+        color: ACCENT_HEX, 
+        emissive: ACCENT_HEX, 
+        emissiveIntensity: 0.2 + (i % 3) * 0.1,
+        transparent: true, 
+        opacity: 0.15, 
+        toneMapped: false,
       })
       const cl = new THREE.Mesh(clGeo, clMat)
-      cl.position.set(0, -0.395, -beltLen / 2 + i * CROSS_SPACING)
+      cl.position.set(0, -0.44, -beltLen / 2 + i * CROSS_SPACING)
       scene.add(cl)
       crossLines.push(cl)
     }
+    
+    // Add holographic data streams along belt
+    const streamCount = 8
+    const dataStreams: THREE.Mesh[] = []
+    for (let i = 0; i < streamCount; i++) {
+      const streamGeo = new THREE.BoxGeometry(0.03, 0.03, 0.5)
+      const streamMat = new THREE.MeshBasicMaterial({
+        color: i % 2 === 0 ? 0x00ffff : ACCENT_HEX,
+        transparent: true,
+        opacity: 0.8,
+        blending: THREE.AdditiveBlending
+      })
+      const stream = new THREE.Mesh(streamGeo, streamMat)
+      stream.position.set(
+        (Math.random() - 0.5) * (beltW - 1),
+        -0.35,
+        (Math.random() - 0.5) * beltLen
+      )
+      scene.add(stream)
+      dataStreams.push(stream)
+    }
+    
+    // Add subtle floating particles
+    const particleCount = 60
+    const particleGeo = new THREE.BufferGeometry()
+    const particlePositions = new Float32Array(particleCount * 3)
+    const particleVelocities: THREE.Vector3[] = []
+    
+    for (let i = 0; i < particleCount; i++) {
+      const i3 = i * 3
+      particlePositions[i3] = (Math.random() - 0.5) * 25
+      particlePositions[i3 + 1] = Math.random() * 6 - 1
+      particlePositions[i3 + 2] = (Math.random() - 0.5) * 25
+      
+      particleVelocities.push(new THREE.Vector3(
+        (Math.random() - 0.5) * 0.01,
+        Math.random() * 0.008 + 0.003,
+        (Math.random() - 0.5) * 0.01
+      ))
+    }
+    
+    particleGeo.setAttribute('position', new THREE.BufferAttribute(particlePositions, 3))
+    
+    const particleMat = new THREE.PointsMaterial({
+      color: 0xffffff,
+      size: 0.05,
+      transparent: true,
+      opacity: 0.4,
+      blending: THREE.AdditiveBlending,
+      sizeAttenuation: true
+    })
+    
+    const particles = new THREE.Points(particleGeo, particleMat)
+    scene.add(particles)
 
     // ── Floor ─────────────────────────────────────────────
     const floorGeo = new THREE.PlaneGeometry(60, 60)
     const floorMat = new THREE.MeshStandardMaterial({
-      color: 0x030303, metalness: 0.95, roughness: 0.18,
-      envMapIntensity: 0.5,
+      color: 0x010101, 
+      metalness: 0.99, 
+      roughness: 0.08,
+      envMapIntensity: 1.2,
     })
     const floor = new THREE.Mesh(floorGeo, floorMat)
     floor.rotation.x = -Math.PI / 2
     floor.position.y = -0.59
     floor.receiveShadow = true
     scene.add(floor)
+    
+    // Add subtle grid pattern on floor
+    const gridHelper = new THREE.GridHelper(60, 40, ACCENT_HEX, 0x0a0a0a)
+    gridHelper.position.y = -0.58
+    gridHelper.material.opacity = 0.08
+    gridHelper.material.transparent = true
+    scene.add(gridHelper)
 
     // ── Assembly Stations ─────────────────────────────────
     const stations = [
@@ -667,14 +994,66 @@ export function RobotConveyor3D() {
         if (cl.position.z > beltLen / 2) cl.position.z -= totalSpan
       }
 
-      // Rail glow pulse
-      const rp = 0.035 + Math.sin(t * 2) * 0.015
+      // Rail glow pulse - more vibrant
+      const rp = 0.18 + Math.sin(t * 1.2) * 0.08
       ;(glowL.material as THREE.MeshBasicMaterial).opacity = rp
       ;(glowR.material as THREE.MeshBasicMaterial).opacity = rp
+      
+      const cp = 0.10 + Math.sin(t * 1.5 + 1) * 0.05
+      ;(cyanGlowL.material as THREE.MeshBasicMaterial).opacity = cp
+      ;(cyanGlowR.material as THREE.MeshBasicMaterial).opacity = cp
 
-      // Accent light micro-drift
-      al1.position.x = 2 + Math.sin(t * 0.15) * 0.3
-      al2.position.z = -3 + Math.cos(t * 0.12) * 0.3
+      // Accent lights dramatic movement with higher intensity
+      al1.position.x = 3 + Math.sin(t * 0.15) * 0.6
+      al1.position.y = 5 + Math.sin(t * 0.2) * 0.5
+      al1.intensity = 5.0 + Math.sin(t * 0.8) * 1.0
+      
+      al2.position.z = -4 + Math.cos(t * 0.12) * 0.6
+      al2.position.y = 5 + Math.cos(t * 0.18) * 0.5
+      al2.intensity = 4.0 + Math.cos(t * 0.9) * 0.8
+      
+      al3.position.x = Math.sin(t * 0.1) * 0.8
+      al3.intensity = 3.5 + Math.sin(t * 1.2) * 0.7
+      
+      cyanAccent.intensity = 2.5 + Math.sin(t * 0.7) * 0.8
+      purpleAccent.intensity = 2.0 + Math.cos(t * 0.6) * 0.6
+      
+      // Starfield rotation - very subtle
+      stars.rotation.y += dt * 0.01
+      
+      // Nebula animation - subtle
+      nebula.rotation.x += dt * 0.02
+      nebula.rotation.y += dt * 0.015
+      
+      // Animate floating particles
+      const particlePositions = particles.geometry.attributes.position.array as Float32Array
+      for (let i = 0; i < particleCount; i++) {
+        const i3 = i * 3
+        particlePositions[i3] += particleVelocities[i].x
+        particlePositions[i3 + 1] += particleVelocities[i].y
+        particlePositions[i3 + 2] += particleVelocities[i].z
+        
+        // Reset if too high
+        if (particlePositions[i3 + 1] > 6) {
+          particlePositions[i3 + 1] = -1
+        }
+        
+        // Wrap around horizontally
+        if (Math.abs(particlePositions[i3]) > 12) particlePositions[i3] *= -0.9
+        if (Math.abs(particlePositions[i3 + 2]) > 12) particlePositions[i3 + 2] *= -0.9
+      }
+      particles.geometry.attributes.position.needsUpdate = true
+      
+      // Animate data streams with more vibrant opacity
+      dataStreams.forEach((stream, i) => {
+        stream.position.z += dt * (3 + i * 0.5)
+        if (stream.position.z > beltLen / 2) {
+          stream.position.z = -beltLen / 2
+          stream.position.x = (Math.random() - 0.5) * (beltW - 1)
+        }
+        const streamMat = stream.material as THREE.MeshBasicMaterial
+        streamMat.opacity = 0.6 + Math.sin(t * 2 + i) * 0.3
+      })
 
       // ── Update each robot ──────────────────────────────
       for (const { obj, c } of robots) {
@@ -951,10 +1330,7 @@ export function RobotConveyor3D() {
         }
       }
 
-      // ── Station arms ───────────────────────────────────
-      // Arms lower toward robot level but NEVER below 1.6
-      // (robot top is ~0.8 above belt, belt is at -0.5 in station local space,
-      //  so robot top ≈ 0.3 – arm at 1.6 stays well above)
+      // ── Station effects ───────────────────────────────────
       const stationZones = [ZONE_TOP, ZONE_FACE, ZONE_EYES]
       stations.forEach((st, si) => {
         const sZ = stationZones[si]
@@ -964,15 +1340,37 @@ export function RobotConveyor3D() {
           if (d < minDist) minDist = d
         }
         const active = minDist < 2.0
-        // NEVER go below 1.6 – this prevents ANY clipping with boxes
-        const targetY = active ? 1.6 : 2.3
-        st.armGroup.position.y = lerp(st.armGroup.position.y, targetY, 0.05)
-        st.armGroup.rotation.z = active ? Math.sin(t * 4) * 0.02 : 0
-
-        const tipI = active ? 2.5 : 0.6
-        ;(st.tip.material as THREE.MeshStandardMaterial).emissiveIntensity = tipI
-        st.tLight.intensity = active ? 1.2 : 0.1
-        ;(st.ring.material as THREE.MeshBasicMaterial).opacity = active ? 0.06 + Math.sin(t * 3) * 0.03 : 0.015
+        const activation = Math.max(0, 1 - minDist / 2.0)
+        
+        // Pulsing ground rings with dual colors - more vibrant
+        const ringPulse = 0.12 + Math.sin(t * 3) * 0.06
+        ;(st.ring.material as THREE.MeshBasicMaterial).opacity = active ? ringPulse * activation : 0.04
+        
+        if (st.ring2) {
+          const ring2Pulse = 0.08 + Math.sin(t * 4 + 1) * 0.05
+          ;(st.ring2.material as THREE.MeshBasicMaterial).opacity = active ? ring2Pulse * activation : 0.02
+          st.ring2.rotation.z = t * 0.3
+        }
+        
+        // Neon glow intensity with breathing effect - more vibrant
+        if (st.neonGlow) {
+          const neonPulse = 0.35 + Math.sin(t * 2.5) * 0.15
+          ;(st.neonGlow.material as THREE.MeshBasicMaterial).opacity = neonPulse * (0.5 + activation * 0.5)
+        }
+        
+        // Holographic scan plane animation - more visible
+        if (st.scanPlane) {
+          st.scanPlane.position.y = 0.3 + Math.sin(t * 2 + si) * 0.4
+          const scanMat = st.scanPlane.material as THREE.MeshBasicMaterial
+          scanMat.opacity = active ? 0.6 + Math.sin(t * 3) * 0.3 : 0.15
+        }
+        
+        // Base glow pulse - more vibrant
+        if (st.baseGlowL && st.baseGlowR) {
+          const baseGlow = 0.4 + Math.sin(t * 2 + si) * 0.2
+          ;(st.baseGlowL.material as THREE.MeshBasicMaterial).opacity = active ? baseGlow * activation : 0.15
+          ;(st.baseGlowR.material as THREE.MeshBasicMaterial).opacity = active ? baseGlow * activation : 0.15
+        }
       })
 
       // Sparks

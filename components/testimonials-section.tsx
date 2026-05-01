@@ -11,7 +11,7 @@ const testimonials = [
     role: "Gerente General",
     company: "Hotel Guacarí",
     industry: "Hotelería",
-    image: "https://i.pravatar.cc/150?img=12",
+    image: "https://robohash.org/carlos-mendez-hotel?set=set1&size=200x200&bgset=bg2",
     metric: { value: "100%", label: "digitalizado" },
     color: "#FF6B35",
   },
@@ -19,9 +19,9 @@ const testimonials = [
     quote: "Antes perdíamos 3 horas diarias en papeles y planillas. Ahora todo es automático y los instructores solo se preocupan por enseñar.",
     author: "Ana Rodríguez",
     role: "Directora",
-    company: "Academia Ritmo & Volley",
+    company: "Ritmo & Volley",
     industry: "Educación Deportiva",
-    image: "https://i.pravatar.cc/150?img=45",
+    image: "https://robohash.org/ana-rodriguez-academy?set=set1&size=200x200&bgset=bg2",
     metric: { value: "85%", label: "menos admin" },
     color: "#00D9FF",
   },
@@ -29,9 +29,9 @@ const testimonials = [
     quote: "Triplicamos las ventas sin contratar más gente. El sistema hace el trabajo pesado y nosotros nos enfocamos en crecer.",
     author: "Roberto Sánchez",
     role: "Socio Fundador",
-    company: "Distribuidora Sandwich Express",
+    company: "Qué Cubano",
     industry: "Distribución Mayorista",
-    image: "https://i.pravatar.cc/150?img=33",
+    image: "https://robohash.org/roberto-sanchez-cubano?set=set1&size=200x200&bgset=bg2",
     metric: { value: "3x", label: "más ventas" },
     color: "#8B5CF6",
   },
@@ -50,7 +50,7 @@ function TestimonialCard({ testimonial, index }: { testimonial: typeof testimoni
       style={{ transitionDelay: `${index * 100}ms` }}
     >
       <div
-        className="group relative h-full rounded-[2rem] border-2 bg-card p-8 transition-all duration-500 hover:shadow-2xl"
+        className="group relative h-full rounded-[2rem] border-2 bg-card p-8 transition-all duration-500 hover:shadow-2xl flex flex-col"
         style={{
           borderColor: isHovered ? testimonial.color : "var(--border)",
         }}
@@ -83,14 +83,14 @@ function TestimonialCard({ testimonial, index }: { testimonial: typeof testimoni
         </div>
 
         {/* Testimonial text */}
-        <blockquote className="relative mb-8 mt-12">
+        <blockquote className="relative mb-8 mt-12 flex-1">
           <p className="text-lg leading-relaxed text-foreground" style={{ fontFamily: "var(--font-display)" }}>
             {testimonial.quote}
           </p>
         </blockquote>
 
         {/* Author info */}
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-4 pr-16 sm:pr-0 mt-auto">
           <div className="relative h-14 w-14 flex-shrink-0 overflow-hidden rounded-full border-2" style={{ borderColor: testimonial.color }}>
             <Image
               src={testimonial.image}
@@ -100,10 +100,10 @@ function TestimonialCard({ testimonial, index }: { testimonial: typeof testimoni
               sizes="56px"
             />
           </div>
-          <div className="flex-1">
+          <div className="flex-1 min-w-0">
             <div className="font-bold text-foreground mb-1">{testimonial.author}</div>
             <div className="text-sm text-muted-foreground mb-0.5">{testimonial.role}</div>
-            <div className="text-sm font-medium" style={{ color: testimonial.color }}>
+            <div className="text-sm font-medium truncate" style={{ color: testimonial.color }}>
               {testimonial.company}
             </div>
           </div>
@@ -111,14 +111,14 @@ function TestimonialCard({ testimonial, index }: { testimonial: typeof testimoni
 
         {/* Metric badge */}
         <div
-          className="absolute -bottom-4 -right-4 rounded-2xl px-6 py-3 shadow-lg transition-all duration-500"
+          className="absolute -bottom-4 -right-4 rounded-2xl px-4 sm:px-6 py-2 sm:py-3 shadow-lg transition-all duration-500"
           style={{
             backgroundColor: testimonial.color,
             transform: isHovered ? "scale(1.1) rotate(3deg)" : "scale(1) rotate(0deg)",
           }}
         >
-          <div className="text-2xl font-bold text-white leading-none mb-1">{testimonial.metric.value}</div>
-          <div className="text-xs uppercase tracking-wider text-white/90 leading-none">{testimonial.metric.label}</div>
+          <div className="text-xl sm:text-2xl font-bold text-white leading-none mb-1">{testimonial.metric.value}</div>
+          <div className="text-[10px] sm:text-xs uppercase tracking-wider text-white/90 leading-none whitespace-nowrap">{testimonial.metric.label}</div>
         </div>
       </div>
     </div>
@@ -169,26 +169,26 @@ export function TestimonialsSection() {
             titleVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
           }`}
         >
-          <div className="inline-flex flex-col sm:flex-row flex-wrap items-center justify-center gap-6 sm:gap-8 rounded-2xl border border-border bg-card/50 px-6 sm:px-8 py-6 backdrop-blur-sm">
-            <div className="text-center min-w-[120px]">
-              <div className="text-3xl font-bold text-foreground leading-none mb-2" style={{ fontFamily: "var(--font-display)" }}>
+          <div className="inline-flex flex-row flex-wrap items-center justify-center gap-4 sm:gap-8 rounded-2xl border border-border bg-card/50 px-4 sm:px-8 py-4 sm:py-6 backdrop-blur-sm">
+            <div className="text-center min-w-[90px] sm:min-w-[120px]">
+              <div className="text-2xl sm:text-3xl font-bold text-foreground leading-none mb-1 sm:mb-2" style={{ fontFamily: "var(--font-display)" }}>
                 50+
               </div>
-              <div className="text-sm text-muted-foreground leading-none">Proyectos entregados</div>
+              <div className="text-xs sm:text-sm text-muted-foreground leading-tight">Proyectos entregados</div>
             </div>
-            <div className="hidden sm:block h-12 w-px bg-border" />
-            <div className="text-center min-w-[120px]">
-              <div className="text-3xl font-bold text-foreground leading-none mb-2" style={{ fontFamily: "var(--font-display)" }}>
+            <div className="h-8 sm:h-12 w-px bg-border" />
+            <div className="text-center min-w-[90px] sm:min-w-[120px]">
+              <div className="text-2xl sm:text-3xl font-bold text-foreground leading-none mb-1 sm:mb-2" style={{ fontFamily: "var(--font-display)" }}>
                 99%
               </div>
-              <div className="text-sm text-muted-foreground leading-none">Clientes satisfechos</div>
+              <div className="text-xs sm:text-sm text-muted-foreground leading-tight">Clientes satisfechos</div>
             </div>
-            <div className="hidden sm:block h-12 w-px bg-border" />
-            <div className="text-center min-w-[120px]">
-              <div className="text-3xl font-bold text-foreground leading-none mb-2" style={{ fontFamily: "var(--font-display)" }}>
+            <div className="h-8 sm:h-12 w-px bg-border" />
+            <div className="text-center min-w-[90px] sm:min-w-[120px]">
+              <div className="text-2xl sm:text-3xl font-bold text-foreground leading-none mb-1 sm:mb-2" style={{ fontFamily: "var(--font-display)" }}>
                 3x
               </div>
-              <div className="text-sm text-muted-foreground leading-none">ROI promedio</div>
+              <div className="text-xs sm:text-sm text-muted-foreground leading-tight">ROI promedio</div>
             </div>
           </div>
         </div>

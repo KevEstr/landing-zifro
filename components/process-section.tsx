@@ -66,7 +66,7 @@ const ProcessStep = forwardRef<HTMLDivElement, {
     >
       <button
         onClick={onClick}
-        className={`group relative w-full h-full text-left rounded-2xl border-2 p-3 lg:p-5 transition-all duration-500 flex flex-col ${isActive
+        className={`group relative w-full h-full text-left rounded-2xl border-2 p-4 lg:p-5 transition-all duration-500 flex flex-col ${isActive
           ? "border-current shadow-2xl scale-[1.02] bg-card"
           : "border-border bg-card/50 hover:border-border hover:bg-card hover:shadow-lg"
           }`}
@@ -77,13 +77,13 @@ const ProcessStep = forwardRef<HTMLDivElement, {
           className={`w-full flex items-center justify-center mb-2 lg:mb-3 transition-all duration-500 ${isActive ? "opacity-100" : "opacity-60 group-hover:opacity-80"
             }`}
         >
-          <div className="relative w-32 h-32 sm:w-40 sm:h-40 lg:w-48 lg:h-48">
+          <div className="relative w-56 h-56 sm:w-64 sm:h-64 md:w-56 md:h-56 lg:w-48 lg:h-48">
             <Image
               src={step.image}
               alt={step.title}
               fill
               className="object-contain"
-              sizes="(max-width: 640px) 128px, (max-width: 1024px) 160px, 192px"
+              sizes="(max-width: 640px) 224px, (max-width: 768px) 256px, (max-width: 1024px) 224px, 192px"
             />
           </div>
         </div>
@@ -127,11 +127,43 @@ export function ProcessSection() {
   const [activeStep, setActiveStep] = useState(0)
   const sectionRef = useRef<HTMLDivElement>(null)
   const stepRefs = useRef<(HTMLDivElement | null)[]>([])
+  const [isAutoPlaying, setIsAutoPlaying] = useState(true)
+  const autoPlayRef = useRef<NodeJS.Timeout | null>(null)
 
-  // Auto-select step based on scroll position
+  // Auto-cycle through steps
+  useEffect(() => {
+    if (!isAutoPlaying) return
+
+    autoPlayRef.current = setInterval(() => {
+      setActiveStep((prev) => (prev + 1) % steps.length)
+    }, 3000) // Change every 3 seconds
+
+    return () => {
+      if (autoPlayRef.current) {
+        clearInterval(autoPlayRef.current)
+      }
+    }
+  }, [isAutoPlaying])
+
+  // Pause auto-play when user manually clicks
+  const handleStepClick = (index: number) => {
+    setActiveStep(index)
+    setIsAutoPlaying(false)
+    
+    // Resume auto-play after 5 seconds of inactivity
+    if (autoPlayRef.current) {
+      clearInterval(autoPlayRef.current)
+    }
+    
+    setTimeout(() => {
+      setIsAutoPlaying(true)
+    }, 5000)
+  }
+
+  // Auto-select step based on scroll position (only when not auto-playing)
   useEffect(() => {
     const handleScroll = () => {
-      if (!sectionRef.current) return
+      if (!sectionRef.current || isAutoPlaying) return
       
       const sectionTop = sectionRef.current.getBoundingClientRect().top
       const sectionHeight = sectionRef.current.offsetHeight
@@ -165,7 +197,7 @@ export function ProcessSection() {
     handleScroll() // Check initial position
     
     return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
+  }, [isAutoPlaying])
 
   return (
     <section ref={sectionRef} className="relative bg-background py-8 lg:py-16 overflow-hidden">
@@ -201,7 +233,7 @@ export function ProcessSection() {
               step={step}
               index={i}
               isActive={activeStep === i}
-              onClick={() => setActiveStep(i)}
+              onClick={() => handleStepClick(i)}
               ref={(el) => (stepRefs.current[i] = el)}
             />
           ))}
