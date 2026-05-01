@@ -113,7 +113,7 @@ function CaseCard({
     >
       <div className="group relative overflow-hidden rounded-[2rem] bg-card border border-border">
         {/* Image */}
-        <div className="relative aspect-[4/3] overflow-hidden bg-background/30">
+        <div className="relative aspect-[16/9] overflow-hidden bg-background/30">
           <img
             src={caseData.image}
             alt={caseData.company}
@@ -137,12 +137,12 @@ function CaseCard({
         </div>
 
         {/* Content */}
-        <div className="p-6">
+        <div className="p-3">
           <h4 className="text-xl font-bold text-foreground" style={{ fontFamily: "var(--font-display)" }}>{caseData.company}</h4>
-          <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{caseData.result}</p>
+          <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">{caseData.result}</p>
           
           {/* Services tags */}
-          <div className="mt-4 flex flex-wrap gap-2">
+          <div className="mt-2.5 flex flex-wrap gap-2">
             {caseData.services.map((service) => (
               <span
                 key={service}
@@ -171,14 +171,6 @@ export function ResultsSection() {
     <section id="resultados" className="relative bg-background overflow-hidden">
       {/* Cases section */}
       <div className="relative py-12 lg:py-16">
-        {/* Decorative blobs - reducido */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute w-[400px] h-[400px] rounded-full bg-primary/4 -top-64 -right-64 blur-3xl animate-blob" style={{ willChange: 'transform' }} />
-          <div
-            className="absolute w-[300px] h-[300px] rounded-full bg-accent/4 -bottom-64 -left-64 blur-3xl animate-blob"
-            style={{ animationDelay: "4s", willChange: 'transform' }}
-          />
-        </div>
 
         <div className="relative mx-auto max-w-7xl px-6">
           <div

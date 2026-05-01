@@ -496,3 +496,169 @@ html {
 .robot-agent {
   transition: filter 0.3s ease;
 }
+
+/* Chat bubble animation - floats up diagonally to the left from monitor */
+@keyframes chat-bubble {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 0, 0) scale(0.7);
+  }
+  12% {
+    opacity: 1;
+    transform: translate3d(-8px, -8px, 0) scale(1);
+  }
+  88% {
+    opacity: 1;
+    transform: translate3d(-90px, -140px, 0) scale(0.95);
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(-110px, -170px, 0) scale(0.85);
+  }
+}
+
+/* Mobile version - less movement to prevent overflow */
+@media (max-width: 768px) {
+  @keyframes chat-bubble {
+    0% {
+      opacity: 0;
+      transform: translate3d(0, 0, 0) scale(0.7);
+    }
+    12% {
+      opacity: 1;
+      transform: translate3d(-5px, -5px, 0) scale(1);
+    }
+    88% {
+      opacity: 1;
+      transform: translate3d(-40px, -80px, 0) scale(0.95);
+    }
+    100% {
+      opacity: 0;
+      transform: translate3d(-50px, -100px, 0) scale(0.85);
+    }
+  }
+}
+
+.animate-chat-bubble {
+  animation: chat-bubble 7s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  will-change: transform, opacity;
+}
+
+/* Sale notification animation - slides up from bottom and fades out */
+@keyframes sale-notification {
+  0% {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px);
+  }
+  5% {
+    visibility: visible;
+  }
+  8% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  20% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  25% {
+    opacity: 0;
+    transform: translateY(-15px);
+  }
+  26% {
+    visibility: hidden;
+  }
+  100% {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+.animate-sale-notification {
+  animation: sale-notification 8.8s ease-in-out infinite;
+  will-change: transform, opacity, visibility;
+}
+
+/* Module-based animations - ONE AT A TIME with proper timing */
+@keyframes module-1 {
+  0% { opacity: 0; visibility: hidden; transform: translateY(20px); }
+  1% { visibility: visible; }
+  5% { opacity: 1; transform: translateY(0); }
+  30% { opacity: 1; transform: translateY(0); }
+  35% { opacity: 0; transform: translateY(-20px); }
+  36% { visibility: hidden; }
+  100% { opacity: 0; visibility: hidden; }
+}
+
+@keyframes module-2 {
+  0%, 35% { opacity: 0; visibility: hidden; transform: translateY(20px); }
+  36% { visibility: visible; }
+  40% { opacity: 1; transform: translateY(0); }
+  55% { opacity: 1; transform: translateY(0); }
+  60% { opacity: 0; transform: translateY(-20px); }
+  61% { visibility: hidden; }
+  100% { opacity: 0; visibility: hidden; }
+}
+
+@keyframes module-3 {
+  0%, 60% { opacity: 0; visibility: hidden; transform: translateY(20px); }
+  61% { visibility: visible; }
+  65% { opacity: 1; transform: translateY(0); }
+  80% { opacity: 1; transform: translateY(0); }
+  85% { opacity: 0; transform: translateY(-20px); }
+  86% { visibility: hidden; }
+  100% { opacity: 0; visibility: hidden; }
+}
+
+@keyframes module-4 {
+  0%, 85% { opacity: 0; visibility: hidden; transform: translateY(20px); }
+  86% { visibility: visible; }
+  90% { opacity: 1; transform: translateY(0); }
+  98% { opacity: 1; transform: translateY(0); }
+  100% { opacity: 0; visibility: hidden; }
+}
+
+.animate-module-1 { animation: module-1 16s ease-in-out infinite; will-change: transform, opacity, visibility; }
+.animate-module-2 { animation: module-2 16s ease-in-out infinite; will-change: transform, opacity, visibility; }
+.animate-module-3 { animation: module-3 16s ease-in-out infinite; will-change: transform, opacity, visibility; }
+.animate-module-4 { animation: module-4 16s ease-in-out infinite; will-change: transform, opacity, visibility; }
+
+/* Progress bar fill animation */
+@keyframes progress-fill {
+  0% {
+    width: 0%;
+  }
+  100% {
+    width: 100%;
+  }
+}
+
+.animate-progress-fill {
+  animation: progress-fill 1.5s ease-out forwards;
+}
+
+/* Case rotation animation - shows one case at a time */
+@keyframes case-rotation {
+  0% {
+    opacity: 1;
+    visibility: visible;
+  }
+  16% {
+    opacity: 1;
+    visibility: visible;
+  }
+  20% {
+    opacity: 0;
+    visibility: hidden;
+  }
+  100% {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+.animate-case-rotation {
+  animation: case-rotation 60s linear infinite;
+  will-change: opacity, visibility;
+}

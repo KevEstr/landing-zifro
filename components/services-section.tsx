@@ -98,70 +98,13 @@ function ServiceShowcase({
   return (
     <div
       ref={ref}
-      className={`relative transition-all duration-1000 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-20"}`}
+      className={`relative transition-all duration-500 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}
     >
       <div className={`flex flex-col items-center gap-8 lg:gap-0 ${isReversed ? "lg:flex-row-reverse" : "lg:flex-row"}`}>
         {/* Visual Side - BIG and immersive */}
-        <div className="relative w-full lg:w-3/5 group">
-          <div className="relative overflow-hidden rounded-[2rem] aspect-[16/10] shadow-2xl bg-card/50 backdrop-blur-sm border border-border">
-            <VisualComponent className="object-cover transition-transform duration-1000 group-hover:scale-105" />
-            <div className="absolute inset-0 bg-gradient-to-t from-foreground/20 via-transparent to-transparent" />
-
-            {/* Floating feature pills ON the visual - reducido */}
-            <div className="absolute inset-0 hidden lg:block">
-              {features.slice(0, 3).map((f, i) => {
-                const positions = [
-                  { top: "15%", left: "10%" },
-                  { top: "12%", right: "8%" },
-                  { bottom: "25%", left: "12%" },
-                ]
-                const pos = positions[i] || positions[0]
-
-                return (
-                  <div
-                    key={f.text}
-                    className="absolute animate-float group"
-                    style={{
-                      ...pos,
-                      animationDelay: `${i * 0.8}s`,
-                      animationDuration: `${5 + i}s`,
-                      willChange: 'transform',
-                    } as React.CSSProperties}
-                  >
-                    <div className="relative">
-                      {/* Hexagonal background */}
-                      <div 
-                        className="absolute inset-0 opacity-20 blur-sm"
-                        style={{
-                          clipPath: 'polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%)',
-                          backgroundColor: accentColor,
-                        }}
-                      />
-                      <div 
-                        className="relative flex items-center justify-center px-3 py-1.5 backdrop-blur-md border transition-all duration-300 group-hover:scale-110"
-                        style={{ 
-                          backgroundColor: `${accentColor}10`,
-                          borderColor: `${accentColor}40`,
-                          clipPath: 'polygon(8% 0%, 92% 0%, 100% 25%, 100% 75%, 92% 100%, 8% 100%, 0% 75%, 0% 25%)',
-                        }}
-                      >
-                        <span className="text-[10px] font-bold text-foreground tracking-wider uppercase">{f.text}</span>
-                      </div>
-                    </div>
-                  </div>
-                )
-              })}
-            </div>
-
-            {/* Big number in corner */}
-            <div className="absolute bottom-6 right-6">
-              <span
-                className="text-8xl font-serif font-bold opacity-30"
-                style={{ color: accentColor }}
-              >
-                0{index + 1}
-              </span>
-            </div>
+        <div className="relative w-full lg:w-3/5">
+          <div className="relative aspect-[16/10]">
+            <VisualComponent />
           </div>
         </div>
 
@@ -179,19 +122,6 @@ function ServiceShowcase({
           <p className="text-base leading-relaxed text-muted-foreground lg:text-lg">
             {description}
           </p>
-
-          {/* Mobile features */}
-          <div className="flex flex-wrap gap-2 lg:hidden">
-            {features.map((f) => (
-              <div
-                key={f.text}
-                className="flex items-center gap-2 rounded-full bg-card px-4 py-2 border border-border"
-              >
-                <div className="h-2 w-2 rounded-full" style={{ backgroundColor: accentColor }} />
-                <span className="text-xs font-bold text-foreground">{f.text}</span>
-              </div>
-            ))}
-          </div>
 
           <a
             href="#contacto"
@@ -261,18 +191,13 @@ export function ServicesSection() {
     <section id="servicios" className="relative bg-background py-12 lg:py-16 overflow-hidden">
       {/* Decorative floating orbs across section - reducido */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute w-80 h-80 rounded-full bg-primary/4 -top-48 -right-48 blur-3xl animate-blob" style={{ willChange: 'transform' }} />
-        <div
-          className="absolute w-64 h-64 rounded-full bg-accent/4 bottom-1/4 -left-40 blur-3xl animate-blob"
-          style={{ animationDelay: "3s", willChange: 'transform' }}
-        />
       </div>
 
       <div className="relative mx-auto max-w-7xl px-6">
         {/* Section Header */}
         <div
           ref={titleRef}
-          className={`mb-12 lg:mb-16 text-center transition-all duration-1000 ${titleVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"}`}
+          className={`mb-12 lg:mb-16 text-center transition-all duration-500 ${titleVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
         >
           <span className="inline-block text-xs font-bold uppercase tracking-[0.3em] text-primary mb-6">
             Nuestros servicios

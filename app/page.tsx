@@ -9,7 +9,7 @@ const ServicesSection = dynamic(() => import("@/components/services-section").th
   loading: () => <div className="min-h-screen" />,
 })
 
-const ResultsSection = dynamic(() => import("@/components/results-section").then(mod => ({ default: mod.ResultsSection })), {
+const TestimonialsSection = dynamic(() => import("@/components/testimonials-section").then(mod => ({ default: mod.TestimonialsSection })), {
   loading: () => <div className="min-h-screen" />,
 })
 
@@ -31,7 +31,7 @@ export default function HomePage() {
       <Navigation />
       <HeroSection />
       <ServicesSection />
-      <ResultsSection />
+      <TestimonialsSection />
       <ProcessSection />
       <ContactSection />
       <Footer />

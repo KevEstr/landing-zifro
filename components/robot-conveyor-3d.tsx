@@ -124,250 +124,80 @@ function createIAFaceTexture(): THREE.CanvasTexture {
   return tex
 }
 
-// ── Robot Head Builder (clean, friendly AI agent) ────────────────────────
+// ── Robot Head Builder (using sprite image with depth layers) ────────────────────────
 function createAssemblyRobot(scene: THREE.Scene) {
   const root = new THREE.Group()
 
-  // ═══════ BODY GROUP (main head) ═══════
+  // ═══════ BODY GROUP (using the pre-rendered 3D image) ═══════
   const bodyGroup = new THREE.Group()
 
-  // Head – a clean rounded box (the iconic robot head shape)
-  const headGeo = new THREE.BoxGeometry(1.1, 0.9, 0.9)
-  headGeo.translate(0, 0, 0)
-  const headMat = new THREE.MeshPhysicalMaterial({
-    color: 0xd8d8d8, metalness: 0.65, roughness: 0.12,
-    transparent: true, opacity: 1,
-    clearcoat: 0.15, clearcoatRoughness: 0.08,
-    envMapIntensity: 1.4,
+  // Load robot head texture (already has 3D depth baked in)
+  const textureLoader = new THREE.TextureLoader()
+  const robotTexture = textureLoader.load('/cabeza.png')
+  robotTexture.colorSpace = THREE.SRGBColorSpace
+  
+  // Single plane with the full 3D image
+  const planeGeo = new THREE.PlaneGeometry(2.2, 2.2)
+  const planeMat = new THREE.MeshBasicMaterial({
+    map: robotTexture,
+    transparent: true,
+    opacity: 1,
+    side: THREE.DoubleSide,
   })
-  const body = new THREE.Mesh(headGeo, headMat)
+  
+  const body = new THREE.Mesh(planeGeo, planeMat)
   body.castShadow = true
   body.receiveShadow = true
   bodyGroup.add(body)
-
-  // ── Edge chamfer highlights (premium beveled look) ──
-  const edgeHLMat = new THREE.MeshStandardMaterial({
-    color: 0xf0f0f0, metalness: 0.8, roughness: 0.05,
-  })
-  const edgeH = new THREE.BoxGeometry(1.12, 0.01, 0.01)
-  const edgeV = new THREE.BoxGeometry(0.01, 0.92, 0.01)
-  const edgeD = new THREE.BoxGeometry(0.01, 0.01, 0.92)
-  const eTop = new THREE.Mesh(edgeH, edgeHLMat)
-  eTop.position.set(0, 0.455, 0.455)
-  bodyGroup.add(eTop)
-  const eBot = new THREE.Mesh(edgeH, edgeHLMat.clone())
-  eBot.position.set(0, -0.455, 0.455)
-  bodyGroup.add(eBot)
-  const eLeft = new THREE.Mesh(edgeV, edgeHLMat.clone())
-  eLeft.position.set(-0.555, 0, 0.455)
-  bodyGroup.add(eLeft)
-  const eRight = new THREE.Mesh(edgeV, edgeHLMat.clone())
-  eRight.position.set(0.555, 0, 0.455)
-  bodyGroup.add(eRight)
-  const eTopR = new THREE.Mesh(edgeD, edgeHLMat.clone())
-  eTopR.position.set(0.555, 0.455, 0)
-  bodyGroup.add(eTopR)
-  const eTopL = new THREE.Mesh(edgeD, edgeHLMat.clone())
-  eTopL.position.set(-0.555, 0.455, 0)
-  bodyGroup.add(eTopL)
-
-  // ── IA Badge on right side ──
-  const iaTex = createIABadgeTexture()
-  const iaBadgeGeo = new THREE.PlaneGeometry(0.38, 0.19)
-  const iaBadgeMat = new THREE.MeshStandardMaterial({
-    map: iaTex, transparent: true, opacity: 1,
-    metalness: 0.2, roughness: 0.5, alphaTest: 0.01,
-  })
-  const iaBadge = new THREE.Mesh(iaBadgeGeo, iaBadgeMat)
-  iaBadge.rotation.y = Math.PI / 2
-  iaBadge.position.set(0.556, -0.05, -0.05)
-  bodyGroup.add(iaBadge)
-
-  // IA Badge on left side (mirrored)
-  const iaBadgeL = new THREE.Mesh(iaBadgeGeo.clone(), iaBadgeMat.clone())
-  iaBadgeL.rotation.y = -Math.PI / 2
-  iaBadgeL.position.set(-0.556, -0.05, 0.05)
-  bodyGroup.add(iaBadgeL)
-
-  // Thin side accent strips (orange lines on temples)
-  const stripGeo = new THREE.BoxGeometry(0.025, 0.55, 0.04)
-  const mkStrip = () => new THREE.MeshStandardMaterial({ color: ACCENT, emissive: ACCENT, emissiveIntensity: 0, toneMapped: false })
-  const stripL = new THREE.Mesh(stripGeo, mkStrip())
-  stripL.position.set(-0.565, 0, 0.3)
-  bodyGroup.add(stripL)
-  const stripR = new THREE.Mesh(stripGeo, mkStrip())
-  stripR.position.set(0.565, 0, 0.3)
-  bodyGroup.add(stripR)
-
-  // Small circular "ear" ports on each side
-  const circGeo = new THREE.CircleGeometry(0.09, 20)
-  const mkCirc = () => new THREE.MeshStandardMaterial({ color: ACCENT, emissive: ACCENT, emissiveIntensity: 0, toneMapped: false })
-  const circL = new THREE.Mesh(circGeo, mkCirc())
-  circL.rotation.y = Math.PI / 2
-  circL.position.set(-0.56, 0.05, 0)
-  bodyGroup.add(circL)
-  const circR = new THREE.Mesh(circGeo, mkCirc())
-  circR.rotation.y = -Math.PI / 2
-  circR.position.set(0.56, 0.05, 0)
-  bodyGroup.add(circR)
-
-  // Subtle bottom accent rail
-  const bottomRailGeo = new THREE.BoxGeometry(1.1, 0.02, 0.9)
-  const bottomRailMat = new THREE.MeshStandardMaterial({
-    color: ACCENT, emissive: ACCENT, emissiveIntensity: 0,
-    toneMapped: false, transparent: true, opacity: 1,
-  })
-  const bottomRail = new THREE.Mesh(bottomRailGeo, bottomRailMat)
-  bottomRail.position.set(0, -0.46, 0)
-  bodyGroup.add(bottomRail)
+  
+  // Slight rotation for dynamic look
+  bodyGroup.rotation.y = Math.PI * 0.08
 
   root.add(bodyGroup)
 
-  // ═══════ TOP PANEL GROUP (flat cap on the head) ═══════
+  // ═══════ DUMMY ELEMENTS (for compatibility with animation system) ═══════
   const topGroup = new THREE.Group()
-
-  const topGeo = new THREE.BoxGeometry(0.95, 0.12, 0.78)
-  const topMat = new THREE.MeshPhysicalMaterial({
-    color: 0xc0c0c0, metalness: 0.65, roughness: 0.10,
-    transparent: true, opacity: 1,
-    clearcoat: 0.12, clearcoatRoughness: 0.06,
-    envMapIntensity: 1.3,
-  })
-  const topPanel = new THREE.Mesh(topGeo, topMat)
-  topPanel.castShadow = true
+  const topPanel = new THREE.Mesh(new THREE.BoxGeometry(0.01, 0.01, 0.01), new THREE.MeshBasicMaterial({transparent: true, opacity: 0}))
   topGroup.add(topPanel)
-
-  // Small antenna
-  const antennaGeo = new THREE.CylinderGeometry(0.015, 0.02, 0.22, 8)
-  const antennaMat = new THREE.MeshStandardMaterial({ color: 0x888888, metalness: 0.7, roughness: 0.2 })
-  const antenna = new THREE.Mesh(antennaGeo, antennaMat)
-  antenna.position.set(0, 0.17, 0)
-  topGroup.add(antenna)
-
-  // Antenna glowing tip
-  const antennaTipGeo = new THREE.SphereGeometry(0.035, 10, 10)
-  const antennaTipMat = new THREE.MeshStandardMaterial({
-    color: ACCENT, emissive: ACCENT, emissiveIntensity: 0, toneMapped: false,
-  })
-  const antennaTip = new THREE.Mesh(antennaTipGeo, antennaTipMat)
-  antennaTip.position.set(0, 0.3, 0)
-  topGroup.add(antennaTip)
-
-  // Thin orange line along front edge of top
-  const topAccentGeo = new THREE.BoxGeometry(0.8, 0.015, 0.02)
-  const topAccentMat = new THREE.MeshStandardMaterial({
-    color: ACCENT, emissive: ACCENT, emissiveIntensity: 0, toneMapped: false,
-  })
-  const topAccent = new THREE.Mesh(topAccentGeo, topAccentMat)
-  topAccent.position.set(0, -0.05, 0.4)
-  topGroup.add(topAccent)
-
   topGroup.position.set(0, 0.51, 0)
   root.add(topGroup)
 
-  // ═══════ FACE GROUP (dark face plate with eyes) ═══════
   const faceGroup = new THREE.Group()
-
-  // Dark face plate – simple rectangle on the front
-  const faceGeo = new THREE.BoxGeometry(0.88, 0.52, 0.04)
-  const faceMat = new THREE.MeshStandardMaterial({
-    color: 0x141414, metalness: 0.5, roughness: 0.18,
-    transparent: true, opacity: 1,
-    envMapIntensity: 0.8,
-  })
-  const facePlate = new THREE.Mesh(faceGeo, faceMat)
+  const facePlate = new THREE.Mesh(new THREE.BoxGeometry(0.01, 0.01, 0.01), new THREE.MeshBasicMaterial({transparent: true, opacity: 0}))
   faceGroup.add(facePlate)
-
-  // Eye sockets – darker recessed circles in the face plate
-  const socketMatL = new THREE.MeshStandardMaterial({ color: 0x0a0a0a, metalness: 0.2, roughness: 0.5 })
-  const socketL = new THREE.Mesh(new THREE.CircleGeometry(0.15, 32), socketMatL)
-  socketL.position.set(-0.19, 0.05, 0.03)
-  faceGroup.add(socketL)
-  const socketMatR = new THREE.MeshStandardMaterial({ color: 0x0a0a0a, metalness: 0.2, roughness: 0.5 })
-  const socketR = new THREE.Mesh(new THREE.CircleGeometry(0.15, 32), socketMatR)
-  socketR.position.set(0.19, 0.05, 0.03)
-  faceGroup.add(socketR)
-
-  // Small "mouth" – a simple horizontal line
-  const btmGeo = new THREE.BoxGeometry(0.3, 0.02, 0.02)
-  const btmMat = new THREE.MeshStandardMaterial({
-    color: ACCENT, emissive: ACCENT, emissiveIntensity: 0,
-    toneMapped: false, transparent: true, opacity: 1,
-  })
-  const btmLine = new THREE.Mesh(btmGeo, btmMat)
-  btmLine.position.set(0, -0.18, 0.025)
-  faceGroup.add(btmLine)
-
-  // IA identifier on face plate (between eyes and mouth)
-  const iaFaceTex = createIAFaceTexture()
-  const iaFaceGeo = new THREE.PlaneGeometry(0.18, 0.065)
-  const iaFaceMat = new THREE.MeshBasicMaterial({
-    map: iaFaceTex, transparent: true, opacity: 1,
-    depthWrite: false, blending: THREE.AdditiveBlending,
-  })
-  const iaFaceLabel = new THREE.Mesh(iaFaceGeo, iaFaceMat)
-  iaFaceLabel.position.set(0, -0.08, 0.03)
-  faceGroup.add(iaFaceLabel)
-
   faceGroup.position.set(0, -0.02, 0.47)
   root.add(faceGroup)
 
-  // ═══════ EYES (clean, friendly circles) ═══════
-  // Face plate front is at z = 0.47 + 0.02 = 0.49
-  // Eyes must stack clearly in front: eye → pupil → (rings behind)
+  // Dummy meshes for animation compatibility
+  const dummyMat = new THREE.MeshBasicMaterial({transparent: true, opacity: 0})
+  const eyeL = new THREE.Mesh(new THREE.SphereGeometry(0.01), dummyMat.clone())
+  const eyeR = new THREE.Mesh(new THREE.SphereGeometry(0.01), dummyMat.clone())
+  const pupilL = new THREE.Mesh(new THREE.SphereGeometry(0.01), dummyMat.clone())
+  const pupilR = new THREE.Mesh(new THREE.SphereGeometry(0.01), dummyMat.clone())
+  const ringL = new THREE.Mesh(new THREE.RingGeometry(0.01, 0.02), dummyMat.clone())
+  const ringR = new THREE.Mesh(new THREE.RingGeometry(0.01, 0.02), dummyMat.clone())
+  const outerRingL = new THREE.Mesh(new THREE.RingGeometry(0.01, 0.02), dummyMat.clone())
+  const outerRingR = new THREE.Mesh(new THREE.RingGeometry(0.01, 0.02), dummyMat.clone())
+  
+  root.add(eyeL, eyeR, pupilL, pupilR, ringL, ringR, outerRingL, outerRingR)
 
-  // Main eye disc – solid orange circle (each gets own geometry to avoid shared-buffer z-fighting)
-  const mkEye = () => new THREE.MeshStandardMaterial({
-    color: ACCENT, emissive: ACCENT, emissiveIntensity: 0, toneMapped: false,
-    depthWrite: true,
-  })
-  const eyeL = new THREE.Mesh(new THREE.CircleGeometry(0.11, 32), mkEye())
-  eyeL.position.set(-0.19, 0.03, 0.52)
-  root.add(eyeL)
-  const eyeR = new THREE.Mesh(new THREE.CircleGeometry(0.11, 32), mkEye())
-  eyeR.position.set(0.19, 0.03, 0.52)
-  root.add(eyeR)
-
-  // Bright center pupil – white dot
-  const mkPupil = () => new THREE.MeshStandardMaterial({
-    color: 0xffffff, emissive: ACCENT, emissiveIntensity: 0, toneMapped: false,
-    depthWrite: true,
-  })
-  const pupilL = new THREE.Mesh(new THREE.CircleGeometry(0.04, 20), mkPupil())
-  pupilL.position.set(-0.19, 0.03, 0.525)
-  root.add(pupilL)
-  const pupilR = new THREE.Mesh(new THREE.CircleGeometry(0.04, 20), mkPupil())
-  pupilR.position.set(0.19, 0.03, 0.525)
-  root.add(pupilR)
-
-  // Soft glow ring – sits just behind the eye disc
-  const mkRing = () => new THREE.MeshStandardMaterial({
-    color: ACCENT, emissive: ACCENT, emissiveIntensity: 0,
-    toneMapped: false, side: THREE.DoubleSide, transparent: true, opacity: 0,
-  })
-  const ringL = new THREE.Mesh(new THREE.RingGeometry(0.11, 0.14, 32), mkRing())
-  ringL.position.set(-0.19, 0.03, 0.515)
-  root.add(ringL)
-  const ringR = new THREE.Mesh(new THREE.RingGeometry(0.11, 0.14, 32), mkRing())
-  ringR.position.set(0.19, 0.03, 0.515)
-  root.add(ringR)
-
-  // Outer soft halo – wider but subtle, behind the ring
-  const mkOuterRing = () => new THREE.MeshStandardMaterial({
-    color: ACCENT, emissive: ACCENT, emissiveIntensity: 0,
-    toneMapped: false, side: THREE.DoubleSide, transparent: true, opacity: 0,
-  })
-  const outerRingL = new THREE.Mesh(new THREE.RingGeometry(0.14, 0.18, 32), mkOuterRing())
-  outerRingL.position.set(-0.19, 0.03, 0.51)
-  root.add(outerRingL)
-  const outerRingR = new THREE.Mesh(new THREE.RingGeometry(0.14, 0.18, 32), mkOuterRing())
-  outerRingR.position.set(0.19, 0.03, 0.51)
-  root.add(outerRingR)
-
-  // Eye light
+  // Eye light (subtle glow)
   const eyeLight = new THREE.PointLight(ACCENT_HEX, 0, 3, 2)
-  eyeLight.position.set(0, 0.03, 0.8)
+  eyeLight.position.set(0, 0.15, 0.8)
   root.add(eyeLight)
+
+  // More dummy elements for animation compatibility
+  const stripL = new THREE.Mesh(new THREE.SphereGeometry(0.01), dummyMat.clone())
+  const stripR = new THREE.Mesh(new THREE.SphereGeometry(0.01), dummyMat.clone())
+  const circL = new THREE.Mesh(new THREE.SphereGeometry(0.01), dummyMat.clone())
+  const circR = new THREE.Mesh(new THREE.SphereGeometry(0.01), dummyMat.clone())
+  const btmLine = new THREE.Mesh(new THREE.SphereGeometry(0.01), dummyMat.clone())
+  const antennaTip = new THREE.Mesh(new THREE.SphereGeometry(0.01), dummyMat.clone())
+  const topAccent = new THREE.Mesh(new THREE.BoxGeometry(0.01, 0.01, 0.01), dummyMat.clone())
+  const bottomRail = new THREE.Mesh(new THREE.BoxGeometry(0.01, 0.01, 0.01), dummyMat.clone())
+  const iaBadge = new THREE.Mesh(new THREE.PlaneGeometry(0.01, 0.01), dummyMat.clone())
+  
+  root.add(stripL, stripR, circL, circR, btmLine, antennaTip, topAccent, bottomRail, iaBadge)
 
   scene.add(root)
   return {
@@ -416,31 +246,16 @@ function createStation(scene: THREE.Scene, z: number) {
   neon.position.set(0, 2.62, 0)
   g.add(neon)
 
-  // tool arm – stays ABOVE robot height, never penetrates
+  // Dummy elements for compatibility (no visible arms)
   const armGroup = new THREE.Group()
-  const pistonGeo = new THREE.CylinderGeometry(0.05, 0.05, 0.8, 8)
-  const pistonMat = new THREE.MeshStandardMaterial({ color: 0x444444, metalness: 0.9, roughness: 0.1 })
-  armGroup.add(new THREE.Mesh(pistonGeo, pistonMat))
-  const housingGeo = new THREE.CylinderGeometry(0.08, 0.08, 0.25, 8)
-  const housing = new THREE.Mesh(housingGeo, darkMetal)
-  housing.position.y = 0.45
-  armGroup.add(housing)
-
-  // Tip sphere – at bottom of piston, NOT a separate dangling ball
-  const tipGeo = new THREE.SphereGeometry(0.07, 16, 16)
-  const tipMat = new THREE.MeshStandardMaterial({ color: ACCENT, emissive: ACCENT, emissiveIntensity: 1, toneMapped: false })
-  const tip = new THREE.Mesh(tipGeo, tipMat)
-  tip.position.y = -0.4
-  armGroup.add(tip)
-
-  // Small point light at tip – low range so it doesn't bleed into boxes
-  const tLight = new THREE.PointLight(ACCENT_HEX, 0.2, 1.5)
-  tLight.position.y = -0.4
-  armGroup.add(tLight)
-
-  // Arm starts HIGH above everything
   armGroup.position.set(0, 2.3, 0)
+  armGroup.visible = false
   g.add(armGroup)
+  
+  const tip = new THREE.Mesh(new THREE.SphereGeometry(0.01), new THREE.MeshBasicMaterial({transparent: true, opacity: 0}))
+  const tLight = new THREE.PointLight(ACCENT_HEX, 0, 0)
+  armGroup.add(tip)
+  armGroup.add(tLight)
 
   // subtle ground ring glow
   const grGeo = new THREE.RingGeometry(0.5, 0.8, 32)
@@ -534,19 +349,20 @@ function setOp(m: THREE.Mesh, v: number) {
 }
 
 // ── Reset robot to hidden ───────────────────────────────────────────────
+// ── Reset robot to hidden ───────────────────────────────────────────────
 function resetRobot(obj: ReturnType<typeof createAssemblyRobot>) {
   obj.bodyGroup.position.set(0, 0, 0)
   obj.bodyGroup.scale.setScalar(1)
-  ;(obj.body.material as THREE.MeshStandardMaterial).opacity = 0
+  ;(obj.body.material as THREE.MeshBasicMaterial).opacity = 0
   obj.topGroup.position.set(0, 0.51, 0)
   obj.topGroup.scale.setScalar(1)
-  ;(obj.topPanel.material as THREE.MeshStandardMaterial).opacity = 0
+  ;(obj.topPanel.material as THREE.MeshBasicMaterial).opacity = 0
   obj.topGroup.rotation.z = 0
   obj.faceGroup.position.set(0, -0.02, 0.47)
   obj.faceGroup.scale.setScalar(1)
   obj.faceGroup.children.forEach(child => {
     if ((child as THREE.Mesh).material && 'opacity' in ((child as THREE.Mesh).material as any)) {
-      ((child as THREE.Mesh).material as THREE.MeshStandardMaterial).opacity = 0
+      ((child as THREE.Mesh).material as THREE.MeshBasicMaterial).opacity = 0
     }
   })
   obj.faceGroup.rotation.y = 0
@@ -792,8 +608,10 @@ export function RobotConveyor3D() {
 
     const robots = cfgs.map((c) => {
       const obj = createAssemblyRobot(scene)
-      obj.root.position.set(c.lane, 0, c.z)
-      obj.root.scale.setScalar(c.scale)
+      obj.root.position.set(c.lane, 0.5, c.z)
+      // Scale down on mobile (60% of original size)
+      const mobileScale = isMobile() ? c.scale * 0.6 : c.scale
+      obj.root.scale.setScalar(mobileScale)
       obj.root.rotation.y = Math.PI * 0.05
       return { obj, c }
     })
@@ -816,6 +634,12 @@ export function RobotConveyor3D() {
         baseCamPos = [...p.pos]
         baseLookAt = [...p.lookAt]
         prevMobile = nowMobile
+        
+        // Update robot scale based on viewport
+        robots.forEach(({ obj, c }) => {
+          const mobileScale = nowMobile ? c.scale * 0.6 : c.scale
+          obj.root.scale.setScalar(mobileScale)
+        })
       }
       camera.updateProjectionMatrix()
       renderer.setSize(container.clientWidth, container.clientHeight)
@@ -872,13 +696,15 @@ export function RobotConveyor3D() {
         } else if (z > FADE_OUT_Z) {
           fadeAlpha = clamp(1 - (z - FADE_OUT_Z) / (BELT_END - FADE_OUT_Z), 0, 1)
         }
-        const fadeScale = c.scale * (0.3 + 0.7 * fadeAlpha)
+        // Apply mobile scale multiplier
+        const baseScale = isMobile() ? c.scale * 0.6 : c.scale
+        const fadeScale = baseScale * (0.3 + 0.7 * fadeAlpha)
         obj.root.scale.setScalar(fadeScale)
 
         // Position
         const isFullyBuilt = z >= ZONE_EYES
         const bob = isFullyBuilt ? Math.sin(t * 1.0 + c.phase) * 0.01 : 0
-        obj.root.position.set(c.lane, bob, z)
+        obj.root.position.set(c.lane, 0.5 + bob, z)
         obj.root.rotation.y = Math.PI * 0.05 + (isFullyBuilt ? Math.sin(t * 0.4 + c.phase) * 0.01 : 0)
 
         // ─────────────────────────────────────────────────
@@ -892,7 +718,7 @@ export function RobotConveyor3D() {
           obj.bodyGroup.visible = true
           obj.bodyGroup.position.y = (1 - ep) * -0.3 // rises gently from just below
           obj.bodyGroup.scale.setScalar(0.85 + ep * 0.15) // subtle 85%→100%, not 0→100%
-          ;(obj.body.material as THREE.MeshStandardMaterial).opacity = ep
+          ;(obj.body.material as THREE.MeshBasicMaterial).opacity = ep
           setOp(obj.iaBadge, ep)
 
           obj.topGroup.visible = false
@@ -923,7 +749,7 @@ export function RobotConveyor3D() {
           // Body done – ensure fully solid
           obj.bodyGroup.position.y = 0
           obj.bodyGroup.scale.setScalar(1)
-          ;(obj.body.material as THREE.MeshStandardMaterial).opacity = 1
+          ;(obj.body.material as THREE.MeshBasicMaterial).opacity = 1
           obj.bodyGroup.visible = true
           obj.topGroup.visible = true
           obj.faceGroup.visible = false
@@ -943,7 +769,7 @@ export function RobotConveyor3D() {
           // Top panel descends gently from 0.5 above its seat
           obj.topGroup.position.set(0, 0.51 + (1 - ep) * 0.5, 0)
           obj.topGroup.scale.setScalar(1)
-          ;(obj.topPanel.material as THREE.MeshStandardMaterial).opacity = ep
+          ;(obj.topPanel.material as THREE.MeshBasicMaterial).opacity = ep
           obj.topGroup.rotation.z = 0
 
           const glow = p * 0.4
@@ -963,10 +789,10 @@ export function RobotConveyor3D() {
         } else if (z < ZONE_FACE) {
           obj.bodyGroup.position.y = 0
           obj.bodyGroup.scale.setScalar(1)
-          ;(obj.body.material as THREE.MeshStandardMaterial).opacity = 1
+          ;(obj.body.material as THREE.MeshBasicMaterial).opacity = 1
           obj.topGroup.position.set(0, 0.51, 0)
           obj.topGroup.scale.setScalar(1)
-          ;(obj.topPanel.material as THREE.MeshStandardMaterial).opacity = 1
+          ;(obj.topPanel.material as THREE.MeshBasicMaterial).opacity = 1
           obj.topGroup.rotation.z = 0
           obj.bodyGroup.visible = true
           obj.topGroup.visible = true
@@ -1013,10 +839,10 @@ export function RobotConveyor3D() {
         } else if (z < ZONE_EYES) {
           obj.bodyGroup.position.y = 0
           obj.bodyGroup.scale.setScalar(1)
-          ;(obj.body.material as THREE.MeshStandardMaterial).opacity = 1
+          ;(obj.body.material as THREE.MeshBasicMaterial).opacity = 1
           obj.topGroup.position.set(0, 0.51, 0)
           obj.topGroup.scale.setScalar(1)
-          ;(obj.topPanel.material as THREE.MeshStandardMaterial).opacity = 1
+          ;(obj.topPanel.material as THREE.MeshBasicMaterial).opacity = 1
           obj.topGroup.rotation.z = 0
           obj.faceGroup.position.set(0, -0.02, 0.47)
           obj.faceGroup.scale.setScalar(1)
@@ -1076,10 +902,10 @@ export function RobotConveyor3D() {
         } else {
           obj.bodyGroup.position.y = 0
           obj.bodyGroup.scale.setScalar(1)
-          ;(obj.body.material as THREE.MeshStandardMaterial).opacity = 1
+          ;(obj.body.material as THREE.MeshBasicMaterial).opacity = 1
           obj.topGroup.position.set(0, 0.51, 0)
           obj.topGroup.scale.setScalar(1)
-          ;(obj.topPanel.material as THREE.MeshStandardMaterial).opacity = 1
+          ;(obj.topPanel.material as THREE.MeshBasicMaterial).opacity = 1
           obj.topGroup.rotation.z = 0
           obj.faceGroup.position.set(0, -0.02, 0.47)
           obj.faceGroup.scale.setScalar(1)
