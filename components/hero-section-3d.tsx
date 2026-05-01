@@ -42,11 +42,11 @@ export function HeroSection() {
       </div>
 
       {/* Main Content - Positioned at bottom */}
-      <div className="relative z-10 mx-auto w-full max-w-7xl px-4 sm:px-6 pb-6 sm:pb-16 lg:pb-24">
+      <div className="relative z-10 mx-auto w-full max-w-7xl px-4 sm:px-6 pb-4 sm:pb-16 lg:pb-24">
         <div className="max-w-2xl">
           {/* Main heading */}
           <h1
-            className={`text-3xl font-bold leading-[1.1] tracking-tight sm:text-5xl lg:text-6xl xl:text-7xl transition-all duration-1000 delay-300 ${
+            className={`text-3xl font-bold leading-[1.05] tracking-tight sm:text-5xl lg:text-6xl xl:text-7xl transition-all duration-1000 delay-300 ${
               isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
             }`}
             style={{ fontFamily: "var(--font-display)" }}
@@ -98,7 +98,7 @@ export function HeroSection() {
 
           {/* CTAs */}
           <div
-            className={`mt-6 sm:mt-8 flex flex-col gap-3 sm:gap-4 sm:flex-row transition-all duration-1000 delay-700 ${
+            className={`mt-4 sm:mt-8 flex flex-col gap-2.5 sm:gap-4 sm:flex-row transition-all duration-1000 delay-700 ${
               isLoaded
                 ? "opacity-100 translate-y-0"
                 : "opacity-0 translate-y-12"
@@ -106,7 +106,7 @@ export function HeroSection() {
           >
             <a
               href="#contacto"
-              className="group inline-flex items-center justify-center gap-3 rounded-full bg-primary px-6 sm:px-8 py-3 sm:py-4 text-sm sm:text-base font-semibold text-primary-foreground transition-all duration-300 hover:shadow-xl hover:shadow-primary/25 hover:-translate-y-1"
+              className="group inline-flex items-center justify-center gap-3 rounded-full bg-primary px-6 sm:px-8 py-2.5 sm:py-4 text-sm sm:text-base font-semibold text-primary-foreground transition-all duration-300 hover:shadow-xl hover:shadow-primary/25 hover:-translate-y-1"
             >
               Comienza tu proyecto
               <svg
@@ -127,7 +127,7 @@ export function HeroSection() {
             </a>
             <a
               href="#servicios"
-              className="inline-flex items-center justify-center gap-2 rounded-full border-2 border-border bg-card/50 backdrop-blur-sm px-6 sm:px-8 py-3 sm:py-4 text-sm sm:text-base font-semibold text-foreground transition-all duration-300 hover:border-primary/50 hover:bg-card hover:-translate-y-1"
+              className="inline-flex items-center justify-center gap-2 rounded-full border-2 border-border bg-card/50 backdrop-blur-sm px-6 sm:px-8 py-2.5 sm:py-4 text-sm sm:text-base font-semibold text-foreground transition-all duration-300 hover:border-primary/50 hover:bg-card hover:-translate-y-1"
             >
               Ver servicios
             </a>

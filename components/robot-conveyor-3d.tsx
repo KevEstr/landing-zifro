@@ -408,10 +408,10 @@ export function RobotConveyor3D() {
     const getCameraParams = () => {
       const mobile = isMobile()
       if (mobile) {
-        // Portrait: wider FOV, pull camera in closer & aim higher so robots
-        // visually sit in the upper-center third of the viewport, leaving the
-        // bottom third clear for the text overlay without heavy gradients.
-        return { fov: 48, pos: [3.5, 5.0, 6.5] as const, lookAt: [0, 0.6, 0] as const }
+        // Portrait: wider FOV, pull camera back further & aim higher so robots
+        // visually sit in the upper half of the viewport, leaving the
+        // bottom half clear for the text overlay without heavy gradients.
+        return { fov: 42, pos: [4.5, 6.5, 9.0] as const, lookAt: [0, 0.3, 0] as const }
       }
       // Desktop
       return { fov: 32, pos: [8, 6.0, 10] as const, lookAt: [-3, 0.0, 0] as const }
@@ -609,8 +609,8 @@ export function RobotConveyor3D() {
     const robots = cfgs.map((c) => {
       const obj = createAssemblyRobot(scene)
       obj.root.position.set(c.lane, 0.5, c.z)
-      // Scale down on mobile (60% of original size)
-      const mobileScale = isMobile() ? c.scale * 0.6 : c.scale
+      // Scale down on mobile (45% of original size)
+      const mobileScale = isMobile() ? c.scale * 0.45 : c.scale
       obj.root.scale.setScalar(mobileScale)
       obj.root.rotation.y = Math.PI * 0.05
       return { obj, c }
@@ -637,7 +637,7 @@ export function RobotConveyor3D() {
         
         // Update robot scale based on viewport
         robots.forEach(({ obj, c }) => {
-          const mobileScale = nowMobile ? c.scale * 0.6 : c.scale
+          const mobileScale = nowMobile ? c.scale * 0.45 : c.scale
           obj.root.scale.setScalar(mobileScale)
         })
       }
@@ -697,7 +697,7 @@ export function RobotConveyor3D() {
           fadeAlpha = clamp(1 - (z - FADE_OUT_Z) / (BELT_END - FADE_OUT_Z), 0, 1)
         }
         // Apply mobile scale multiplier
-        const baseScale = isMobile() ? c.scale * 0.6 : c.scale
+        const baseScale = isMobile() ? c.scale * 0.45 : c.scale
         const fadeScale = baseScale * (0.3 + 0.7 * fadeAlpha)
         obj.root.scale.setScalar(fadeScale)
 
