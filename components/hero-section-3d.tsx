@@ -42,11 +42,11 @@ export function HeroSection() {
       </div>
 
       {/* Main Content - Positioned at bottom */}
-      <div className="relative z-10 mx-auto w-full max-w-7xl px-4 sm:px-6 pb-8 sm:pb-16 lg:pb-24">
+      <div className="relative z-10 mx-auto w-full max-w-7xl px-4 sm:px-6 pb-3 sm:pb-16 lg:pb-24">
         <div className="max-w-2xl">
           {/* Main heading */}
           <h1
-            className={`text-3xl font-bold leading-[1.05] tracking-tight sm:text-5xl lg:text-6xl xl:text-7xl transition-all duration-1000 delay-300 ${
+            className={`text-4xl font-bold leading-[1.05] tracking-tight sm:text-5xl lg:text-6xl xl:text-7xl transition-all duration-1000 delay-300 ${
               isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
             }`}
             style={{ fontFamily: "var(--font-display)" }}
@@ -85,7 +85,7 @@ export function HeroSection() {
 
           {/* Subtitle – hidden on small mobile to save space, visible from sm up */}
           <p
-            className={`mt-4 sm:mt-6 max-w-xl hidden sm:block text-sm leading-relaxed text-foreground/60 sm:text-lg transition-all duration-1000 delay-500 ${
+            className={`mt-3 sm:mt-6 max-w-xl hidden sm:block text-sm leading-relaxed text-foreground/60 sm:text-lg transition-all duration-1000 delay-500 ${
               isLoaded
                 ? "opacity-100 translate-y-0"
                 : "opacity-0 translate-y-12"
@@ -98,7 +98,7 @@ export function HeroSection() {
 
           {/* CTAs */}
           <div
-            className={`mt-8 sm:mt-8 flex flex-col gap-2.5 sm:gap-4 sm:flex-row transition-all duration-1000 delay-700 ${
+            className={`mt-4 sm:mt-8 flex flex-col gap-2 sm:gap-4 sm:flex-row transition-all duration-1000 delay-700 ${
               isLoaded
                 ? "opacity-100 translate-y-0"
                 : "opacity-0 translate-y-12"
@@ -136,7 +136,7 @@ export function HeroSection() {
 
         {/* Scroll indicator – hidden on small mobile */}
         <div
-          className={`mt-4 sm:mt-12 hidden sm:flex justify-center lg:justify-start transition-all duration-1000 delay-1000 ${
+          className={`mt-3 sm:mt-12 hidden sm:flex justify-center lg:justify-start transition-all duration-1000 delay-1000 ${
             isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
           }`}
         >
@@ -154,7 +154,7 @@ export function HeroSection() {
       </div>
 
       {/* Bottom gradient fade */}
-      <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-background to-transparent z-[5]" />
+      <div className="absolute bottom-0 left-0 right-0 h-12 sm:h-24 bg-gradient-to-t from-background to-transparent z-[5]" />
     </section>
   )
 }
