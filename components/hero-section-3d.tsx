@@ -26,8 +26,8 @@ export function HeroSection() {
   return (
     <section
       id="inicio"
-      className="relative min-h-[100dvh] sm:min-h-screen flex items-end overflow-hidden"
-      style={{ background: "#050505" }}
+      className="relative min-h-[100dvh] sm:min-h-screen flex items-end overflow-hidden pt-16 sm:pt-20"
+      style={{ background: "linear-gradient(135deg, #0a0e14 0%, #050810 50%, #0a0e14 100%)" }}
     >
       {/* Animated Robot Conveyor Background */}
       <RobotConveyor3D />
@@ -36,9 +36,9 @@ export function HeroSection() {
       <div className="absolute inset-0 z-[2] pointer-events-none">
         {/* MOBILE: thin bottom-only gradient so animation stays visible */}
         {/* DESKTOP: wider, richer gradients for the side-layout */}
-        <div className="absolute bottom-0 left-0 right-0 h-[35%] sm:h-[55%] bg-gradient-to-t from-[#050505] via-[#050505]/70 sm:via-[#050505]/80 to-transparent" />
-        <div className="absolute inset-0 left-0 w-0 sm:w-[50%] bg-gradient-to-r from-[#050505]/70 via-[#050505]/30 to-transparent" />
-        <div className="absolute bottom-0 left-0 w-full sm:w-[60%] h-[25%] sm:h-[60%] bg-gradient-to-tr from-[#050505]/50 sm:from-[#050505]/60 to-transparent" />
+        <div className="absolute bottom-0 left-0 right-0 h-[35%] sm:h-[55%] bg-gradient-to-t from-[#0a0e14] via-[#0a0e14]/70 sm:via-[#0a0e14]/80 to-transparent" />
+        <div className="absolute inset-0 left-0 w-0 sm:w-[50%] bg-gradient-to-r from-[#0a0e14]/70 via-[#0a0e14]/30 to-transparent" />
+        <div className="absolute bottom-0 left-0 w-full sm:w-[60%] h-[25%] sm:h-[60%] bg-gradient-to-tr from-[#0a0e14]/50 sm:from-[#0a0e14]/60 to-transparent" />
       </div>
 
       {/* Main Content - Positioned at bottom */}
