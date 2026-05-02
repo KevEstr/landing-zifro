@@ -42,7 +42,7 @@ export function HeroSection() {
       </div>
 
       {/* Main Content - Positioned at bottom */}
-      <div className="relative z-10 mx-auto w-full max-w-7xl px-4 sm:px-6 pb-6 sm:pb-16 lg:pb-24">
+      <div className="relative z-10 mx-auto w-full max-w-7xl px-4 sm:px-6 pb-8 sm:pb-16 lg:pb-24">
         <div className="max-w-2xl">
           {/* Main heading */}
           <h1
@@ -85,7 +85,7 @@ export function HeroSection() {
 
           {/* Subtitle – hidden on small mobile to save space, visible from sm up */}
           <p
-            className={`mt-3 sm:mt-6 max-w-xl hidden sm:block text-sm leading-relaxed text-foreground/60 sm:text-lg transition-all duration-1000 delay-500 ${
+            className={`mt-4 sm:mt-6 max-w-xl hidden sm:block text-sm leading-relaxed text-foreground/60 sm:text-lg transition-all duration-1000 delay-500 ${
               isLoaded
                 ? "opacity-100 translate-y-0"
                 : "opacity-0 translate-y-12"
@@ -98,7 +98,7 @@ export function HeroSection() {
 
           {/* CTAs */}
           <div
-            className={`mt-3 sm:mt-8 flex flex-col gap-2.5 sm:gap-4 sm:flex-row transition-all duration-1000 delay-700 ${
+            className={`mt-8 sm:mt-8 flex flex-col gap-2.5 sm:gap-4 sm:flex-row transition-all duration-1000 delay-700 ${
               isLoaded
                 ? "opacity-100 translate-y-0"
                 : "opacity-0 translate-y-12"
