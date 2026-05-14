@@ -17,7 +17,7 @@
   --secondary-foreground: #F5F5F5;
   --muted: #1d2330;
   --muted-foreground: #A3A3A3;
-  --accent: #0EA5E9;
+  --accent: #FF6B35;
   --accent-foreground: #FFFFFF;
   --destructive: #EF4444;
   --destructive-foreground: #FFFFFF;
@@ -41,7 +41,7 @@
 }
 
 @theme inline {
-  --font-sans: var(--font-inter), 'Inter', system-ui, sans-serif;
+  --font-sans: var(--font-geist), 'Geist', system-ui, sans-serif;
   --font-display: var(--font-space-grotesk), 'Space Grotesk', sans-serif;
   --font-mono: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
   --color-background: var(--background);
@@ -84,25 +84,41 @@
 
 @layer base {
   * {
-    @apply border-border outline-ring/50;
+    @apply border-border;
+  }
+  /* Visible, accessible focus ring for keyboard users */
+  :focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 3px;
+    border-radius: 4px;
   }
   body {
     @apply bg-background text-foreground;
+    /* Tighter letter-spacing for display feel */
+    font-feature-settings: "ss01", "cv11";
     background-image: 
-      radial-gradient(circle at 20% 50%, rgba(14, 165, 233, 0.03) 0%, transparent 50%),
-      radial-gradient(circle at 80% 80%, rgba(139, 92, 246, 0.02) 0%, transparent 50%),
-      url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
-    background-attachment: fixed;
+      radial-gradient(circle at 20% 50%, rgba(255, 77, 0, 0.04) 0%, transparent 55%),
+      radial-gradient(circle at 85% 85%, rgba(255, 77, 0, 0.025) 0%, transparent 55%),
+      url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.04'/%3E%3C/svg%3E");
+  }
+  /* Tabular numbers for data-heavy figures */
+  .tabular-nums {
+    font-variant-numeric: tabular-nums;
+  }
+  /* Tighter display tracking */
+  h1, h2, h3 {
+    letter-spacing: -0.02em;
+  }
+  /* Orphan prevention on headings and long paragraphs */
+  h1, h2, h3, h4 {
+    text-wrap: balance;
+  }
+  p {
+    text-wrap: pretty;
   }
   
   /* Performance optimizations */
   img, video, iframe {
-    content-visibility: auto;
-  }
-  
-  /* CSS Containment for sections - CRITICAL for performance */
-  section {
-    contain: layout style paint;
     content-visibility: auto;
   }
   
@@ -211,51 +227,42 @@
 
 .animate-float {
   animation: float 6s ease-in-out infinite;
-  will-change: transform;
 }
 
 .animate-float-delayed {
   animation: float-delayed 7s ease-in-out infinite;
   animation-delay: 1s;
-  will-change: transform;
 }
 
 .animate-slide-up {
   animation: slide-up-fade 0.8s ease-out forwards;
-  will-change: transform, opacity;
 }
 
 .animate-scale-in {
   animation: scale-in 0.6s ease-out forwards;
-  will-change: transform, opacity;
 }
 
 .animate-marquee {
   animation: marquee 10s linear infinite;
-  will-change: transform;
 }
 
 .animate-pulse-soft {
   animation: pulse-soft 3s ease-in-out infinite;
-  will-change: opacity;
 }
 
 .animate-blob {
   animation: blob 8s ease-in-out infinite;
-  will-change: transform, border-radius;
 }
 
 .animate-gradient {
   background-size: 200% 200%;
   animation: gradient 3s ease infinite;
-  will-change: background-position;
 }
 
 .animate-draw-line {
   stroke-dasharray: 1000;
   stroke-dashoffset: 1000;
   animation: draw-line 2s ease-out forwards;
-  will-change: stroke-dashoffset;
 }
 
 /* Scroll-triggered animations - optimized */
@@ -263,13 +270,11 @@
   opacity: 0;
   transform: translate3d(0, 30px, 0);
   transition: opacity 0.8s ease, transform 0.8s ease;
-  will-change: transform, opacity;
 }
 
 .reveal.visible {
   opacity: 1;
   transform: translate3d(0, 0, 0);
-  will-change: auto;
 }
 
 /* Stagger children - optimized */
@@ -277,14 +282,13 @@
   opacity: 0;
   transform: translate3d(0, 20px, 0);
   transition: opacity 0.6s ease, transform 0.6s ease;
-  will-change: transform, opacity;
 }
 
-.stagger-children.visible > *:nth-child(1) { transition-delay: 0.1s; opacity: 1; transform: translate3d(0, 0, 0); will-change: auto; }
-.stagger-children.visible > *:nth-child(2) { transition-delay: 0.2s; opacity: 1; transform: translate3d(0, 0, 0); will-change: auto; }
-.stagger-children.visible > *:nth-child(3) { transition-delay: 0.3s; opacity: 1; transform: translate3d(0, 0, 0); will-change: auto; }
-.stagger-children.visible > *:nth-child(4) { transition-delay: 0.4s; opacity: 1; transform: translate3d(0, 0, 0); will-change: auto; }
-.stagger-children.visible > *:nth-child(5) { transition-delay: 0.5s; opacity: 1; transform: translate3d(0, 0, 0); will-change: auto; }
+.stagger-children.visible > *:nth-child(1) { transition-delay: 0.1s; opacity: 1; transform: translate3d(0, 0, 0); }
+.stagger-children.visible > *:nth-child(2) { transition-delay: 0.2s; opacity: 1; transform: translate3d(0, 0, 0); }
+.stagger-children.visible > *:nth-child(3) { transition-delay: 0.3s; opacity: 1; transform: translate3d(0, 0, 0); }
+.stagger-children.visible > *:nth-child(4) { transition-delay: 0.4s; opacity: 1; transform: translate3d(0, 0, 0); }
+.stagger-children.visible > *:nth-child(5) { transition-delay: 0.5s; opacity: 1; transform: translate3d(0, 0, 0); }
 
 /* Custom scrollbar */
 ::-webkit-scrollbar {
@@ -546,7 +550,6 @@ html {
 
 .animate-chat-bubble {
   animation: chat-bubble 7s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-  will-change: transform, opacity;
 }
 
 /* Sale notification animation - slides up from bottom and fades out */
@@ -582,7 +585,6 @@ html {
 
 .animate-sale-notification {
   animation: sale-notification 8.8s ease-in-out infinite;
-  will-change: transform, opacity, visibility;
 }
 
 /* Module-based animations - ONE AT A TIME with proper timing */
@@ -624,10 +626,10 @@ html {
   100% { opacity: 0; visibility: hidden; }
 }
 
-.animate-module-1 { animation: module-1 16s ease-in-out infinite; will-change: transform, opacity, visibility; }
-.animate-module-2 { animation: module-2 16s ease-in-out infinite; will-change: transform, opacity, visibility; }
-.animate-module-3 { animation: module-3 16s ease-in-out infinite; will-change: transform, opacity, visibility; }
-.animate-module-4 { animation: module-4 16s ease-in-out infinite; will-change: transform, opacity, visibility; }
+.animate-module-1 { animation: module-1 16s ease-in-out infinite; }
+.animate-module-2 { animation: module-2 16s ease-in-out infinite; }
+.animate-module-3 { animation: module-3 16s ease-in-out infinite; }
+.animate-module-4 { animation: module-4 16s ease-in-out infinite; }
 
 /* Progress bar fill animation */
 @keyframes progress-fill {
@@ -666,4 +668,284 @@ html {
 .animate-case-rotation {
   animation: case-rotation 60s linear infinite;
   will-change: opacity, visibility;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════════
+   NEW: Service Visual Animations — Spring physics, typing, confetti
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* Typing indicator dots */
+@keyframes typing-dot {
+  0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
+  30% { transform: translateY(-4px); opacity: 1; }
+}
+
+.animate-typing-dot {
+  animation: typing-dot 1.2s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+/* Slow ping for active status ring */
+@keyframes ping-slow {
+  0% { transform: scale(1); opacity: 0.3; }
+  50% { transform: scale(1.08); opacity: 0.1; }
+  100% { transform: scale(1); opacity: 0.3; }
+}
+
+.animate-ping-slow {
+  animation: ping-slow 3s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+/* Slide in from left */
+@keyframes slide-in-left {
+  from { opacity: 0; transform: translateX(-20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.animate-slide-in-left {
+  animation: slide-in-left 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  will-change: transform, opacity;
+}
+
+/* Slide in from right */
+@keyframes slide-in-right {
+  from { opacity: 0; transform: translateX(20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.animate-slide-in-right {
+  animation: slide-in-right 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  will-change: transform, opacity;
+}
+
+/* Pop in with spring overshoot */
+@keyframes pop-in {
+  0% { transform: scale(0); opacity: 0; }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.animate-pop-in {
+  animation: pop-in 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  will-change: transform, opacity;
+}
+
+/* Confetti burst particles */
+@keyframes confetti-burst {
+  0% { transform: translate(0, 0) scale(1); opacity: 1; }
+  100% { transform: translate(var(--confetti-x, 20px), var(--confetti-y, -30px)) scale(0); opacity: 0; }
+}
+
+.animate-confetti-burst {
+  --confetti-x: 20px;
+  --confetti-y: -30px;
+  animation: confetti-burst 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+  will-change: transform, opacity;
+}
+
+.animate-confetti-burst:nth-child(1) { --confetti-x: -15px; --confetti-y: -25px; }
+.animate-confetti-burst:nth-child(2) { --confetti-x: 20px; --confetti-y: -30px; }
+.animate-confetti-burst:nth-child(3) { --confetti-x: -25px; --confetti-y: -10px; }
+.animate-confetti-burst:nth-child(4) { --confetti-x: 15px; --confetti-y: -35px; }
+.animate-confetti-burst:nth-child(5) { --confetti-x: -10px; --confetti-y: -40px; }
+.animate-confetti-burst:nth-child(6) { --confetti-x: 30px; --confetti-y: -15px; }
+.animate-confetti-burst:nth-child(7) { --confetti-x: -20px; --confetti-y: -20px; }
+.animate-confetti-burst:nth-child(8) { --confetti-x: 25px; --confetti-y: -25px; }
+
+/* Flow down particle on automation lines */
+@keyframes flow-down {
+  0% { top: 0; opacity: 0; }
+  20% { opacity: 1; }
+  80% { opacity: 1; }
+  100% { top: 100%; opacity: 0; }
+}
+
+.animate-flow-down {
+  animation: flow-down 0.8s ease-in-out infinite;
+  will-change: top, opacity;
+}
+
+/* Progress bar grow */
+@keyframes progress-grow {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+.animate-progress-grow {
+  animation: progress-grow 1.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  animation-delay: 0.8s;
+  transform-origin: left;
+  will-change: transform;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   ENHANCED: Magnetic hover effect for buttons and cards
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* Spotlight border effect on hover */
+@keyframes spotlight-border {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Smooth entrance for sections */
+@keyframes section-reveal {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 60px, 0);
+    filter: blur(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+    filter: blur(0);
+  }
+}
+
+.animate-section-reveal {
+  animation: section-reveal 1s cubic-bezier(0.22, 1, 0.36, 1) both;
+  will-change: transform, opacity, filter;
+}
+
+/* Glow pulse for active elements */
+@keyframes glow-pulse {
+  0%, 100% { box-shadow: 0 0 20px rgba(255, 77, 0, 0.2); }
+  50% { box-shadow: 0 0 40px rgba(255, 77, 0, 0.4), 0 0 80px rgba(255, 77, 0, 0.1); }
+}
+
+.animate-glow-pulse {
+  animation: glow-pulse 2.5s ease-in-out infinite;
+}
+
+/* Shimmer loading effect */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.animate-shimmer {
+  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.05) 50%, transparent 100%);
+  background-size: 200% 100%;
+  animation: shimmer 2s ease-in-out infinite;
+}
+
+/* Counter number roll */
+@keyframes number-roll {
+  from { transform: translateY(100%); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.animate-number-roll {
+  animation: number-roll 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  will-change: transform, opacity;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════════
+   ORBITAL / SATELLITE ANIMATIONS — Floating data nodes around visuals
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* Gentle orbital float - elements bob around their anchor position */
+@keyframes orbit-float {
+  0%, 100% { transform: translate(0, 0); }
+  25% { transform: translate(3px, -4px); }
+  50% { transform: translate(-2px, -6px); }
+  75% { transform: translate(-4px, -2px); }
+}
+
+.animate-orbit-float {
+  animation: orbit-float 5s ease-in-out infinite;
+  will-change: transform;
+}
+
+/* Fade in with scale - for satellite cards appearing */
+@keyframes fade-in-scale {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-fade-in-scale {
+  animation: fade-in-scale 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  will-change: transform, opacity;
+}
+
+/* Dash flow - data flowing through SVG lines */
+@keyframes dash-flow {
+  to { stroke-dashoffset: -20; }
+}
+
+.animate-dash-flow {
+  animation: dash-flow 1.5s linear infinite;
+  will-change: stroke-dashoffset;
+}
+
+/* Radar ping - expanding pulse rings */
+@keyframes radar-ping {
+  0% { transform: scale(0.5); opacity: 0.8; transform-origin: center; }
+  100% { transform: scale(1.5); opacity: 0; transform-origin: center; }
+}
+
+.animate-radar-ping {
+  transform-origin: 50% 50%;
+  transform-box: fill-box;
+  animation: radar-ping 2.5s ease-out infinite;
+  will-change: transform, opacity;
+}
+
+/* Drift particles - floating slowly in a direction */
+@keyframes drift {
+  0% { transform: translate(0, 0); opacity: 0; }
+  20% { opacity: 0.8; }
+  80% { opacity: 0.8; }
+  100% { transform: translate(15px, -25px); opacity: 0; }
+}
+
+.animate-drift {
+  animation: drift 4s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════════
+   Agent Visual — Command Center animations
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* Neural pulse rings expanding behind the robot */
+@keyframes neural-pulse {
+  0% {
+    transform: scale(0.6);
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(1.4);
+    opacity: 0;
+  }
+}
+
+/* Task card sliding in from top with spring */
+@keyframes task-slide-in {
+  0% {
+    opacity: 0;
+    transform: translateY(-12px) scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.animate-task-slide-in {
+  animation: task-slide-in 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
 }

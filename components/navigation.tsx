@@ -6,19 +6,33 @@ import { Menu, X } from "lucide-react"
 const navLinks = [
   { label: "Inicio", href: "#inicio" },
   { label: "Servicios", href: "#servicios" },
-  { label: "Resultados", href: "#resultados" },
+  { label: "Testimonios", href: "#testimonios" },
   { label: "Contacto", href: "#contacto" },
 ]
 
 export function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileOpen, setIsMobileOpen] = useState(false)
+  const [activeHash, setActiveHash] = useState<string>("#inicio")
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50)
+      // Detect active section
+      const sections = navLinks.map((l) => l.href)
+      const offset = window.innerHeight * 0.35
+      let current = sections[0]
+      for (const id of sections) {
+        const el = document.querySelector(id)
+        if (el) {
+          const rect = el.getBoundingClientRect()
+          if (rect.top - offset <= 0) current = id
+        }
+      }
+      setActiveHash(current)
     }
-    window.addEventListener("scroll", handleScroll)
+    window.addEventListener("scroll", handleScroll, { passive: true })
+    handleScroll()
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
@@ -26,37 +40,49 @@ export function Navigation() {
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         isScrolled
-          ? "bg-card/80 backdrop-blur-xl shadow-sm py-3"
-          : "bg-transparent py-6"
+          ? "bg-background/60 backdrop-blur-md shadow-sm py-2"
+          : "bg-transparent py-4"
       }`}
     >
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-6">
+      <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-2">
         {/* Logo */}
-        <a href="#inicio" className="flex items-center gap-2 group">
-          <div className="relative flex h-10 w-10 items-center justify-center rounded-xl bg-primary transition-transform duration-300 group-hover:scale-110">
-            <span className="text-xl font-bold text-primary-foreground font-serif">Z</span>
-            <div className="absolute -inset-1 rounded-xl bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+        <a href="#inicio" className="flex items-center group pl-1 sm:pl-2">
+          <div className="relative h-8 sm:h-9 lg:h-10 transition-transform duration-300 group-hover:scale-105">
+            <img 
+              src="/logo.png" 
+              alt="Zifro" 
+              className="h-full w-auto object-contain"
+            />
           </div>
-          <span className="text-xl font-bold tracking-tight text-foreground">
-            Zifro
-          </span>
         </a>
 
         {/* Desktop Nav */}
         <div className="hidden items-center gap-1 md:flex">
-          {navLinks.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              className="relative px-4 py-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground group"
-            >
-              {link.label}
-              <span className="absolute bottom-0 left-1/2 h-0.5 w-0 bg-primary transition-all duration-300 group-hover:left-4 group-hover:w-[calc(100%-2rem)]" />
-            </a>
-          ))}
+          {navLinks.map((link) => {
+            const isActive = activeHash === link.href
+            return (
+              <a
+                key={link.href}
+                href={link.href}
+                aria-current={isActive ? "page" : undefined}
+                className={`relative px-4 py-2 text-sm font-medium transition-colors group ${
+                  isActive ? "text-foreground" : "text-muted-foreground hover:text-foreground"
+                }`}
+              >
+                {link.label}
+                <span
+                  className={`absolute bottom-0 h-0.5 bg-primary transition-all duration-300 ${
+                    isActive
+                      ? "left-4 w-[calc(100%-2rem)]"
+                      : "left-1/2 w-0 group-hover:left-4 group-hover:w-[calc(100%-2rem)]"
+                  }`}
+                />
+              </a>
+            )
+          })}
           <a
             href="#contacto"
-            className="ml-4 inline-flex items-center gap-2 rounded-full bg-primary px-6 py-2.5 text-sm font-semibold text-primary-foreground transition-all duration-300 hover:shadow-lg hover:shadow-primary/25 hover:-translate-y-0.5"
+            className="ml-4 inline-flex items-center gap-2 rounded-full bg-primary px-6 py-2.5 text-sm font-semibold text-primary-foreground transition-all duration-300 hover:shadow-lg hover:shadow-primary/25 hover:-translate-y-0.5 active:scale-[0.98]"
           >
             Hablemos
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className="transition-transform duration-300 group-hover:translate-x-1">

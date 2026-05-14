@@ -402,7 +402,7 @@ class SparkSystem {
   life: Float32Array
   max: number
 
-  constructor(scene: THREE.Scene, max = 350) {
+  constructor(scene: THREE.Scene, max = 150) {
     this.max = max
     this.pos = new Float32Array(max * 3)
     this.vel = new Float32Array(max * 3)
@@ -548,10 +548,10 @@ export function RobotConveyor3D() {
       alpha: false,
       powerPreference: "high-performance",
     })
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, mobile ? 1.5 : 2))
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, mobile ? 1 : 1.5))
     renderer.setSize(container.clientWidth, container.clientHeight)
-    renderer.shadowMap.enabled = true
-    renderer.shadowMap.type = mobile ? THREE.BasicShadowMap : THREE.PCFSoftShadowMap
+    renderer.shadowMap.enabled = !mobile
+    renderer.shadowMap.type = THREE.BasicShadowMap
     renderer.toneMapping = THREE.ACESFilmicToneMapping
     renderer.toneMappingExposure = 1.3
     renderer.setClearColor(0x030303, 1)
@@ -562,7 +562,7 @@ export function RobotConveyor3D() {
     
     // Create subtle starfield background
     const starGeometry = new THREE.BufferGeometry()
-    const starCount = 800
+    const starCount = 400
     const starPositions = new Float32Array(starCount * 3)
     const starColors = new Float32Array(starCount * 3)
     
@@ -639,7 +639,7 @@ export function RobotConveyor3D() {
     const keyLight = new THREE.DirectionalLight(0xffe4cc, 3.0)
     keyLight.position.set(10, 16, 10)
     keyLight.castShadow = true
-    keyLight.shadow.mapSize.set(mobile ? 1024 : 2048, mobile ? 1024 : 2048)
+    keyLight.shadow.mapSize.set(mobile ? 512 : 1024, mobile ? 512 : 1024)
     keyLight.shadow.camera.near = 0.5
     keyLight.shadow.camera.far = 50
     keyLight.shadow.camera.left = -16
@@ -659,49 +659,18 @@ export function RobotConveyor3D() {
     rim.position.set(-6, 6, -8)
     scene.add(rim)
 
-    // Multiple orange accent lights for vibrant glow
-    const al1 = new THREE.PointLight(ACCENT_HEX, mobile ? 0 : 5.0, 18, 2)
-    al1.position.set(3, 5, 3)
+    // Single orange accent light (reduced from 5 for performance)
+    const al1 = new THREE.PointLight(ACCENT_HEX, mobile ? 0 : 5.0, 20, 2)
+    al1.position.set(2, 5, 2)
     al1.castShadow = false
     scene.add(al1)
     
-    const al2 = new THREE.PointLight(ACCENT_HEX, mobile ? 0 : 4.0, 15, 2)
-    al2.position.set(-3, 5, -4)
+    const al2 = new THREE.PointLight(ACCENT_HEX, mobile ? 0 : 3.0, 18, 2)
+    al2.position.set(-3, 4, -4)
     al2.castShadow = false
     scene.add(al2)
-    
-    const al3 = new THREE.PointLight(ACCENT_HEX, mobile ? 0 : 3.5, 12, 2)
-    al3.position.set(0, 4, 6)
-    al3.castShadow = false
-    scene.add(al3)
 
-    // Cyan accent for vibrant sci-fi feel
-    const cyanAccent = new THREE.PointLight(0x00ffff, mobile ? 0 : 2.5, 20, 2)
-    cyanAccent.position.set(0, 4, -10)
-    scene.add(cyanAccent)
-    
-    // Purple accent for depth
-    const purpleAccent = new THREE.PointLight(0xaa00ff, mobile ? 0 : 2.0, 18, 2)
-    purpleAccent.position.set(-5, 3, 0)
-    scene.add(purpleAccent)
-
-    // ── Environment map for polished reflections ──────────
-    const pmremGenerator = new THREE.PMREMGenerator(renderer)
-    const envScene = new THREE.Scene()
-    envScene.background = new THREE.Color(0x080808)
-    const envFill = new THREE.AmbientLight(0x222222, 1)
-    envScene.add(envFill)
-    const envAccent = new THREE.PointLight(ACCENT_HEX, 0.6, 40)
-    envAccent.position.set(5, 5, 5)
-    envScene.add(envAccent)
-    const envCool = new THREE.PointLight(0x334466, 0.3, 40)
-    envCool.position.set(-5, 3, -5)
-    envScene.add(envCool)
-    const envWarm = new THREE.PointLight(0xfff0e0, 0.4, 40)
-    envWarm.position.set(0, 10, 0)
-    envScene.add(envWarm)
-    scene.environment = pmremGenerator.fromScene(envScene, 0.04).texture
-    pmremGenerator.dispose()
+    // ── Skip environment map for performance (use ambient + directional instead) ──
 
     // ── Conveyor Belt ─────────────────────────────────────
     const beltLen = 34
@@ -812,8 +781,8 @@ export function RobotConveyor3D() {
     scene.add(cyanGlowR)
 
     // Animated cross-lines with gradient effect
-    const CROSS_SPACING = 2.2
-    const CROSS_COUNT = 16
+    const CROSS_SPACING = 4.0
+    const CROSS_COUNT = 8
     const crossLines: THREE.Mesh[] = []
     for (let i = 0; i < CROSS_COUNT; i++) {
       const clGeo = new THREE.BoxGeometry(beltW - 0.7, 0.01, 0.03)
@@ -832,7 +801,7 @@ export function RobotConveyor3D() {
     }
     
     // Add holographic data streams along belt
-    const streamCount = 8
+    const streamCount = 4
     const dataStreams: THREE.Mesh[] = []
     for (let i = 0; i < streamCount; i++) {
       const streamGeo = new THREE.BoxGeometry(0.03, 0.03, 0.5)
@@ -853,7 +822,7 @@ export function RobotConveyor3D() {
     }
     
     // Add subtle floating particles
-    const particleCount = 60
+    const particleCount = 20
     const particleGeo = new THREE.BufferGeometry()
     const particlePositions = new Float32Array(particleCount * 3)
     const particleVelocities: THREE.Vector3[] = []
@@ -914,7 +883,7 @@ export function RobotConveyor3D() {
     ]
 
     // ── Sparks ────────────────────────────────────────────
-    const sparks = new SparkSystem(scene, 350)
+    const sparks = new SparkSystem(scene, 100)
 
     // ── Robots ────────────────────────────────────────────
     interface RCfg {
@@ -922,15 +891,13 @@ export function RobotConveyor3D() {
       sparkCD: number[]; wasInZone: boolean[]
     }
 
-    // 5 robots, evenly spaced 6 units apart, ALL same speed → never bunch up
+    // 3 robots, evenly spaced — fewer draw calls
     const ROBOT_SPEED = 1.6
-    const ROBOT_SPACING = 6.0
+    const ROBOT_SPACING = 9.0
     const cfgs: RCfg[] = [
       { z: -12,                    speed: ROBOT_SPEED, lane:  0.0,  scale: 1.10, phase: 0,   sparkCD: [0,0,0], wasInZone: [false,false,false] },
-      { z: -12 + ROBOT_SPACING,    speed: ROBOT_SPEED, lane:  0.0,  scale: 1.08, phase: 2.0, sparkCD: [0,0,0], wasInZone: [false,false,false] },
-      { z: -12 + ROBOT_SPACING * 2, speed: ROBOT_SPEED, lane:  0.0,  scale: 1.12, phase: 4.0, sparkCD: [0,0,0], wasInZone: [false,false,false] },
-      { z: -12 + ROBOT_SPACING * 3, speed: ROBOT_SPEED, lane:  0.0,  scale: 1.06, phase: 6.0, sparkCD: [0,0,0], wasInZone: [false,false,false] },
-      { z: -12 + ROBOT_SPACING * 4, speed: ROBOT_SPEED, lane:  0.0,  scale: 1.10, phase: 8.0, sparkCD: [0,0,0], wasInZone: [false,false,false] },
+      { z: -12 + ROBOT_SPACING,    speed: ROBOT_SPEED, lane:  0.0,  scale: 1.08, phase: 3.0, sparkCD: [0,0,0], wasInZone: [false,false,false] },
+      { z: -12 + ROBOT_SPACING * 2, speed: ROBOT_SPEED, lane:  0.0,  scale: 1.12, phase: 6.0, sparkCD: [0,0,0], wasInZone: [false,false,false] },
     ]
 
     const robots = cfgs.map((c) => {
@@ -970,10 +937,7 @@ export function RobotConveyor3D() {
         
         // Update accent lights based on viewport
         al1.intensity = nowMobile ? 0 : 5.0
-        al2.intensity = nowMobile ? 0 : 4.0
-        al3.intensity = nowMobile ? 0 : 3.5
-        cyanAccent.intensity = nowMobile ? 0 : 2.5
-        purpleAccent.intensity = nowMobile ? 0 : 2.0
+        al2.intensity = nowMobile ? 0 : 3.0
       }
       camera.updateProjectionMatrix()
       renderer.setSize(container.clientWidth, container.clientHeight)
@@ -982,9 +946,20 @@ export function RobotConveyor3D() {
 
     // ── Animation Loop ────────────────────────────────────
     const clock = new THREE.Clock()
+    let animationId: number | null = null
+    let isVisible = true
+    let lastFrameTime = 0
+    const FRAME_INTERVAL = 1000 / 30 // 30fps cap
 
     const animate = () => {
-      requestAnimationFrame(animate)
+      if (!isVisible) return // Don't schedule next frame if not visible
+      animationId = requestAnimationFrame(animate)
+
+      // Frame rate limiting
+      const now = performance.now()
+      if (now - lastFrameTime < FRAME_INTERVAL) return
+      lastFrameTime = now
+
       const dt = Math.min(clock.getDelta(), 0.04)
       const t = clock.elapsedTime
 
@@ -1016,16 +991,8 @@ export function RobotConveyor3D() {
       if (!mobile) al1.intensity = 5.0 + Math.sin(t * 0.8) * 1.0
       
       al2.position.z = -4 + Math.cos(t * 0.12) * 0.6
-      al2.position.y = 5 + Math.cos(t * 0.18) * 0.5
-      if (!mobile) al2.intensity = 4.0 + Math.cos(t * 0.9) * 0.8
-      
-      al3.position.x = Math.sin(t * 0.1) * 0.8
-      if (!mobile) al3.intensity = 3.5 + Math.sin(t * 1.2) * 0.7
-      
-      if (!mobile) {
-        cyanAccent.intensity = 2.5 + Math.sin(t * 0.7) * 0.8
-        purpleAccent.intensity = 2.0 + Math.cos(t * 0.6) * 0.6
-      }
+      al2.position.y = 4 + Math.cos(t * 0.18) * 0.5
+      if (!mobile) al2.intensity = 3.0 + Math.cos(t * 0.9) * 0.8
       
       // Starfield rotation - very subtle
       stars.rotation.y += dt * 0.01
@@ -1391,8 +1358,25 @@ export function RobotConveyor3D() {
 
     animate()
 
+    // Pause when not visible (user scrolled away)
+    const visibilityObserver = new IntersectionObserver(
+      ([entry]) => {
+        isVisible = entry.isIntersecting
+        if (isVisible && animationId === null) {
+          clock.start()
+          lastFrameTime = performance.now()
+          animate()
+        }
+      },
+      { threshold: 0.05 }
+    )
+    if (container) visibilityObserver.observe(container)
+
     // Cleanup
     return () => {
+      isVisible = false
+      if (animationId !== null) cancelAnimationFrame(animationId)
+      visibilityObserver.disconnect()
       window.removeEventListener("resize", handleResize)
       renderer.dispose()
       if (container && renderer.domElement.parentNode === container) {

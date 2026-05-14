@@ -10,11 +10,11 @@ const ServicesSection = dynamic(() => import("@/components/services-section").th
 })
 
 const TestimonialsSection = dynamic(() => import("@/components/testimonials-section").then(mod => ({ default: mod.TestimonialsSection })), {
-  loading: () => <div className="min-h-screen" />,
+  loading: () => <div className="min-h-[50vh]" />,
 })
 
 const ProcessSection = dynamic(() => import("@/components/process-section").then(mod => ({ default: mod.ProcessSection })), {
-  loading: () => <div className="min-h-screen" />,
+  loading: () => <div className="min-h-[50vh]" />,
 })
 
 const ContactSection = dynamic(() => import("@/components/contact-section").then(mod => ({ default: mod.ContactSection })), {

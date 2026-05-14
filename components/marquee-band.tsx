@@ -1,35 +1,44 @@
 "use client"
 
+import { Sparkles } from "lucide-react"
+
 const items = [
-  { text: "Agentes Inteligentes" },
-  { text: "Desarrollo Web" },
-  { text: "Automatizacion" },
-  { text: "Machine Learning" },
-  { text: "Chatbots IA" },
-  { text: "Alto Rendimiento" },
-  { text: "Flujos Inteligentes" },
-  { text: "Integraciones API" },
-  { text: "Analisis de Datos" },
-  { text: "Experiencias Unicas" },
+  "Agentes Inteligentes",
+  "Desarrollo Web",
+  "Automatizacion",
+  "Machine Learning",
+  "Chatbots IA",
+  "Integraciones API",
+  "Analisis de Datos",
+  "Experiencias Unicas",
+  "Flujos n8n",
+  "GPT-4 · Claude · Gemini",
 ]
 
 export function MarqueeBand() {
   return (
-    <div className="relative bg-background overflow-hidden py-6 border-y border-border">
-      {/* Fade edges */}
-      <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-background to-transparent z-10" />
-      <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-secondary to-transparent z-10" />
+    <div className="relative bg-background overflow-hidden border-y border-border/30">
+      {/* Top + bottom thin lines for editorial weight */}
+      <div className="absolute left-0 right-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
+      <div className="absolute left-0 right-0 bottom-0 h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent" />
 
-      <div className="flex animate-marquee whitespace-nowrap">
+      {/* Fade edges */}
+      <div className="absolute left-0 top-0 bottom-0 w-24 sm:w-40 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
+      <div className="absolute right-0 top-0 bottom-0 w-24 sm:w-40 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
+
+      <div className="flex animate-marquee whitespace-nowrap py-5 lg:py-6">
         {[...items, ...items, ...items].map((item, i) => (
           <span
             key={i}
-            className="mx-8 flex items-center gap-4 text-sm font-bold uppercase tracking-[0.2em] text-muted-foreground"
+            className="mx-6 sm:mx-10 flex items-center gap-3 sm:gap-4"
           >
-            <svg width="6" height="6" viewBox="0 0 6 6" className="flex-shrink-0">
-              <circle cx="3" cy="3" r="3" fill="currentColor" opacity="0.4" />
-            </svg>
-            <span>{item.text}</span>
+            <Sparkles className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-primary/60 flex-shrink-0" strokeWidth={2} />
+            <span
+              className="text-sm sm:text-base font-semibold uppercase text-foreground/70"
+              style={{ fontFamily: "var(--font-display)", letterSpacing: "0.18em" }}
+            >
+              {item}
+            </span>
           </span>
         ))}
       </div>

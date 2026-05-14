@@ -68,14 +68,20 @@ const ProcessStep = forwardRef<HTMLDivElement, {
         onClick={onClick}
         className={`group relative w-full h-full text-left rounded-2xl border-2 p-4 lg:p-5 transition-all duration-500 flex flex-col ${isActive
           ? "border-current shadow-2xl scale-[1.02] bg-card"
-          : "border-border bg-card/50 hover:border-border hover:bg-card hover:shadow-lg"
+          : "border-border bg-card/50 hover:border-border hover:bg-card hover:shadow-lg hover:-translate-y-1"
           }`}
-        style={{ color: isActive ? step.color : undefined, willChange: 'transform' }}
+        style={{
+          color: isActive ? step.color : undefined,
+          willChange: 'transform',
+          boxShadow: isActive ? `0 20px 60px -15px ${step.color}30` : undefined,
+          transitionTimingFunction: "cubic-bezier(0.34, 1.56, 0.64, 1)",
+        }}
       >
         {/* Robot Image */}
         <div
-          className={`w-full flex items-center justify-center mb-2 lg:mb-3 transition-all duration-500 ${isActive ? "opacity-100" : "opacity-60 group-hover:opacity-80"
+          className={`w-full flex items-center justify-center mb-2 lg:mb-3 transition-all duration-500 ${isActive ? "opacity-100 scale-105" : "opacity-60 group-hover:opacity-80"
             }`}
+          style={{ transitionTimingFunction: "cubic-bezier(0.34, 1.56, 0.64, 1)" }}
         >
           <div className="relative w-56 h-56 sm:w-64 sm:h-64 md:w-56 md:h-56 lg:w-48 lg:h-48">
             <Image
@@ -200,13 +206,9 @@ export function ProcessSection() {
   }, [isAutoPlaying])
 
   return (
-    <section ref={sectionRef} className="relative bg-background py-8 lg:py-16 overflow-hidden">
-      {/* Top wave */}
-      <div className="absolute -top-1 left-0 right-0">
-        <svg viewBox="0 0 1440 80" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full rotate-180">
-          <path d="M0 40C360 80 720 0 1080 40C1260 60 1380 50 1440 40V80H0V40Z" fill="var(--background)" />
-        </svg>
-      </div>
+    <section ref={sectionRef} className="relative bg-background py-16 lg:py-28 overflow-hidden">
+      {/* Top editorial line */}
+      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-border to-transparent" />
 
       {/* Decorative - reducido */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -215,15 +217,27 @@ export function ProcessSection() {
       <div className="relative mx-auto max-w-7xl px-6">
         <div
           ref={titleRef}
-          className={`mb-8 lg:mb-16 text-center transition-all duration-700 ${titleVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"}`}
+          className={`mb-12 lg:mb-20 transition-all duration-700 ${titleVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"}`}
         >
-          <span className="inline-block text-xs font-bold uppercase tracking-[0.3em] text-accent mb-6">
-            Como trabajamos
-          </span>
-          <h2 className="text-4xl font-bold text-foreground sm:text-5xl lg:text-7xl text-balance leading-tight" style={{ fontFamily: "var(--font-display)" }}>
+          <div className="flex items-center gap-3 mb-6">
+            <span className="h-px w-10 bg-primary" />
+            <span
+              className="text-[11px] font-semibold uppercase text-primary"
+              style={{ fontFamily: "var(--font-display)", letterSpacing: "0.3em" }}
+            >
+              Como trabajamos
+            </span>
+          </div>
+          <h2
+            className="text-3xl font-bold text-foreground sm:text-4xl lg:text-6xl text-balance leading-[1.05]"
+            style={{ fontFamily: "var(--font-display)", letterSpacing: "-0.03em" }}
+          >
             De tu idea a{" "}
-            <span className="bg-gradient-to-r from-accent to-primary bg-clip-text text-transparent">resultados medibles.</span>
+            <span className="text-primary">resultados medibles.</span>
           </h2>
+          <p className="mt-4 max-w-lg text-base text-muted-foreground lg:text-lg">
+            Cuatro pasos. Sin sorpresas. Siempre con visibilidad total del progreso.
+          </p>
         </div>
 
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
@@ -234,7 +248,7 @@ export function ProcessSection() {
               index={i}
               isActive={activeStep === i}
               onClick={() => handleStepClick(i)}
-              ref={(el) => (stepRefs.current[i] = el)}
+              ref={(el) => { stepRefs.current[i] = el }}
             />
           ))}
         </div>

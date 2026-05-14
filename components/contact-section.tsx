@@ -24,29 +24,38 @@ export function ContactSection() {
   }
 
   return (
-    <section id="contacto" className="relative bg-black overflow-hidden">
-      {/* Header area */}
-      <div className="relative w-full h-[40vh] lg:h-[45vh] overflow-hidden bg-black">
-        {/* Floating text over illustration */}
+    <section id="contacto" className="relative bg-background overflow-hidden">
+      {/* Top editorial line */}
+      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-border to-transparent" />
+
+      {/* Header area — compact */}
+      <div className="relative w-full pt-20 pb-10 lg:pt-28 lg:pb-14">
         <div
           ref={titleRef}
-          className={`absolute inset-0 flex flex-col items-center justify-center text-center px-6 transition-all duration-1000 ${
+          className={`flex flex-col items-center text-center px-6 transition-all duration-1000 ${
             titleVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
           }`}
         >
-          <span className="inline-block text-xs font-bold uppercase tracking-[0.3em] text-primary mb-4 bg-black/90 backdrop-blur-xl px-4 py-1.5 rounded-full border border-primary/30">
-            Contacto
-          </span>
-          <h2 className="text-4xl font-bold text-foreground sm:text-5xl lg:text-7xl text-balance leading-tight px-4" style={{ fontFamily: "var(--font-display)" }}>
-            <span className="bg-black/90 backdrop-blur-xl px-4 sm:px-6 py-2 rounded-2xl inline-block border border-border/30">
-              Hablemos de tu{" "}
-              <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">proyecto.</span>
+          <div className="flex items-center gap-3 mb-5">
+            <span className="h-px w-10 bg-primary" />
+            <span
+              className="text-[11px] font-semibold uppercase text-primary"
+              style={{ fontFamily: "var(--font-display)", letterSpacing: "0.3em" }}
+            >
+              Contacto
             </span>
+            <span className="h-px w-10 bg-primary" />
+          </div>
+          <h2
+            className="text-3xl font-bold text-foreground sm:text-4xl lg:text-6xl text-balance leading-[1.05]"
+            style={{ fontFamily: "var(--font-display)", letterSpacing: "-0.03em" }}
+          >
+            Hablemos de tu <span className="text-primary">proyecto.</span>
           </h2>
         </div>
       </div>
 
-      <div className="relative -mt-20 mx-auto max-w-4xl px-6 pb-12 lg:pb-16">
+      <div className="relative mx-auto max-w-4xl px-6 pb-16 lg:pb-24">
         <div
           ref={formRef}
           className={`transition-all duration-1000 ${formVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-16"}`}
@@ -62,9 +71,9 @@ export function ContactSection() {
                   </div>
                   <div className="absolute -inset-4 rounded-full bg-accent/10 animate-ping" />
                 </div>
-                <h4 className="text-3xl font-bold text-foreground" style={{ fontFamily: "var(--font-display)" }}>¡Mensaje recibido!</h4>
-                <p className="mt-3 text-lg text-muted-foreground">
-                  Nos pondremos en contacto contigo en menos de 24 horas. Gracias por confiar en Zifro.
+                <h4 className="text-3xl font-bold text-foreground" style={{ fontFamily: "var(--font-display)" }}>Mensaje recibido</h4>
+                <p className="mt-3 text-lg text-muted-foreground max-w-md">
+                  Te escribiremos en menos de 24 horas. Mientras tanto, revisa tu bandeja de spam por si acaso.
                 </p>
               </div>
             ) : (
@@ -104,7 +113,7 @@ export function ContactSection() {
                           ? "border-primary shadow-lg shadow-primary/10 bg-background"
                           : "border-border/30 hover:border-primary/30"
                       }`}
-                      placeholder="Juan Perez"
+                      placeholder="Lucia Fernandez"
                     />
                   </div>
                   <div className="flex flex-col gap-2">
@@ -124,7 +133,7 @@ export function ContactSection() {
                           ? "border-primary shadow-lg shadow-primary/10 bg-background"
                           : "border-border/30 hover:border-primary/30"
                       }`}
-                      placeholder="juan@empresa.com"
+                      placeholder="lucia@miempresa.com"
                     />
                   </div>
                 </div>

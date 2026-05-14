@@ -2,7 +2,13 @@
 
 import { useEffect, useState } from "react"
 import { ArrowDown } from "lucide-react"
-import { RobotConveyor3D } from "./robot-conveyor-3d"
+import dynamic from "next/dynamic"
+
+// Lazy load Three.js conveyor — heavy, don't block initial paint
+const RobotConveyor3D = dynamic(
+  () => import("./robot-conveyor-3d").then(mod => ({ default: mod.RobotConveyor3D })),
+  { ssr: false, loading: () => <div className="absolute inset-0 bg-[#030303]" /> }
+)
 
 const rotatingWords = [
   "Agentes IA",
@@ -26,10 +32,10 @@ export function HeroSection() {
   return (
     <section
       id="inicio"
-      className="relative min-h-[100dvh] sm:min-h-screen flex items-end overflow-hidden pt-16 sm:pt-20"
+      className="relative min-h-[100dvh] sm:min-h-screen flex items-end overflow-hidden pt-32 sm:pt-40 lg:pt-44"
       style={{ background: "linear-gradient(135deg, #0a0e14 0%, #050810 50%, #0a0e14 100%)" }}
     >
-      {/* Animated Robot Conveyor Background */}
+      {/* Animated Robot Conveyor Background — Three.js (lazy loaded) */}
       <RobotConveyor3D />
 
       {/* Dark gradient overlays for text readability */}
@@ -46,17 +52,17 @@ export function HeroSection() {
         <div className="max-w-2xl">
           {/* Main heading */}
           <h1
-            className={`text-5xl font-bold leading-[1.05] tracking-tight sm:text-5xl lg:text-6xl xl:text-7xl transition-all duration-1000 delay-300 ${
+            className={`text-5xl font-bold leading-[1.03] tracking-tight sm:text-5xl lg:text-6xl xl:text-7xl transition-all duration-1000 delay-300 ${
               isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
             }`}
-            style={{ fontFamily: "var(--font-display)" }}
+            style={{ fontFamily: "var(--font-display)", letterSpacing: "-0.035em" }}
           >
             <span className="text-foreground block">Creamos</span>
             <span className="relative mt-0.5 sm:mt-1 block min-h-[1.3em] flex items-center">
               {rotatingWords.map((word, idx) => (
                 <span
                   key={word}
-                  className={`absolute inset-x-0 flex items-center font-bold transition-all duration-500 ${
+                  className={`absolute inset-x-0 flex items-center font-bold transition-all duration-500 text-primary ${
                     idx === currentWord
                       ? "opacity-100 translate-y-0 scale-100"
                       : idx ===
@@ -65,16 +71,6 @@ export function HeroSection() {
                       ? "opacity-0 -translate-y-full scale-95"
                       : "opacity-0 translate-y-full scale-95"
                   }`}
-                  style={{
-                    color:
-                      idx === 0
-                        ? "#FF4D00"
-                        : idx === 1
-                        ? "#0EA5E9"
-                        : idx === 2
-                        ? "#8B5CF6"
-                        : "#FF4D00",
-                  }}
                 >
                   {word}
                 </span>
@@ -106,7 +102,7 @@ export function HeroSection() {
           >
             <a
               href="#contacto"
-              className="group inline-flex items-center justify-center gap-3 rounded-full bg-primary px-6 sm:px-8 py-2.5 sm:py-4 text-sm sm:text-base font-semibold text-primary-foreground transition-all duration-300 hover:shadow-xl hover:shadow-primary/25 hover:-translate-y-1"
+              className="group inline-flex items-center justify-center gap-3 rounded-full bg-primary px-6 sm:px-8 py-2.5 sm:py-4 text-sm sm:text-base font-semibold text-primary-foreground transition-all duration-300 hover:shadow-xl hover:shadow-primary/25 hover:-translate-y-1 active:scale-[0.98]"
             >
               Comienza tu proyecto
               <svg
@@ -127,7 +123,7 @@ export function HeroSection() {
             </a>
             <a
               href="#servicios"
-              className="inline-flex items-center justify-center gap-2 rounded-full border-2 border-border bg-card/50 backdrop-blur-sm px-6 sm:px-8 py-2.5 sm:py-4 text-sm sm:text-base font-semibold text-foreground transition-all duration-300 hover:border-primary/50 hover:bg-card hover:-translate-y-1"
+              className="inline-flex items-center justify-center gap-2 rounded-full border-2 border-border bg-card/50 backdrop-blur-sm px-6 sm:px-8 py-2.5 sm:py-4 text-sm sm:text-base font-semibold text-foreground transition-all duration-300 hover:border-primary/50 hover:bg-card hover:-translate-y-1 active:scale-[0.98]"
             >
               Ver servicios
             </a>

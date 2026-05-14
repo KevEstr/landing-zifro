@@ -201,11 +201,9 @@ export function RobotConveyorAnimation() {
 
     // Pre-placed robots on the belt (already there)
     const presets = [
-      { xPct: 0.25, yPct: 0.15, z: 0.4, speed: 55 },
-      { xPct: 0.50, yPct: 0.28, z: 0.6, speed: 50 },
-      { xPct: 0.72, yPct: 0.40, z: 0.8, speed: 45 },
-      { xPct: 0.38, yPct: 0.55, z: 0.9, speed: 42 },
-      { xPct: 0.60, yPct: 0.10, z: 0.35, speed: 58 },
+      { xPct: 0.30, yPct: 0.20, z: 0.5, speed: 52 },
+      { xPct: 0.55, yPct: 0.35, z: 0.7, speed: 48 },
+      { xPct: 0.70, yPct: 0.50, z: 0.85, speed: 44 },
     ]
 
     presets.forEach((p, i) => {
@@ -224,15 +222,15 @@ export function RobotConveyorAnimation() {
     })
 
     // Robots that will drop from above (staggered)
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < 3; i++) {
       robots.push({
         x: width * (0.2 + rng() * 0.6),
-        y: -100 - i * 300,  // staggered above the screen
+        y: -100 - i * 400,
         z: 0.5 + rng() * 0.4,
         speed: 40 + rng() * 20,
         variant: (i + 2) % 4,
         falling: true,
-        fallY: -100 - i * 300,
+        fallY: -100 - i * 400,
         fallSpeed: 80 + rng() * 60,
         bobOffset: i * 2,
         opacity: 1,
@@ -245,7 +243,7 @@ export function RobotConveyorAnimation() {
   const initParticles = useCallback((width: number, height: number) => {
     const rng = seededRandom(123)
     const particles: Particle[] = []
-    for (let i = 0; i < 40; i++) {
+    for (let i = 0; i < 20; i++) {
       particles.push({
         x: rng() * width,
         y: rng() * height,
@@ -268,7 +266,7 @@ export function RobotConveyorAnimation() {
 
     // Resize handler
     const resize = () => {
-      const dpr = Math.min(window.devicePixelRatio || 1, 2)
+      const dpr = Math.min(window.devicePixelRatio || 1, 1.5)
       const rect = canvas.parentElement?.getBoundingClientRect()
       if (!rect) return
       canvas.width = rect.width * dpr
@@ -286,10 +284,17 @@ export function RobotConveyorAnimation() {
 
     // ── Animation loop ────────────────────────────────────────────────────
     let lastTime = performance.now()
+    const FRAME_INTERVAL = 1000 / 30 // Cap at 30fps
+    let elapsed = 0
 
     const animate = (now: number) => {
-      const dt = Math.min((now - lastTime) / 1000, 0.05) // delta in seconds, capped
-      lastTime = now
+      elapsed = now - lastTime
+      if (elapsed < FRAME_INTERVAL) {
+        animRef.current = requestAnimationFrame(animate)
+        return
+      }
+      const dt = Math.min(elapsed / 1000, 0.05) // delta in seconds, capped
+      lastTime = now - (elapsed % FRAME_INTERVAL)
       timeRef.current += dt
       beltOffsetRef.current += dt * 40
 

@@ -83,6 +83,8 @@ function ServiceShowcase({
   features,
   accentColor,
   index,
+  total,
+  tags,
 }: {
   title: string
   subtitle: string
@@ -91,16 +93,65 @@ function ServiceShowcase({
   features: { text: string }[]
   accentColor: string
   index: number
+  total: number
+  tags: string[]
 }) {
   const { ref, isVisible } = useScrollReveal(0.1)
   const isReversed = index % 2 !== 0
+  const num = String(index + 1).padStart(2, "0")
+  const totalStr = String(total).padStart(2, "0")
 
   return (
     <div
       ref={ref}
-      className={`relative transition-all duration-500 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}
+      className={`relative transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
+      style={{ transitionTimingFunction: "cubic-bezier(0.22, 1, 0.36, 1)" }}
     >
-      <div className={`flex flex-col items-center gap-8 lg:gap-0 ${isReversed ? "lg:flex-row-reverse" : "lg:flex-row"}`}>
+      {/* Editorial number watermark behind */}
+      <div
+        aria-hidden="true"
+        className={`absolute -top-8 lg:-top-16 ${isReversed ? "right-0" : "left-0"} pointer-events-none select-none`}
+      >
+        <span
+          className="block text-[120px] sm:text-[180px] lg:text-[240px] font-bold leading-none text-foreground/[0.03]"
+          style={{ fontFamily: "var(--font-display)", letterSpacing: "-0.06em" }}
+        >
+          {num}
+        </span>
+      </div>
+
+      {/* Service header line: index + tags */}
+      <div className={`relative mb-6 lg:mb-10 flex items-center gap-4 ${isReversed ? "lg:flex-row-reverse" : ""}`}>
+        <div className="flex items-center gap-3">
+          <span
+            className="text-xs font-semibold tabular-nums text-primary"
+            style={{ fontFamily: "var(--font-display)", letterSpacing: "0.05em" }}
+          >
+            {num}
+          </span>
+          <span className="text-xs text-muted-foreground/60 tabular-nums">/ {totalStr}</span>
+          <span className="hidden sm:block h-px w-12 bg-border" />
+          <span
+            className="hidden sm:inline text-[10px] font-semibold uppercase text-muted-foreground"
+            style={{ fontFamily: "var(--font-display)", letterSpacing: "0.25em" }}
+          >
+            {subtitle}
+          </span>
+        </div>
+        <div className={`hidden md:flex flex-1 items-center gap-2 ${isReversed ? "justify-start" : "justify-end"}`}>
+          {tags.map((tag, i) => (
+            <span
+              key={i}
+              className="inline-flex items-center rounded-full border border-border/60 px-2.5 py-0.5 text-[10px] font-medium text-muted-foreground/80"
+              style={{ fontFamily: "var(--font-mono, ui-monospace)" }}
+            >
+              {tag}
+            </span>
+          ))}
+        </div>
+      </div>
+
+      <div className={`relative flex flex-col items-center gap-8 lg:gap-0 ${isReversed ? "lg:flex-row-reverse" : "lg:flex-row"}`}>
         {/* Visual Side - BIG and immersive */}
         <div className="relative w-full lg:w-3/5">
           <div className="relative aspect-[16/10]">
@@ -110,23 +161,30 @@ function ServiceShowcase({
 
         {/* Content Side - Minimal but impactful */}
         <div className={`w-full lg:w-2/5 flex flex-col gap-6 ${isReversed ? "lg:pr-12" : "lg:pl-12"}`}>
-          <div
-            className="inline-flex self-start rounded-full px-5 py-2 text-xs font-bold uppercase tracking-[0.2em]"
-            style={{ backgroundColor: `${accentColor}15`, color: accentColor }}
+          <h3
+            className="text-3xl font-bold text-foreground lg:text-5xl text-balance leading-[1.05]"
+            style={{ fontFamily: "var(--font-display)", letterSpacing: "-0.025em" }}
           >
-            {subtitle}
-          </div>
-          <h3 className="text-4xl font-bold text-foreground lg:text-5xl text-balance leading-tight" style={{ fontFamily: "var(--font-display)" }}>
             {title}
           </h3>
-          <p className="text-base leading-relaxed text-muted-foreground lg:text-lg">
+          <p className="text-base leading-relaxed text-muted-foreground lg:text-lg max-w-xl">
             {description}
           </p>
 
+          {/* Feature list as bullet pairs */}
+          <ul className="grid grid-cols-2 gap-x-4 gap-y-2 mt-2">
+            {features.map((f) => (
+              <li key={f.text} className="flex items-start gap-2 text-sm text-foreground/80">
+                <span className="mt-1.5 h-1 w-1 flex-shrink-0 rounded-full bg-primary" />
+                <span>{f.text}</span>
+              </li>
+            ))}
+          </ul>
+
           <a
             href="#contacto"
-            className="group hidden lg:inline-flex items-center gap-3 self-start mt-2 rounded-full px-8 py-4 text-base font-semibold text-card transition-all duration-300 hover:shadow-2xl hover:-translate-y-1"
-            style={{ backgroundColor: accentColor }}
+            className="group hidden lg:inline-flex items-center gap-3 self-start mt-4 rounded-full px-8 py-4 text-base font-semibold text-primary-foreground bg-primary transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 active:scale-[0.98]"
+            style={{ boxShadow: `0 10px 40px -10px ${accentColor}50` }}
           >
             Solicitar informacion
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="transition-transform duration-300 group-hover:translate-x-1">
@@ -149,7 +207,8 @@ export function ServicesSection() {
       description:
         "Creamos agentes inteligentes que atienden a tus clientes las 24 horas, responden preguntas al instante y aprenden de cada conversación para mejorar continuamente.",
       VisualComponent: AgentVisual,
-      accentColor: "#FF6B35",
+      accentColor: "#FF4D00",
+      tags: ["GPT-4", "RAG", "Webhooks"],
       features: [
         { text: "Contexto de negocio" },
         { text: "Memoria de clientes" },
@@ -163,7 +222,8 @@ export function ServicesSection() {
       description:
         "Diseñamos y desarrollamos sitios web modernos, rapidos y optimizados para convertir visitantes en clientes. Cada pixel tiene un proposito.",
       VisualComponent: WebVisual,
-      accentColor: "#00D9FF",
+      accentColor: "#FF4D00",
+      tags: ["Next.js", "TypeScript", "Vercel"],
       features: [
         { text: "Conversion optimizada" },
         { text: "Analytics integrado" },
@@ -177,7 +237,8 @@ export function ServicesSection() {
       description:
         "Eliminamos tareas repetitivas conectando tus herramientas favoritas. Tu equipo se dedica a lo importante mientras la tecnologia trabaja por ti.",
       VisualComponent: AutomationVisual,
-      accentColor: "#8B5CF6",
+      accentColor: "#FF4D00",
+      tags: ["n8n", "Zapier", "REST API"],
       features: [
         { text: "Flujos personalizados" },
         { text: "Triggers inteligentes" },
@@ -188,36 +249,57 @@ export function ServicesSection() {
   ]
 
   return (
-    <section id="servicios" className="relative bg-background py-12 lg:py-16 overflow-hidden">
-      {/* Decorative floating orbs across section - reducido */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-      </div>
+    <section id="servicios" className="relative bg-background py-16 lg:py-28 overflow-hidden">
+      {/* Subtle editorial grid pattern */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 opacity-[0.025]"
+        style={{
+          backgroundImage: `
+            linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px)
+          `,
+          backgroundSize: "80px 80px",
+        }}
+      />
 
       <div className="relative mx-auto max-w-7xl px-6">
         {/* Section Header */}
         <div
           ref={titleRef}
-          className={`mb-12 lg:mb-16 text-center transition-all duration-500 ${titleVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
+          className={`mb-16 lg:mb-24 transition-all duration-500 ${titleVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
         >
-          <span className="inline-block text-xs font-bold uppercase tracking-[0.3em] text-primary mb-6">
-            Nuestros servicios
-          </span>
-          <h2 className="text-5xl font-bold text-foreground sm:text-6xl lg:text-7xl text-balance leading-tight" style={{ fontFamily: "var(--font-display)" }}>
-            Tecnologia que impulsa
+          <div className="flex items-center gap-3 mb-6">
+            <span className="h-px w-10 bg-primary" />
+            <span
+              className="text-[11px] font-semibold uppercase text-primary"
+              style={{ fontFamily: "var(--font-display)", letterSpacing: "0.3em" }}
+            >
+              Nuestros servicios
+            </span>
+          </div>
+          <h2
+            className="text-4xl font-bold text-foreground sm:text-5xl lg:text-7xl text-balance leading-[1.02]"
+            style={{ fontFamily: "var(--font-display)", letterSpacing: "-0.035em" }}
+          >
+            Tres formas de hacer
             <br />
-            <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">tu crecimiento.</span>
+            <span className="text-foreground/40">que tu negocio</span> <span className="text-primary">crezca solo.</span>
           </h2>
         </div>
 
-        {/* Services */}
-        <div className="flex flex-col gap-16 lg:gap-20">
+        {/* Services with editorial dividers */}
+        <div className="flex flex-col">
           {services.map((service, i) => (
-            <ServiceShowcase key={service.title} {...service} index={i} />
+            <div key={service.title}>
+              <ServiceShowcase {...service} index={i} total={services.length} />
+              {i < services.length - 1 && <ServiceDivider index={i} />}
+            </div>
           ))}
         </div>
 
         {/* Mobile CTA - Solo visible en móvil, al final de todos los servicios */}
-        <div className="mt-12 flex justify-center lg:hidden">
+        <div className="mt-16 flex justify-center lg:hidden">
           <a
             href="#contacto"
             className="group inline-flex items-center gap-3 rounded-full bg-primary px-10 py-5 text-lg font-semibold text-primary-foreground transition-all duration-300 hover:shadow-2xl hover:shadow-primary/30 hover:-translate-y-1"
@@ -237,5 +319,49 @@ export function ServicesSection() {
         </svg>
       </div>
     </section>
+  )
+}
+
+/* ────────────────────────────────────────────────────────────────────────
+   Editorial divider between services: long horizontal line with animated
+   centered node, technical hash count, and side dashes — feels like the
+   gutter of a print magazine.
+   ──────────────────────────────────────────────────────────────────────── */
+function ServiceDivider({ index }: { index: number }) {
+  const { ref, isVisible } = useScrollReveal(0.3)
+  const num = String(index + 1).padStart(3, "0")
+  return (
+    <div
+      ref={ref}
+      className={`relative my-16 lg:my-24 transition-all duration-1000 ${isVisible ? "opacity-100" : "opacity-0"}`}
+    >
+      {/* Section transition label */}
+      <div className="mb-8 flex items-center justify-center gap-3">
+        <span
+          className="text-[10px] font-semibold tabular-nums text-muted-foreground/60"
+          style={{ fontFamily: "var(--font-mono, ui-monospace)", letterSpacing: "0.1em" }}
+        >
+          §{num}
+        </span>
+        <span className="text-[10px] text-muted-foreground/40">·</span>
+        <span
+          className="text-[10px] font-semibold uppercase text-muted-foreground/60"
+          style={{ fontFamily: "var(--font-display)", letterSpacing: "0.3em" }}
+        >
+          Siguiente
+        </span>
+      </div>
+
+      {/* Long horizontal line with animated center node */}
+      <div className="relative flex items-center">
+        <span className="flex-1 h-px bg-gradient-to-r from-transparent to-border" />
+        <div className="flex items-center gap-2 px-4">
+          <span className="h-1.5 w-1.5 rounded-full bg-border" />
+          <span className="h-2 w-2 rounded-full bg-primary animate-pulse" />
+          <span className="h-1.5 w-1.5 rounded-full bg-border" />
+        </div>
+        <span className="flex-1 h-px bg-gradient-to-l from-transparent to-border" />
+      </div>
+    </div>
   )
 }

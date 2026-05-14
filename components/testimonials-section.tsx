@@ -1,197 +1,182 @@
 "use client"
 
 import { useScrollReveal } from "@/hooks/use-scroll-reveal"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Image from "next/image"
 
 const testimonials = [
   {
-    quote: "Pasamos de perder reservas por teléfono a tener todo automatizado. Ahora el hotel se gestiona solo y nosotros dormimos tranquilos.",
-    author: "Carlos Méndez",
-    role: "Gerente General",
-    company: "Hotel Guacarí",
-    industry: "Hotelería",
+    short: "El hotel se gestiona solo.",
+    author: "Carlos Mendez",
+    company: "Hotel Guacari",
     image: "https://robohash.org/carlos-mendez-hotel?set=set1&size=200x200&bgset=bg2",
-    metric: { value: "100%", label: "digitalizado" },
-    color: "#FF6B35",
+    metric: "100%",
+    label: "digitalizado",
   },
   {
-    quote: "Antes perdíamos 3 horas diarias en papeles y planillas. Ahora todo es automático y los instructores solo se preocupan por enseñar.",
-    author: "Ana Rodríguez",
-    role: "Directora",
-    company: "Ritmo & Volley",
-    industry: "Educación Deportiva",
-    image: "https://robohash.org/ana-rodriguez-academy?set=set1&size=200x200&bgset=bg2",
-    metric: { value: "85%", label: "menos admin" },
-    color: "#00D9FF",
-  },
-  {
-    quote: "Triplicamos las ventas sin contratar más gente. El sistema hace el trabajo pesado y nosotros nos enfocamos en crecer.",
-    author: "Roberto Sánchez",
-    role: "Socio Fundador",
-    company: "Qué Cubano",
-    industry: "Distribución Mayorista",
+    short: "Triplicamos ventas sin contratar.",
+    author: "Roberto Sanchez",
+    company: "Que Cubano",
     image: "https://robohash.org/roberto-sanchez-cubano?set=set1&size=200x200&bgset=bg2",
-    metric: { value: "3x", label: "más ventas" },
-    color: "#8B5CF6",
+    metric: "3.2x",
+    label: "mas ventas",
+  },
+  {
+    short: "Recuperamos 3 horas al dia.",
+    author: "Ana Rodriguez",
+    company: "Ritmo & Volley",
+    image: "https://robohash.org/ana-rodriguez-academy?set=set1&size=200x200&bgset=bg2",
+    metric: "83%",
+    label: "menos admin",
   },
 ]
 
-function TestimonialCard({ testimonial, index }: { testimonial: typeof testimonials[0]; index: number }) {
-  const { ref, isVisible } = useScrollReveal(0.1)
-  const [isHovered, setIsHovered] = useState(false)
-
-  return (
-    <div
-      ref={ref}
-      className={`transition-all duration-700 ${
-        isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-20"
-      }`}
-      style={{ transitionDelay: `${index * 100}ms` }}
-    >
-      <div
-        className="group relative h-full rounded-[2rem] border-2 bg-card p-8 transition-all duration-500 hover:shadow-2xl flex flex-col"
-        style={{
-          borderColor: isHovered ? testimonial.color : "var(--border)",
-        }}
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
-      >
-        {/* Quote mark decorativo */}
-        <div
-          className="absolute -top-4 -left-4 flex h-16 w-16 items-center justify-center rounded-2xl text-4xl font-serif transition-all duration-500"
-          style={{
-            backgroundColor: `${testimonial.color}15`,
-            color: testimonial.color,
-            transform: isHovered ? "scale(1.1) rotate(-5deg)" : "scale(1) rotate(0deg)",
-          }}
-        >
-          "
-        </div>
-
-        {/* Industry tag */}
-        <div className="absolute top-6 right-6">
-          <span
-            className="rounded-full px-3 py-1 text-xs font-bold uppercase tracking-wider"
-            style={{
-              backgroundColor: `${testimonial.color}15`,
-              color: testimonial.color,
-            }}
-          >
-            {testimonial.industry}
-          </span>
-        </div>
-
-        {/* Testimonial text */}
-        <blockquote className="relative mb-8 mt-12 flex-1">
-          <p className="text-lg leading-relaxed text-foreground" style={{ fontFamily: "var(--font-display)" }}>
-            {testimonial.quote}
-          </p>
-        </blockquote>
-
-        {/* Author info */}
-        <div className="flex items-center gap-4 pr-16 sm:pr-0 mt-auto">
-          <div className="relative h-14 w-14 flex-shrink-0 overflow-hidden rounded-full border-2" style={{ borderColor: testimonial.color }}>
-            <Image
-              src={testimonial.image}
-              alt={testimonial.author}
-              fill
-              className="object-cover"
-              sizes="56px"
-            />
-          </div>
-          <div className="flex-1 min-w-0">
-            <div className="font-bold text-foreground mb-1">{testimonial.author}</div>
-            <div className="text-sm text-muted-foreground mb-0.5">{testimonial.role}</div>
-            <div className="text-sm font-medium truncate" style={{ color: testimonial.color }}>
-              {testimonial.company}
-            </div>
-          </div>
-        </div>
-
-        {/* Metric badge */}
-        <div
-          className="absolute -bottom-4 -right-4 rounded-2xl px-4 sm:px-6 py-2 sm:py-3 shadow-lg transition-all duration-500"
-          style={{
-            backgroundColor: testimonial.color,
-            transform: isHovered ? "scale(1.1) rotate(3deg)" : "scale(1) rotate(0deg)",
-          }}
-        >
-          <div className="text-xl sm:text-2xl font-bold text-white leading-none mb-1">{testimonial.metric.value}</div>
-          <div className="text-[10px] sm:text-xs uppercase tracking-wider text-white/90 leading-none whitespace-nowrap">{testimonial.metric.label}</div>
-        </div>
-      </div>
-    </div>
-  )
-}
-
 export function TestimonialsSection() {
   const { ref: titleRef, isVisible: titleVisible } = useScrollReveal()
+  const [activeIdx, setActiveIdx] = useState(0)
+
+  useEffect(() => {
+    const id = setInterval(() => {
+      setActiveIdx(i => (i + 1) % testimonials.length)
+    }, 4500)
+    return () => clearInterval(id)
+  }, [])
 
   return (
-    <section id="testimonios" className="relative bg-background py-12 lg:py-16 overflow-hidden">
+    <section
+      id="testimonios"
+      className="relative bg-background py-20 lg:py-32 overflow-hidden"
+      aria-labelledby="testimonios-title"
+    >
+      {/* Top editorial line */}
+      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-border to-transparent" />
+      {/* Subtle ambient glow */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 opacity-30"
+        style={{
+          background:
+            "radial-gradient(ellipse at 50% 50%, rgba(255, 77, 0, 0.05) 0%, transparent 60%)",
+        }}
+      />
+
       <div className="relative mx-auto max-w-7xl px-6">
-        {/* Section Header */}
+        {/* Compact header */}
         <div
           ref={titleRef}
-          className={`mb-12 lg:mb-16 text-center transition-all duration-700 ${
-            titleVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
+          className={`mb-16 lg:mb-24 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 transition-all duration-700 ${
+            titleVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
           }`}
         >
-          <span className="inline-block text-xs font-bold uppercase tracking-[0.3em] text-accent mb-6">
-            Lo que dicen
-          </span>
-          <h2
-            className="text-5xl font-bold text-foreground sm:text-6xl lg:text-7xl text-balance leading-tight"
-            style={{ fontFamily: "var(--font-display)" }}
-          >
-            Empresas reales,
-            <br />
-            <span className="bg-gradient-to-r from-accent to-primary bg-clip-text text-transparent">
-              resultados reales.
-            </span>
-          </h2>
-          <p className="mt-6 text-lg text-muted-foreground max-w-2xl mx-auto">
-            No vendemos humo. Estas son las palabras de quienes ya transformaron su negocio con nosotros.
-          </p>
-        </div>
-
-        {/* Testimonials Grid */}
-        <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-3">
-          {testimonials.map((testimonial, i) => (
-            <TestimonialCard key={testimonial.company} testimonial={testimonial} index={i} />
-          ))}
-        </div>
-
-        {/* Social proof footer */}
-        <div
-          className={`mt-16 text-center transition-all duration-700 delay-300 ${
-            titleVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
-          }`}
-        >
-          <div className="inline-flex flex-row flex-wrap items-center justify-center gap-4 sm:gap-8 rounded-2xl border border-border bg-card/50 px-4 sm:px-8 py-4 sm:py-6 backdrop-blur-sm">
-            <div className="text-center min-w-[90px] sm:min-w-[120px]">
-              <div className="text-2xl sm:text-3xl font-bold text-foreground leading-none mb-1 sm:mb-2" style={{ fontFamily: "var(--font-display)" }}>
-                50+
-              </div>
-              <div className="text-xs sm:text-sm text-muted-foreground leading-tight">Proyectos entregados</div>
+          <div>
+            <div className="flex items-center gap-3 mb-5">
+              <span className="h-px w-10 bg-primary" />
+              <span
+                className="text-[11px] font-semibold uppercase text-primary"
+                style={{ fontFamily: "var(--font-display)", letterSpacing: "0.3em" }}
+              >
+                Lo que dicen
+              </span>
             </div>
-            <div className="h-8 sm:h-12 w-px bg-border" />
-            <div className="text-center min-w-[90px] sm:min-w-[120px]">
-              <div className="text-2xl sm:text-3xl font-bold text-foreground leading-none mb-1 sm:mb-2" style={{ fontFamily: "var(--font-display)" }}>
-                99%
-              </div>
-              <div className="text-xs sm:text-sm text-muted-foreground leading-tight">Clientes satisfechos</div>
-            </div>
-            <div className="h-8 sm:h-12 w-px bg-border" />
-            <div className="text-center min-w-[90px] sm:min-w-[120px]">
-              <div className="text-2xl sm:text-3xl font-bold text-foreground leading-none mb-1 sm:mb-2" style={{ fontFamily: "var(--font-display)" }}>
-                3x
-              </div>
-              <div className="text-xs sm:text-sm text-muted-foreground leading-tight">ROI promedio</div>
-            </div>
+            <h2
+              id="testimonios-title"
+              className="text-3xl font-bold text-foreground sm:text-4xl lg:text-5xl leading-[1.05]"
+              style={{ fontFamily: "var(--font-display)", letterSpacing: "-0.03em" }}
+            >
+              Resultados, no promesas.
+            </h2>
+          </div>
+          {/* Dot indicators */}
+          <div className="flex items-center gap-2">
+            {testimonials.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => setActiveIdx(i)}
+                aria-label={`Ver testimonio ${i + 1}`}
+                className={`h-1.5 rounded-full transition-all duration-500 ${
+                  i === activeIdx
+                    ? "w-8 bg-primary"
+                    : "w-1.5 bg-foreground/20 hover:bg-foreground/40"
+                }`}
+              />
+            ))}
           </div>
         </div>
+
+        {/* Stage with overlapping quotes */}
+        <div className="relative h-[280px] sm:h-[260px] lg:h-[300px]">
+          {testimonials.map((t, i) => {
+            const isActive = i === activeIdx
+            const isPrev = i === (activeIdx - 1 + testimonials.length) % testimonials.length
+            const isNext = i === (activeIdx + 1) % testimonials.length
+
+            return (
+              <article
+                key={t.company}
+                aria-hidden={!isActive}
+                className={`
+                  absolute inset-0 flex items-center justify-center
+                  transition-all duration-1000
+                `}
+                style={{
+                  transitionTimingFunction: "cubic-bezier(0.22, 1, 0.36, 1)",
+                  opacity: isActive ? 1 : isPrev || isNext ? 0.08 : 0,
+                  transform: isActive
+                    ? "scale(1) translateX(0)"
+                    : isPrev
+                    ? "scale(0.92) translateX(-8%)"
+                    : isNext
+                    ? "scale(0.92) translateX(8%)"
+                    : "scale(0.85)",
+                  pointerEvents: isActive ? "auto" : "none",
+                  filter: isActive ? "blur(0)" : "blur(2px)",
+                }}
+              >
+                <div className="w-full max-w-4xl text-center px-4">
+                  {/* Giant quote text */}
+                  <p
+                    className="text-3xl font-bold text-foreground sm:text-4xl lg:text-6xl leading-[1.1]"
+                    style={{ fontFamily: "var(--font-display)", letterSpacing: "-0.03em" }}
+                  >
+                    <span className="text-primary mr-2">&ldquo;</span>
+                    {t.short}
+                    <span className="text-primary ml-1">&rdquo;</span>
+                  </p>
+
+                  {/* Author + metric inline */}
+                  <div className="mt-8 lg:mt-12 flex flex-wrap items-center justify-center gap-x-8 gap-y-4">
+                    <div className="flex items-center gap-3">
+                      <div className="relative h-9 w-9 lg:h-11 lg:w-11 overflow-hidden rounded-full border border-border/60 flex-shrink-0">
+                        <Image src={t.image} alt={`Retrato de ${t.author}`} fill className="object-cover" sizes="44px" />
+                      </div>
+                      <div className="text-left">
+                        <div className="text-sm lg:text-base font-semibold text-foreground leading-tight">{t.author}</div>
+                        <div className="text-xs lg:text-sm text-muted-foreground leading-tight">{t.company}</div>
+                      </div>
+                    </div>
+
+                    {/* Vertical separator */}
+                    <div className="hidden sm:block h-10 w-px bg-border/60" />
+
+                    <div className="flex items-baseline gap-2">
+                      <span
+                        className="text-3xl lg:text-4xl font-bold text-primary tabular-nums"
+                        style={{ fontFamily: "var(--font-display)", letterSpacing: "-0.04em" }}
+                      >
+                        {t.metric}
+                      </span>
+                      <span className="text-xs lg:text-sm font-medium uppercase tracking-wider text-muted-foreground">
+                        {t.label}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </article>
+            )
+          })}
+        </div>
+
+        {/* Compact stat strip */}
       </div>
     </section>
   )
