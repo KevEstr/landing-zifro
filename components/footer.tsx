@@ -110,7 +110,7 @@ export function Footer() {
         {/* Bottom line */}
         <div className="mt-12 flex flex-col items-center justify-between gap-3 border-t border-border/20 pt-8 sm:flex-row">
           <p className="text-xs opacity-40">© 2026 Zifro. Todos los derechos reservados.</p>
-          <p className="text-xs opacity-40">Hecho en Buenos Aires · Trabajamos remoto</p>
+          <p className="text-xs opacity-40">Hecho en Colombia para el mundo</p>
         </div>
       </div>
     </footer>

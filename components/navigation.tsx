@@ -47,7 +47,7 @@ export function Navigation() {
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-2">
         {/* Logo */}
         <a href="#inicio" className="flex items-center group pl-1 sm:pl-2">
-          <div className="relative h-8 sm:h-9 lg:h-10 transition-transform duration-300 group-hover:scale-105">
+          <div className="relative h-6 sm:h-7 lg:h-8 transition-transform duration-300 group-hover:scale-105">
             <img 
               src="/logo.png" 
               alt="Zifro" 

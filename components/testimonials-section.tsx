@@ -45,7 +45,7 @@ export function TestimonialsSection() {
   return (
     <section
       id="testimonios"
-      className="relative bg-background py-20 lg:py-32 overflow-hidden"
+      className="relative bg-background py-12 lg:py-16 overflow-hidden"
       aria-labelledby="testimonios-title"
     >
       {/* Top editorial line */}
@@ -64,7 +64,7 @@ export function TestimonialsSection() {
         {/* Compact header */}
         <div
           ref={titleRef}
-          className={`mb-16 lg:mb-24 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 transition-all duration-700 ${
+          className={`mb-10 lg:mb-14 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 transition-all duration-700 ${
             titleVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
           }`}
         >

@@ -249,7 +249,7 @@ export function ServicesSection() {
   ]
 
   return (
-    <section id="servicios" className="relative bg-background py-16 lg:py-28 overflow-hidden">
+    <section id="servicios" className="relative bg-background py-16 lg:py-20 overflow-hidden">
       {/* Subtle editorial grid pattern */}
       <div
         aria-hidden="true"
@@ -293,7 +293,14 @@ export function ServicesSection() {
           {services.map((service, i) => (
             <div key={service.title}>
               <ServiceShowcase {...service} index={i} total={services.length} />
-              {i < services.length - 1 && <ServiceDivider index={i} />}
+              {i < services.length - 1 && (
+                <ServiceDivider
+                  fromIdx={i}
+                  toIdx={i + 1}
+                  nextSubtitle={services[i + 1].subtitle}
+                  nextTitle={services[i + 1].title}
+                />
+              )}
             </div>
           ))}
         </div>
@@ -323,44 +330,126 @@ export function ServicesSection() {
 }
 
 /* ────────────────────────────────────────────────────────────────────────
-   Editorial divider between services: long horizontal line with animated
-   centered node, technical hash count, and side dashes — feels like the
-   gutter of a print magazine.
+   Editorial divider between services
+   Animated SVG line that draws across, with a "next up" card revealing the
+   following service title. Subtle, premium, no fake-functional UI.
    ──────────────────────────────────────────────────────────────────────── */
-function ServiceDivider({ index }: { index: number }) {
+function ServiceDivider({
+  fromIdx,
+  toIdx,
+  nextSubtitle,
+  nextTitle,
+}: {
+  fromIdx: number
+  toIdx: number
+  nextSubtitle: string
+  nextTitle: string
+}) {
   const { ref, isVisible } = useScrollReveal(0.3)
-  const num = String(index + 1).padStart(3, "0")
+  const fromNum = String(fromIdx + 1).padStart(2, "0")
+  const toNum = String(toIdx + 1).padStart(2, "0")
+
   return (
-    <div
-      ref={ref}
-      className={`relative my-16 lg:my-24 transition-all duration-1000 ${isVisible ? "opacity-100" : "opacity-0"}`}
-    >
-      {/* Section transition label */}
-      <div className="mb-8 flex items-center justify-center gap-3">
-        <span
-          className="text-[10px] font-semibold tabular-nums text-muted-foreground/60"
-          style={{ fontFamily: "var(--font-mono, ui-monospace)", letterSpacing: "0.1em" }}
+    <div ref={ref} className="relative my-12 lg:my-16">
+      {/* Animated draw-on horizontal SVG line */}
+      <svg
+        className="absolute inset-x-0 top-1/2 -translate-y-1/2 w-full h-[2px] overflow-visible pointer-events-none"
+        viewBox="0 0 100 1"
+        preserveAspectRatio="none"
+      >
+        <line
+          x1="0"
+          y1="0.5"
+          x2="100"
+          y2="0.5"
+          stroke="rgba(255,255,255,0.06)"
+          strokeWidth="0.5"
+          vectorEffect="non-scaling-stroke"
+        />
+        <line
+          x1="0"
+          y1="0.5"
+          x2="100"
+          y2="0.5"
+          stroke="var(--primary)"
+          strokeWidth="0.5"
+          vectorEffect="non-scaling-stroke"
+          strokeDasharray="100"
+          strokeDashoffset={isVisible ? "0" : "100"}
+          style={{ transition: "stroke-dashoffset 1.4s cubic-bezier(0.22, 1, 0.36, 1)", opacity: 0.4 }}
+        />
+      </svg>
+
+      {/* Center floating "next up" preview */}
+      <div className="relative flex items-center justify-center">
+        <div
+          className={`
+            relative flex items-center gap-3 sm:gap-4 lg:gap-6
+            bg-background border border-border/60 rounded-full
+            px-3 py-2 sm:px-4 sm:py-2.5 lg:px-6 lg:py-3
+            max-w-[calc(100%-3rem)]
+            transition-all duration-700
+            ${isVisible ? "opacity-100 translate-y-0 scale-100" : "opacity-0 translate-y-3 scale-95"}
+          `}
+          style={{ transitionTimingFunction: "cubic-bezier(0.22, 1, 0.36, 1)", transitionDelay: "0.4s" }}
         >
-          §{num}
-        </span>
-        <span className="text-[10px] text-muted-foreground/40">·</span>
-        <span
-          className="text-[10px] font-semibold uppercase text-muted-foreground/60"
-          style={{ fontFamily: "var(--font-display)", letterSpacing: "0.3em" }}
-        >
-          Siguiente
-        </span>
+          {/* From → To progression chips */}
+          <div className="flex items-center gap-1.5 sm:gap-2 flex-shrink-0">
+            <span
+              className="text-[10px] font-bold tabular-nums text-muted-foreground/50"
+              style={{ fontFamily: "var(--font-display)", letterSpacing: "0.05em" }}
+            >
+              {fromNum}
+            </span>
+            <span className="flex items-center gap-0.5">
+              <span className="h-px w-1.5 sm:w-2 bg-muted-foreground/30" />
+              <span className="h-px w-2 sm:w-3 bg-primary" />
+              <svg width="6" height="6" viewBox="0 0 6 6" className="text-primary" fill="currentColor">
+                <path d="M0 0 L6 3 L0 6 Z" />
+              </svg>
+            </span>
+            <span
+              className="text-[10px] font-bold tabular-nums text-primary"
+              style={{ fontFamily: "var(--font-display)", letterSpacing: "0.05em" }}
+            >
+              {toNum}
+            </span>
+          </div>
+
+          <span className="h-4 w-px bg-border flex-shrink-0" />
+
+          {/* Next service preview */}
+          <div className="flex flex-col min-w-0">
+            <span
+              className="text-[8px] font-semibold uppercase text-primary/80 leading-none mb-1"
+              style={{ fontFamily: "var(--font-display)", letterSpacing: "0.25em" }}
+            >
+              {nextSubtitle}
+            </span>
+            <span
+              className="text-[11px] sm:text-xs lg:text-sm font-semibold text-foreground leading-tight truncate"
+              style={{ fontFamily: "var(--font-display)", letterSpacing: "-0.01em" }}
+            >
+              {nextTitle}
+            </span>
+          </div>
+        </div>
       </div>
 
-      {/* Long horizontal line with animated center node */}
-      <div className="relative flex items-center">
-        <span className="flex-1 h-px bg-gradient-to-r from-transparent to-border" />
-        <div className="flex items-center gap-2 px-4">
-          <span className="h-1.5 w-1.5 rounded-full bg-border" />
-          <span className="h-2 w-2 rounded-full bg-primary animate-pulse" />
-          <span className="h-1.5 w-1.5 rounded-full bg-border" />
-        </div>
-        <span className="flex-1 h-px bg-gradient-to-l from-transparent to-border" />
+      {/* Side floating dots — hidden on mobile to avoid clutter */}
+      <div
+        className={`hidden sm:flex absolute left-4 lg:left-12 top-1/2 -translate-y-1/2 items-center gap-1 transition-opacity duration-1000 ${isVisible ? "opacity-100" : "opacity-0"}`}
+        style={{ transitionDelay: "0.8s" }}
+      >
+        <span className="h-1 w-1 rounded-full bg-primary/60" />
+        <span className="h-1 w-1 rounded-full bg-border" />
+      </div>
+      <div
+        className={`hidden sm:flex absolute right-4 lg:right-12 top-1/2 -translate-y-1/2 items-center gap-1 transition-opacity duration-1000 ${isVisible ? "opacity-100" : "opacity-0"}`}
+        style={{ transitionDelay: "0.8s" }}
+      >
+        <span className="h-1 w-1 rounded-full bg-border" />
+        <span className="h-1 w-1 rounded-full bg-primary/60" />
       </div>
     </div>
   )
