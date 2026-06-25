@@ -1,0 +1,29 @@
+# Zifro
+
+> Zifro es una empresa de desarrollo de software a medida con base en Medellín, Colombia, fundada en 2023. Construye agentes de inteligencia artificial, aplicaciones web y móviles, MVPs para startups y automatización de procesos. Opera de forma remota para clientes en Latinoamérica y el resto del mundo.
+
+Datos clave:
+- Sector: desarrollo de software a medida y agentes de IA
+- Ubicación: Medellín, Antioquia, Colombia (operación remota)
+- Fundación: 2023
+- Fundador: Kevin Estrada (CEO)
+- Contacto: hola@zifro.app
+- Stack: React, Next.js, TypeScript, Node.js, Python, PostgreSQL, React Native
+
+## Páginas principales
+
+- [Inicio](https://zifro.app): servicios, proceso de trabajo, testimonios y preguntas frecuentes.
+- [Ziff — Agente de IA para WhatsApp](https://zifro.app/ziff): agente multimodal que lee mensajes, interpreta fotos, escucha audios, responde con voz y consulta inventario en tiempo real para atender y vender 24/7.
+- [Preguntas frecuentes](https://zifro.app/#preguntas): cómo elegir empresa de software en Colombia, qué es un MVP, agentes de IA, costos y tecnologías.
+
+## Servicios
+
+- Desarrollo de software a medida (aplicaciones web y móviles).
+- Agentes de inteligencia artificial para atención al cliente, ventas y automatización interna.
+- MVPs para startups en 6 a 12 semanas.
+- Automatización de procesos e integración con sistemas existentes (CRM, WhatsApp, APIs).
+
+## Legal
+
+- [Política de privacidad](https://zifro.app/privacidad)
+- [Términos y condiciones](https://zifro.app/terminos)

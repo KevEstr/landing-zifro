@@ -11,6 +11,9 @@ export const metadata: Metadata = {
   title: "Términos y Condiciones | Zifro",
   description:
     "Condiciones generales que rigen la prestación de servicios de desarrollo de software, agentes de inteligencia artificial y automatización por parte de Zifro.",
+  alternates: {
+    canonical: "/terminos",
+  },
 }
 
 const toc: TocItem[] = [

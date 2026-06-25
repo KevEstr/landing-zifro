@@ -11,6 +11,9 @@ export const metadata: Metadata = {
   title: "Política de Privacidad | Zifro",
   description:
     "Cómo Zifro recolecta, usa, almacena y protege los datos personales de sus clientes y usuarios, en cumplimiento de la Ley 1581 de 2012 de Colombia.",
+  alternates: {
+    canonical: "/privacidad",
+  },
 }
 
 const toc: TocItem[] = [

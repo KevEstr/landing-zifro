@@ -86,47 +86,62 @@ export const metadata: Metadata = {
 
 const organizationJsonLd = {
   '@context': 'https://schema.org',
-  '@type': 'Organization',
-  name: 'Zifro',
-  url: siteUrl,
-  logo: `${siteUrl}/logo.png`,
-  description:
-    'Empresa de desarrollo de software a medida: agentes de IA, aplicaciones web y móviles, MVPs y automatización para startups y empresas.',
-  foundingDate: '2023',
-  email: 'hola@zifro.app',
-  founders: [
+  '@graph': [
     {
-      '@type': 'Person',
-      name: 'Kevin Estrada',
-      jobTitle: 'Fundador y CEO',
+      '@type': 'Organization',
+      '@id': `${siteUrl}/#organization`,
+      name: 'Zifro',
+      url: siteUrl,
+      logo: `${siteUrl}/logo.png`,
+      description:
+        'Empresa de desarrollo de software a medida: agentes de IA, aplicaciones web y móviles, MVPs y automatización para startups y empresas.',
+      foundingDate: '2023',
+      email: 'hola@zifro.app',
+      founders: [
+        {
+          '@type': 'Person',
+          name: 'Kevin Estrada',
+          jobTitle: 'Fundador y CEO',
+        },
+      ],
+      address: {
+        '@type': 'PostalAddress',
+        addressLocality: 'Medellín',
+        addressRegion: 'Antioquia',
+        addressCountry: 'CO',
+      },
+      contactPoint: {
+        '@type': 'ContactPoint',
+        contactType: 'sales',
+        email: 'hola@zifro.app',
+        availableLanguage: ['es', 'en'],
+      },
+      knowsAbout: [
+        'Desarrollo de software a medida',
+        'Agentes de inteligencia artificial',
+        'Desarrollo web',
+        'Aplicaciones móviles',
+        'Automatización de procesos',
+        'MVP para startups',
+      ],
+      // Añade aquí TODOS los perfiles a medida que los crees (Clutch, GitHub, etc.)
+      sameAs: [
+        'https://www.linkedin.com/company/zifro',
+        'https://github.com/zifro',
+        'https://www.instagram.com/zifro.app',
+        'https://clutch.co/profile/zifro',
+      ],
     },
-  ],
-  address: {
-    '@type': 'PostalAddress',
-    addressLocality: 'Medellín',
-    addressRegion: 'Antioquia',
-    addressCountry: 'CO',
-  },
-  contactPoint: {
-    '@type': 'ContactPoint',
-    contactType: 'sales',
-    email: 'hola@zifro.app',
-    availableLanguage: ['es', 'en'],
-  },
-  knowsAbout: [
-    'Desarrollo de software a medida',
-    'Agentes de inteligencia artificial',
-    'Desarrollo web',
-    'Aplicaciones móviles',
-    'Automatización de procesos',
-    'MVP para startups',
-  ],
-  // Añade aquí TODOS los perfiles a medida que los crees (Clutch, GitHub, etc.)
-  sameAs: [
-    'https://www.linkedin.com/company/zifro',
-    'https://github.com/zifro',
-    'https://www.instagram.com/zifro.app',
-    'https://clutch.co/profile/zifro',
+    {
+      '@type': 'WebSite',
+      '@id': `${siteUrl}/#website`,
+      url: siteUrl,
+      name: 'Zifro',
+      description:
+        'Desarrollo de software a medida, agentes de IA, apps web y móviles, MVPs y automatización.',
+      publisher: { '@id': `${siteUrl}/#organization` },
+      inLanguage: 'es',
+    },
   ],
 }
 
