@@ -60,7 +60,7 @@ export default function PrivacyPage() {
             { term: "Domicilio", description: "Medellín, Colombia" },
             {
               term: "Correo de contacto",
-              description: "privacidad@zifro.dev",
+              description: "privacidad@zifro.app",
             },
           ]}
         />
@@ -73,7 +73,7 @@ export default function PrivacyPage() {
         </p>
         <LegalList
           items={[
-            "Visitantes del sitio web zifro.dev y sus subdominios.",
+            "Visitantes del sitio web zifro.app y sus subdominios.",
             "Clientes actuales, prospectos y personas que solicitan información comercial.",
             "Usuarios finales de los productos que desarrollamos para nuestros clientes, cuando Zifro actúa como encargado del tratamiento.",
             "Proveedores, aliados comerciales y candidatos a posiciones laborales.",
@@ -364,10 +364,10 @@ export default function PrivacyPage() {
           Para ejercer cualquier derecho, presentar consultas o reclamos sobre
           el tratamiento de tus datos, escríbenos a{" "}
           <a
-            href="mailto:privacidad@zifro.dev"
+            href="mailto:privacidad@zifro.app"
             className="font-medium text-primary underline-offset-4 hover:underline"
           >
-            privacidad@zifro.dev
+            privacidad@zifro.app
           </a>{" "}
           con la siguiente información:
         </p>

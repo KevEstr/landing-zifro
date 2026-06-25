@@ -21,8 +21,16 @@ const ContactSection = dynamic(() => import("@/components/contact-section").then
   loading: () => <div className="min-h-[50vh]" />,
 })
 
+const FaqSection = dynamic(() => import("@/components/faq-section").then(mod => ({ default: mod.FaqSection })), {
+  loading: () => <div className="min-h-[50vh]" />,
+})
+
 const Footer = dynamic(() => import("@/components/footer").then(mod => ({ default: mod.Footer })), {
   loading: () => <div className="min-h-[20vh]" />,
+})
+
+const VeraTeaser = dynamic(() => import("@/components/vera-teaser").then(mod => ({ default: mod.VeraTeaser })), {
+  loading: () => <div className="min-h-[40vh]" />,
 })
 
 export default function HomePage() {
@@ -31,8 +39,10 @@ export default function HomePage() {
       <Navigation />
       <HeroSection />
       <ServicesSection />
+      <VeraTeaser />
       <TestimonialsSection />
       <ProcessSection />
+      <FaqSection />
       <ContactSection />
       <Footer />
     </main>

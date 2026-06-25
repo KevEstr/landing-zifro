@@ -247,11 +247,11 @@ export function LegalShell({
                 </p>
               </div>
               <a
-                href="mailto:legal@zifro.dev"
+                href="mailto:legal@zifro.app"
                 className="group inline-flex items-center justify-center gap-3 self-start rounded-full bg-primary px-7 py-4 text-sm font-semibold text-primary-foreground transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-primary/25 active:scale-[0.98] lg:self-auto"
               >
                 <Mail size={16} />
-                legal@zifro.dev
+                legal@zifro.app
                 <ArrowUpRight
                   size={16}
                   className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"

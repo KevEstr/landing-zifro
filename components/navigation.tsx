@@ -4,10 +4,11 @@ import { useState, useEffect } from "react"
 import { Menu, X } from "lucide-react"
 
 const navLinks = [
-  { label: "Inicio", href: "#inicio" },
-  { label: "Servicios", href: "#servicios" },
-  { label: "Testimonios", href: "#testimonios" },
-  { label: "Contacto", href: "#contacto" },
+  { label: "Inicio", href: "/#inicio" },
+  { label: "Servicios", href: "/#servicios" },
+  { label: "Ziff", href: "/ziff" },
+  { label: "Testimonios", href: "/#testimonios" },
+  { label: "Contacto", href: "/#contacto" },
 ]
 
 export function Navigation() {
@@ -18,15 +19,17 @@ export function Navigation() {
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50)
-      // Detect active section
-      const sections = navLinks.map((l) => l.href)
+      // Only track in-page anchors for active state (skip real routes like /vera)
+      const anchors = navLinks
+        .filter((l) => l.href.includes("#"))
+        .map((l) => ({ href: l.href, id: "#" + l.href.split("#")[1] }))
       const offset = window.innerHeight * 0.35
-      let current = sections[0]
-      for (const id of sections) {
-        const el = document.querySelector(id)
+      let current = anchors[0]?.href ?? ""
+      for (const a of anchors) {
+        const el = document.querySelector(a.id)
         if (el) {
           const rect = el.getBoundingClientRect()
-          if (rect.top - offset <= 0) current = id
+          if (rect.top - offset <= 0) current = a.href
         }
       }
       setActiveHash(current)
@@ -46,7 +49,7 @@ export function Navigation() {
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-2">
         {/* Logo */}
-        <a href="#inicio" className="flex items-center group pl-1 sm:pl-2">
+        <a href="/#inicio" className="flex items-center group pl-1 sm:pl-2">
           <div className="relative h-6 sm:h-7 lg:h-8 transition-transform duration-300 group-hover:scale-105">
             <img 
               src="/logo.png" 
@@ -81,7 +84,7 @@ export function Navigation() {
             )
           })}
           <a
-            href="#contacto"
+            href="/#contacto"
             className="ml-4 inline-flex items-center gap-2 rounded-full bg-primary px-6 py-2.5 text-sm font-semibold text-primary-foreground transition-all duration-300 hover:shadow-lg hover:shadow-primary/25 hover:-translate-y-0.5 active:scale-[0.98]"
           >
             Hablemos
@@ -119,7 +122,7 @@ export function Navigation() {
             </a>
           ))}
           <a
-            href="#contacto"
+            href="/#contacto"
             onClick={() => setIsMobileOpen(false)}
             className="mt-2 inline-flex items-center justify-center rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground"
           >

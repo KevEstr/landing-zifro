@@ -250,10 +250,10 @@ export default function TermsPage() {
         <p>
           Notificaciones formales sobre este documento deben enviarse a{" "}
           <a
-            href="mailto:legal@zifro.dev"
+            href="mailto:legal@zifro.app"
             className="font-medium text-primary underline-offset-4 hover:underline"
           >
-            legal@zifro.dev
+            legal@zifro.app
           </a>
           . Recibimos solicitudes durante días hábiles y respondemos en los
           plazos legales aplicables.

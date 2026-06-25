@@ -201,14 +201,14 @@ export function ContactSection() {
         {/* Contact info below form */}
         <div className="mt-12 flex flex-wrap items-center justify-center gap-8 text-center">
           <a
-            href="mailto:hola@zifro.dev"
+            href="mailto:hola@zifro.app"
             className="group flex items-center gap-3 rounded-full bg-background px-6 py-3 border border-border shadow-sm transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
           >
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="transition-transform duration-300 group-hover:scale-110">
               <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
               <polyline points="22,6 12,13 2,6"></polyline>
             </svg>
-            <span className="text-sm font-semibold text-foreground">hola@zifro.dev</span>
+            <span className="text-sm font-semibold text-foreground">hola@zifro.app</span>
           </a>
           <div className="flex items-center gap-3 rounded-full bg-background px-6 py-3 border border-border shadow-sm">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">

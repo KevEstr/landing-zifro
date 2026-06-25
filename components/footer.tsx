@@ -53,6 +53,7 @@ export function Footer() {
                   { label: "Inicio", href: "#inicio" },
                   { label: "Servicios", href: "#servicios" },
                   { label: "Testimonios", href: "#testimonios" },
+                  { label: "Preguntas", href: "#preguntas" },
                   { label: "Contacto", href: "#contacto" },
                 ].map((link) => (
                   <a
@@ -69,10 +70,10 @@ export function Footer() {
               <h4 className="text-xs font-bold uppercase tracking-[0.2em] opacity-30 mb-4">Conecta</h4>
               <div className="flex flex-col gap-3">
                 {[
-                  { label: "LinkedIn", href: "https://linkedin.com" },
-                  { label: "Instagram", href: "https://instagram.com" },
-                  { label: "GitHub", href: "https://github.com" },
-                  { label: "hola@zifro.dev", href: "mailto:hola@zifro.dev" },
+                  { label: "LinkedIn", href: "https://www.linkedin.com/company/zifro" },
+                  { label: "Instagram", href: "https://www.instagram.com/zifro.app" },
+                  { label: "GitHub", href: "https://github.com/zifro" },
+                  { label: "hola@zifro.app", href: "mailto:hola@zifro.app" },
                 ].map((link) => (
                   <a
                     key={link.label}
