@@ -23,6 +23,7 @@ const toc: TocItem[] = [
   { id: "finalidades", title: "Para qué los usamos" },
   { id: "bases", title: "Base legal y consentimiento" },
   { id: "ia", title: "Datos en agentes de IA" },
+  { id: "google-calendar", title: "Integración con Google Calendar" },
   { id: "transferencias", title: "Compartir y encargados" },
   { id: "retencion", title: "Tiempo de almacenamiento" },
   { id: "seguridad", title: "Seguridad de la información" },
@@ -43,8 +44,8 @@ export default function PrivacyPage() {
         </>
       }
       subtitle="Acá te contamos qué datos manejamos, para qué los usamos y cómo los protegemos. Está alineada con la Ley 1581 de 2012 y el Decreto 1377 de 2013 de Colombia."
-      lastUpdated="15 de mayo de 2026"
-      readingTime="8 min de lectura"
+      lastUpdated="29 de octubre de 2026"
+      readingTime="11 min de lectura"
       toc={toc}
     >
       <LegalSection
@@ -115,6 +116,11 @@ export default function PrivacyPage() {
               description:
                 "Conversaciones, instrucciones y contenidos procesados por los agentes que desarrollamos. Ver sección 6 para más detalle.",
             },
+            {
+              term: "Datos de Google Calendar",
+              description:
+                "Cuando conectas tu cuenta de Google, accedemos a la lista de calendarios autorizados y a sus eventos, junto con los datos de identificación básicos de la cuenta que otorga el consentimiento. Ver sección 7 para más detalle.",
+            },
           ]}
         />
         <p className="text-sm">
@@ -133,6 +139,7 @@ export default function PrivacyPage() {
             "Enviar comunicaciones operativas relacionadas con servicios activos.",
             "Mejorar el sitio web y entender cómo se usa, mediante datos agregados de analítica.",
             "Cumplir obligaciones legales, contables y tributarias.",
+            "Sincronizar agendas y crear, actualizar o eliminar eventos en Google Calendar, cuando el usuario conecta voluntariamente su cuenta. Ver sección 7.",
             "Protegernos frente a fraude, abuso o uso no autorizado de nuestros servicios.",
           ]}
         />
@@ -185,8 +192,202 @@ export default function PrivacyPage() {
       </LegalSection>
 
       <LegalSection
-        id="transferencias"
+        id="google-calendar"
         index={7}
+        title="Integración con Google Calendar y uso de datos de Google"
+      >
+        <LegalLead>
+          La integración con Google Calendar es una función opcional de Zifro.
+          Solo se activa cuando el usuario autoriza expresamente el acceso
+          desde su cuenta de Google. Si no conectas tu calendario, no accedemos
+          a ningún dato de Google.
+        </LegalLead>
+        <p>
+          Esta sección explica de forma específica qué permisos solicitamos,
+          qué hacemos con los datos de Google, cuánto tiempo los conservamos,
+          con quién los compartimos y cómo puedes revocar el acceso o solicitar
+          su eliminación. Zifro cumple con la Política de Datos de Usuario de
+          los Servicios API de Google y con los requisitos de Uso Limitado
+          (Limited Use) aplicables a los datos de Google.
+        </p>
+
+        <h3 className="pt-2 text-base font-semibold text-foreground">
+          7.1. Qué permisos de Google solicitamos
+        </h3>
+        <p>
+          Para brindar el servicio, Zifro solicita a través de OAuth 2.0 los
+          siguientes permisos, siempre limitados a los calendarios que tú
+          autorizas:
+        </p>
+        <LegalList
+          variant="definition"
+          items={[
+            {
+              term: "Lectura de calendarios y eventos",
+              description:
+                "Permite consultar la lista de calendarios de tu cuenta y los eventos disponibles en ellos. Lo usamos para conocer tu disponibilidad, evitar cruces de horarios y programar correctamente las reservas.",
+            },
+            {
+              term: "Creación, edición y eliminación de eventos",
+              description:
+                "Permite crear eventos nuevos, modificarlos y eliminarlos. Lo usamos para sincronizar en tu calendario las reuniones de Google Meet agendadas desde Zifro, tanto para el asesor como para el cliente final, y para reflejar cambios o cancelaciones.",
+            },
+            {
+              term: "Identificación básica de la cuenta",
+              description:
+                "Nombre y correo electrónico asociados a la cuenta de Google, usados únicamente para identificar la conexión, asociarla a tu usuario de Zifro y mostrar qué cuenta está vinculada.",
+            },
+            {
+              term: "Acceso continuo (refresh token)",
+              description:
+                "Almacenamos un token de actualización cifrado que permite mantener la sincronización activa sin que tengas que volver a autorizar cada vez. Este token se revoca cuando desconectas la cuenta.",
+            },
+          ]}
+        />
+        <p>
+          No solicitamos acceso a Gmail, Google Drive, Google Contacts,
+          YouTube ni a ningún otro servicio de Google distinto de Calendar. No
+          solicitamos permisos de administración sobre tu cuenta ni sobre
+          usuarios de Google Workspace.
+        </p>
+
+        <h3 className="pt-2 text-base font-semibold text-foreground">
+          7.2. Qué hacemos con los datos de Google Calendar
+        </h3>
+        <p>
+          Zifro utiliza el calendario para que la agenda del asesor y la del
+          cliente final se mantengan sincronizadas con las reuniones y reservas
+          gestionadas en el SaaS, incluidas las reservas que se originan por
+          WhatsApp. Concretamente:
+        </p>
+        <LegalList
+          items={[
+            "Consultar la disponibilidad de los calendarios autorizados para ofrecer horarios libres y evitar dobles reservas.",
+            "Crear eventos de Google Meet para las reuniones agendadas a través de Zifro, invitando al asesor y al cliente final.",
+            "Actualizar la fecha, la hora, la descripción o los invitados de un evento cuando la reserva cambia en la aplicación.",
+            "Cancelar o eliminar el evento cuando una reserva se cancela, se reprograma o se elimina en el SaaS.",
+            "Leer los eventos existentes para reflejar en Zifro los cambios que el asesor o el cliente hagan directamente en Google Calendar.",
+          ]}
+        />
+        <p>
+          Los eventos sincronizados pueden ser editados y eliminados tanto
+          desde Google Calendar como desde Zifro, ya que ambas herramientas
+          operan sobre la misma agenda. Esta doble vía es precisamente lo que
+          garantiza una sincronización confiable.
+        </p>
+
+        <h3 className="pt-2 text-base font-semibold text-foreground">
+          7.3. Datos de Google que almacenamos
+        </h3>
+        <LegalList
+          variant="definition"
+          items={[
+            {
+              term: "Tokens de acceso y actualización",
+              description:
+                "Almacenados cifrados en nuestro servidor. Son necesarios para mantener la conexión y se eliminan al desconectar la cuenta o al terminar el contrato.",
+            },
+            {
+              term: "Identificadores de calendario y de evento",
+              description:
+                "Guardamos el identificador del calendario y del evento para poder crear, actualizar o eliminar el evento correspondiente y evitar duplicados.",
+            },
+            {
+              term: "Metadatos del evento",
+              description:
+                "Título, fecha, hora, zona horaria, duración, enlace de Google Meet, descripción e invitados de los eventos que Zifro crea o sincroniza.",
+            },
+            {
+              term: "Correo de la cuenta conectada",
+              description:
+                "Para identificar qué cuenta de Google está vinculada a cada usuario de Zifro.",
+            },
+          ]}
+        />
+        <p>
+          No almacenamos copias completas de tu calendario ni el contenido de
+          eventos que no estén relacionados con reservas o reuniones gestionadas
+          a través de Zifro. No utilizamos los datos de Google Calendar para
+          publicidad, perfilamiento comercial, venta a terceros ni para
+          entrenar modelos de inteligencia artificial propios o de terceros.
+        </p>
+
+        <h3 className="pt-2 text-base font-semibold text-foreground">
+          7.4. Cuánto tiempo conservamos los datos de Google
+        </h3>
+        <p>
+          Conservamos los tokens y los metadatos de sincronización mientras la
+          cuenta de Google permanezca conectada y el servicio esté activo. Una
+          vez desconectas la cuenta, revocamos el acceso, eliminamos los tokens
+          de forma segura y dejamos de acceder a Google Calendar de inmediato.
+        </p>
+        <p>
+          Los metadatos de eventos se conservan únicamente mientras sean
+          necesarios para mantener el historial de reservas del usuario o
+          mientras exista una obligación legal o contractual. Cuando dejan de
+          ser necesarios, se eliminan o anonimizan conforme a la sección 9 de
+          esta política.
+        </p>
+
+        <h3 className="pt-2 text-base font-semibold text-foreground">
+          7.5. Con quién compartimos los datos de Google
+        </h3>
+        <p>
+          No vendemos, no alquilamos ni compartimos datos de Google Calendar con
+          terceros para fines publicitarios. Solo los tratamos nosotros y, en la
+          medida estrictamente necesaria para operar el servicio, con los
+          encargados descritos en la sección 8:
+        </p>
+        <LegalList
+          items={[
+            "Proveedores de infraestructura y hosting en la nube, que almacenan los datos cifrados bajo nuestras instrucciones.",
+            "Proveedores de modelos de IA, únicamente cuando una función del agente requiera interpretar el contexto de una reunión o reserva. En ese caso se envían datos mínimos, no se usan para entrenamiento y aplican cláusulas de confidencialidad.",
+            "Proveedores de comunicación y CRM utilizados para enviar confirmaciones y recordatorios de las reuniones.",
+          ]}
+        />
+        <p>
+          Cualquier transferencia se realiza bajo contratos que obligan al
+          encargado a proteger los datos con un nivel equivalente al nuestro y
+          a usarlos solo para las finalidades aquí descritas.
+        </p>
+
+        <h3 className="pt-2 text-base font-semibold text-foreground">
+          7.6. Cómo desconectar tu cuenta y eliminar los datos de Google
+        </h3>
+        <p>Puedes revocar el acceso en cualquier momento por cualquiera de estas vías:</p>
+        <LegalList
+          items={[
+            "Desde Zifro: entra a la configuración de tu cuenta, sección de integraciones, y selecciona “Desconectar Google Calendar”. El acceso se revoca y los tokens se eliminan de inmediato.",
+            "Desde tu cuenta de Google: visita https://myaccount.google.com/permissions, busca Zifro y selecciona “Quitar acceso”. Al hacerlo, Zifro deja de poder acceder a tu calendario.",
+            "Por correo: escríbenos a privacidad@zifro.app y solicitamos la desconexión y eliminación de los datos de Google asociados a tu cuenta.",
+          ]}
+        />
+        <p>
+          Al desconectar la cuenta, Zifro deja de leer y de escribir en tu Google
+          Calendar y elimina los tokens de acceso. Los metadatos de eventos ya
+          sincronizados se eliminan dentro de los treinta (30) días siguientes,
+          salvo que exista una obligación legal o contractual que exija
+          conservarlos por más tiempo. Los eventos que ya fueron creados en tu
+          calendario de Google permanecen allí, bajo tu control, y puedes
+          eliminarlos directamente desde Google Calendar.
+        </p>
+        <p>
+          Para solicitar la eliminación total de los datos de Google asociados a
+          tu cuenta, escríbenos a{" "}
+          <a
+            href="mailto:privacidad@zifro.app"
+            className="font-medium text-primary underline-offset-4 hover:underline"
+          >
+            privacidad@zifro.app
+          </a>
+          . Atenderemos la solicitud en los plazos establecidos por la Ley 1581
+          de 2012 y el Decreto 1377 de 2013.
+        </p>
+      </LegalSection>
+
+      <LegalSection
+        id="transferencias"
+        index={8}
         title="Compartir y encargados"
       >
         <p>
@@ -234,7 +435,7 @@ export default function PrivacyPage() {
         </p>
       </LegalSection>
 
-      <LegalSection id="retencion" index={8} title="Tiempo de almacenamiento">
+      <LegalSection id="retencion" index={9} title="Tiempo de almacenamiento">
         <p>
           Conservamos los datos solo el tiempo necesario para cumplir las
           finalidades para las que fueron recolectados o, cuando aplique,
@@ -247,7 +448,7 @@ export default function PrivacyPage() {
         </p>
       </LegalSection>
 
-      <LegalSection id="seguridad" index={9} title="Seguridad de la información">
+      <LegalSection id="seguridad" index={10} title="Seguridad de la información">
         <p>
           Aplicamos medidas técnicas, administrativas y organizacionales para
           proteger los datos personales:
@@ -268,7 +469,7 @@ export default function PrivacyPage() {
         </p>
       </LegalSection>
 
-      <LegalSection id="derechos" index={10} title="Tus derechos como titular">
+      <LegalSection id="derechos" index={11} title="Tus derechos como titular">
         <p>
           La Ley 1581 de 2012 te reconoce derechos que puedes ejercer en
           cualquier momento:
@@ -311,7 +512,7 @@ export default function PrivacyPage() {
 
       <LegalSection
         id="cookies"
-        index={11}
+        index={12}
         title="Cookies y tecnologías similares"
       >
         <p>Usamos cookies para tres fines, claramente diferenciados:</p>
@@ -342,7 +543,7 @@ export default function PrivacyPage() {
         </p>
       </LegalSection>
 
-      <LegalSection id="menores" index={12} title="Datos de menores de edad">
+      <LegalSection id="menores" index={13} title="Datos de menores de edad">
         <p>
           Nuestros servicios están dirigidos a empresas y profesionales
           mayores de edad. No recolectamos conscientemente datos de menores de
@@ -352,7 +553,7 @@ export default function PrivacyPage() {
         </p>
       </LegalSection>
 
-      <LegalSection id="cambios" index={13} title="Cambios a esta política">
+      <LegalSection id="cambios" index={14} title="Cambios a esta política">
         <p>
           Actualizamos esta política cuando cambian nuestras prácticas, aparece
           nueva regulación o lanzamos servicios nuevos. La versión vigente
@@ -362,7 +563,7 @@ export default function PrivacyPage() {
         </p>
       </LegalSection>
 
-      <LegalSection id="contacto" index={14} title="Cómo ejercer tus derechos">
+      <LegalSection id="contacto" index={15} title="Cómo ejercer tus derechos">
         <p>
           Para ejercer cualquier derecho, presentar consultas o reclamos sobre
           el tratamiento de tus datos, escríbenos a{" "}
