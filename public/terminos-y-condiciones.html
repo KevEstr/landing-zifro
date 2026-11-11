@@ -1,0 +1,333 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Zifro - Agentes IA para tu negocio</title>
+<link rel="icon" type="image/x-icon" href="ZIFRO_isotipo.ico">
+<meta name="description" content="Las reglas entre tú y ZIFRO, en un español que sí se entiende.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,200..800&family=Caveat:wght@600;700&family=Inter:wght@400;500;600;700&display=swap">
+<style>
+:root{--cr:#F3EEE3;--ink:#111;--or:#D9541E;--w:#FBF8F1;--ln:#DDD6C6;--pp:#E8DEC6;--mut:#5f5a52;--hw:'Caveat',cursive}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:92px}
+body{margin:0;background:var(--cr);color:var(--ink);font:460 17px/1.5 'Bricolage Grotesque',system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+h1,h2,h3,p,ul,ol{margin:0}ul,ol{padding:0;list-style:none}a{color:inherit;text-decoration:none}[hidden]{display:none!important}
+:focus-visible{outline:2px solid var(--or);outline-offset:3px}
+.wrap{max-width:1320px;margin:0 auto;padding:0 max(28px,env(safe-area-inset-left,0px))}
+.h{font-size:clamp(44px,7vw,104px);line-height:.9;letter-spacing:-.04em;font-weight:560;font-stretch:90%;text-wrap:balance}
+.hw{font-family:var(--hw);font-size:30px;line-height:1;font-weight:700;color:var(--or)}
+.btn{display:inline-flex;align-items:center;gap:10px;min-height:52px;padding:0 24px;border-radius:99px;border:1.5px solid var(--ink);font:inherit;font-weight:600;cursor:pointer;background:none;color:var(--ink);transition:transform .15s,background .2s,color .2s}
+.btn:active{transform:scale(.97)}.b1{background:var(--or);border-color:var(--or);color:#fff}.b1:hover{background:var(--ink);border-color:var(--ink)}.b2{background:var(--cr)}.b2:hover{background:var(--ink);color:var(--cr)}
+.pi{position:relative;background:var(--pp);padding:20px 18px 14px;transform:rotate(var(--r,0deg));box-shadow:4px 4px 0 var(--ink);border:1.5px solid var(--ink)}
+.pi::before{content:"";position:absolute;top:-13px;left:50%;width:70px;height:22px;background:var(--or);opacity:.88;transform:translateX(-50%) rotate(-3deg)}
+.pi .hw{color:var(--ink);font-size:27px;display:block}.pi.o{background:var(--or)}.pi.o .hw,.pi.o p{color:#fff}.pi.o::before{background:var(--ink)}
+.tag{display:inline-block;font-weight:700;font-size:13px;letter-spacing:.05em;color:var(--or);border:2px solid var(--or);border-radius:6px;padding:2px 8px;transform:rotate(-3deg)}
+#pg{position:fixed;top:0;left:0;height:3px;width:0;background:var(--or);z-index:50}
+header{position:sticky;top:0;z-index:20;padding-top:env(safe-area-inset-top,0px);background:rgba(243,238,227,.85);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid transparent;transition:border-color .2s}header.s{border-color:var(--ln)}
+.nv{display:flex;align-items:center;justify-content:space-between;height:68px}.lg{display:flex;align-items:center;gap:10px}.lg svg{display:block}
+.nv nav{display:flex;gap:30px;font-weight:540}.nv nav a:hover{color:var(--or)}.nv .btn{min-height:42px;padding:0 20px;font-size:15px}
+/* hero */
+.th{padding:54px 0 40px}.thg{display:grid;grid-template-columns:1.15fr .85fr;gap:48px;align-items:center}
+.th .h{margin:16px 0 0}.ul{position:relative;display:inline-block}
+.ul svg{position:absolute;left:-2%;bottom:-.16em;width:104%;height:.34em;overflow:visible}
+.ul path{fill:none;stroke:var(--or);stroke-width:6;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1;animation:dr .8s .3s ease-out forwards}.ul path:nth-child(2){animation-delay:.6s}.ul path:nth-child(3){animation-delay:.85s;opacity:.55}
+@keyframes dr{to{stroke-dashoffset:0}}
+.th .l{font-size:21px;color:#3d3a35;max-width:40ch;margin:26px 0 20px}
+.mt{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:26px}.mt span{border:1.5px solid var(--ink);border-radius:99px;padding:5px 14px;font-size:14.5px;font-weight:560;background:var(--w)}
+.cta{display:flex;gap:14px;flex-wrap:wrap;align-items:center}.cta .hw{transform:rotate(-4deg);font-size:30px}
+.thr{display:grid;grid-template-columns:1fr 1fr;gap:30px 22px;align-items:start}
+.thr .pi{font-size:17px}.thr .pi .hw{font-size:26px;line-height:1.02}
+.pc{grid-column:1/-1;background:#fff;border:1px solid #e5e7eb;border-radius:14px;overflow:hidden;font:400 13.5px/1.35 Inter,system-ui,sans-serif;color:#111827;box-shadow:0 16px 36px rgba(17,24,39,.16);transform:rotate(1deg)}
+.ph{display:flex;align-items:center;gap:9px;padding:10px 13px;border-bottom:1px solid #eef0f3}.ph b{display:block;font-size:13.5px;font-weight:600}.ph small{color:#6b7280;font-size:11px}
+.av{width:30px;height:30px;border-radius:50%;background:#6366f1;color:#fff;display:grid;place-items:center;font-weight:600;font-size:11px;flex:none;position:relative}
+.av::after{content:"";position:absolute;right:-2px;bottom:-2px;width:11px;height:11px;border-radius:50%;background:#22c55e;border:1.5px solid #fff}
+.pb2{padding:2px 12px 11px;background:#f9fafb}.m{max-width:86%;margin:8px 0 0;padding:7px 10px;border-radius:10px;background:#f3f4f6;border:1px solid #e5e7eb}.m.o{margin-left:auto;background:#d1fae5;border-color:#a7f3d0}
+.m small{display:block;text-align:right;color:#6b7280;font-size:10px}
+/* cuerpo */
+.lw{display:grid;grid-template-columns:290px minmax(0,1fr);gap:64px;align-items:start;padding-top:30px;padding-bottom:70px}
+.toc{position:sticky;top:92px}.tt{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:12px}.tt b{font-size:22px;letter-spacing:-.02em}.tt span{font-size:13.5px;color:var(--mut)}
+.sr{display:flex;align-items:center;gap:8px;background:var(--w);border:1.5px solid var(--ink);border-radius:99px;padding:0 14px;margin-bottom:14px;box-shadow:3px 3px 0 var(--ink)}
+.sr svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;flex:none}.sr input{flex:1;min-width:0;height:42px;border:0;background:none;font:inherit;font-size:15.5px;outline:0;color:var(--ink)}
+#tl a{display:flex;gap:12px;align-items:baseline;padding:8px 12px;border-left:2.5px solid var(--ln);font-weight:540;font-size:16px;color:#47433c;transition:.2s}
+#tl a i{font-style:normal;font-size:12.5px;font-weight:700;color:var(--or);width:20px}#tl a:hover{color:var(--ink);border-color:var(--ink)}
+#tl a.on{border-color:var(--or);color:var(--ink);background:rgba(217,84,30,.09);font-weight:640}
+.pr{margin-top:16px;width:100%;justify-content:center;min-height:46px;font-size:15px}
+.cl{display:grid;grid-template-columns:96px minmax(0,1fr);padding:46px 0 42px;border-top:1.5px solid var(--ink);opacity:0;transform:translateY(18px);transition:opacity .6s,transform .6s}.cl.v{opacity:1;transform:none}
+.cl:first-of-type{border-top:0;padding-top:10px}
+.no{font-weight:800;font-size:68px;line-height:.9;letter-spacing:-.05em;color:transparent;-webkit-text-stroke:1.5px var(--ink)}
+.cl h2{font-size:clamp(29px,3.3vw,44px);line-height:1;letter-spacing:-.03em;font-weight:580;font-stretch:92%;margin-bottom:22px}
+.k{display:grid;grid-template-columns:46px 1fr;margin:0 0 13px;max-width:68ch;color:#2c2a26;line-height:1.62}.k b{color:var(--or);font-weight:700;font-variant-numeric:tabular-nums}
+mark{background:linear-gradient(transparent 58%,rgba(217,84,30,.3) 58%);color:inherit;padding:0 2px}
+.cr{max-width:400px;margin-top:30px}.cr p{font-size:16.5px;font-weight:540;line-height:1.35;margin-top:3px}
+.cx{display:flex;align-items:center;gap:10px;margin:8px 0 18px;flex-wrap:wrap}.cx span{background:var(--w);border:1.5px solid var(--ink);border-radius:12px;padding:9px 14px;line-height:1.2;font-weight:640}.cx small{display:block;font-weight:460;font-size:13px;color:var(--mut)}
+.cx span.z{background:var(--ink);color:var(--cr)}.cx span.z small{color:#a8a299}.cx em{font-family:var(--hw);font-style:normal;font-weight:700;font-size:24px;color:var(--or)}
+.yn{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:6px 0 16px}.yn div{border:1.5px solid var(--ink);border-radius:16px;padding:18px 20px;background:var(--w);box-shadow:5px 5px 0 var(--ink)}
+.yn .no2{background:var(--ink);color:var(--cr);box-shadow:5px 5px 0 var(--or)}.yn h3{font-size:21px;letter-spacing:-.02em;margin-bottom:8px}
+.yn li{display:grid;grid-template-columns:22px 1fr;font-size:15.5px;line-height:1.4;padding:4px 0}.yn li::before{content:"✓";color:var(--or);font-weight:800}.no2 li::before{content:"✕"}
+.tbl{width:100%;border-collapse:separate;border-spacing:0;border:1.5px solid var(--ink);border-radius:14px;overflow:hidden;margin:8px 0 18px;background:var(--w);font-size:15.5px;line-height:1.4}
+.tbl th{background:var(--ink);color:var(--cr);text-align:left;padding:11px 14px;font-weight:600;font-size:14px}.tbl td{padding:12px 14px;border-top:1.5px dashed var(--ln);vertical-align:top}.tbl tr:first-child+tr td{border-top:0}.tbl td:first-child{font-weight:620}
+.al{border:2px dashed var(--ink);border-radius:14px;background:var(--w);padding:18px 20px;margin:6px 0 16px;max-width:68ch}.al .tag{margin-bottom:8px}.al p{font-size:16px;line-height:1.5}
+.fin{background:var(--or);padding:76px 0;overflow:hidden}.fg{display:grid;grid-template-columns:1.2fr .8fr;gap:48px;align-items:center}
+.fin .h{color:var(--ink)}.fin .hw{display:block;color:var(--ink);font-size:36px;transform:rotate(-2deg);margin:18px 0 28px}.fin .btn{margin:0 10px 10px 0}.fin .b1{background:var(--ink);border-color:var(--ink)}.fin .b1:hover{background:var(--cr);color:var(--ink)}
+.fc{background:var(--w);border:1.5px solid var(--ink);border-radius:18px;padding:24px 26px;box-shadow:7px 7px 0 var(--ink);transform:rotate(1.2deg)}.fc h3{font-size:24px;letter-spacing:-.02em;margin-bottom:10px}.fc p{font-size:16px;color:#3d3a35;padding:7px 0;border-top:1.5px dashed var(--ln)}.fc p:first-of-type{border-top:0}.fc b{color:var(--ink)}
+footer{background:var(--ink);color:#a8a299;padding:34px 0 calc(34px + env(safe-area-inset-bottom,0px));font-size:14px}.fr{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}.mfo{display:inline-flex;align-items:center;gap:8px;color:#f3eee3;font-weight:600}
+@media(max-width:1000px){
+ .nv nav{display:none}.thg,.fg{grid-template-columns:minmax(0,1fr);gap:34px}.thg>*{min-width:0}.th{padding-top:34px}.lw{grid-template-columns:1fr;gap:6px;padding-top:12px}
+ .toc{top:102px;z-index:15;margin:0 -28px;padding:10px 28px;overflow-x:auto;background:rgba(243,238,227,.94);backdrop-filter:blur(10px);border-bottom:1px solid var(--ln);scrollbar-width:none}.toc::-webkit-scrollbar{display:none}
+ .tt,.sr,.pr{display:none}#tl{display:flex;gap:8px;width:max-content}#tl a{border:1.5px solid var(--ink);border-radius:99px;padding:6px 13px;font-size:14.5px;white-space:nowrap;background:var(--w)}#tl a i{width:auto}#tl a.on{background:var(--ink);color:var(--cr);border-color:var(--ink)}
+ .cl{grid-template-columns:1fr;padding:38px 0 34px}.no{font-size:46px;margin-bottom:6px}.k{grid-template-columns:38px 1fr}
+}
+@media(max-width:640px){.yn{grid-template-columns:1fr}.thr{gap:26px 14px}.th .l{font-size:19px}
+ .tbl,.tbl tbody,.tbl tr,.tbl td{display:block}.tbl thead{display:none}.tbl{border:0;background:none;box-shadow:none}.tbl tr{border:1.5px solid var(--ink);border-radius:14px;background:var(--w);margin-bottom:12px;overflow:hidden}.tbl td{border-top:1.5px dashed var(--ln)!important}.tbl tr td:first-child{border-top:0!important;background:var(--pp)}.tbl td[data-l]::before{content:attr(data-l);display:block;font-size:12px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--or)}}
+@media(prefers-reduced-motion:reduce){.ul path{animation:none;stroke-dashoffset:0}.cl{opacity:1;transform:none;transition:none}html{scroll-behavior:auto}}
+@media print{header,.toc,.fin,#pg,.thr,.cta{display:none!important}body{background:#fff;font-size:11pt}.lw{display:block}.cl{opacity:1;transform:none;break-inside:avoid-page}.pi{box-shadow:none}}
+</style><link rel="stylesheet" href="zf-shared.css"><link rel="stylesheet" href="zf-legal.css"><style>@media(max-width:1000px){html{scroll-padding-top:150px}}@media(max-width:860px){html{scroll-padding-top:176px}.toc{top:102px}}</style>
+</head><body>
+<div id="pg"></div>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<symbol id="zi" viewBox="0 0 100 100"><rect width="100" height="100" rx="26" fill="var(--sq,#111)"/><path d="M76.8 20 L50.7 32.6 L35 32.6 L35.7 74.7 L66.8 64.2 L50.7 32.6" fill="none" stroke="var(--l2,#fff)" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/><g fill="var(--l2,#fff)"><circle cx="76.8" cy="20" r="6"/><circle cx="35.7" cy="74.7" r="6"/><circle cx="66.8" cy="64.2" r="6"/></g><circle cx="50.7" cy="32.6" r="9.3" fill="#ff7a2b"/></symbol>
+<symbol id="zw" viewBox="0 0 404 100"><g fill="none" stroke-width="24" stroke-linecap="round" stroke-linejoin="round"><path d="M14 14H64L14 86H66"/><path d="M100 14V86"/><path d="M134 86V14H184M134 50H176"/><path d="M220 86V14H250C282 14 282 52 250 52H220M250 52L280 86"/><circle cx="350" cy="50" r="38"/></g></symbol>
+<symbol id="i-home" viewBox="0 0 24 24"><path d="M3 11l9-8 9 8v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/></symbol><symbol id="i-chat" viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-4-7.5L21 3l-1.5 4A9 9 0 0 1 21 12z"/></symbol><symbol id="i-trend" viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8M15 7h6v6"/></symbol><symbol id="i-cal" viewBox="0 0 24 24"><path d="M4 5h16v16H4zM4 10h16M8 3v4M16 3v4"/></symbol><symbol id="i-mega" viewBox="0 0 24 24"><path d="M4 10v4h3l6 4V6L7 10zM17 9a4 4 0 0 1 0 6"/></symbol><symbol id="i-msg" viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/></symbol><symbol id="i-check" viewBox="0 0 24 24"><path d="M4 5h16v14H4zM8 12l3 3 5-6"/></symbol><symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 9a6 6 0 0 1 12 0c0 6 2 7 2 7H4s2-1 2-7M10 20a2 2 0 0 0 4 0"/></symbol><symbol id="i-video" viewBox="0 0 24 24"><path d="M3 7h11v10H3zM14 11l7-4v10l-7-4"/></symbol><symbol id="i-bot" viewBox="0 0 24 24"><path d="M8 8h8a3 3 0 0 1 3 3v5H5v-5a3 3 0 0 1 3-3zM12 4v4M9 13h.01M15 13h.01"/></symbol></defs></svg>
+<header id="hd"><div class="zf-wrap">
+<a class="zf-logo zf-logo--anim" href="ventas.html" aria-label="ZIFRO"><iframe class="zf-logo-anim" src="logo.html?embed=1" title="ZIFRO" loading="eager" scrolling="no" tabindex="-1" aria-hidden="true"></iframe></a>
+<nav class="zf-nav" aria-label="Principal"><a href="ventas.html">Inicio</a><a href="politica-de-privacidad.html">Políticas</a><a href="terminos-y-condiciones.html" aria-current="page">Términos y condiciones</a></nav>
+<a class="zf-cta wa" href="#">Escríbenos</a>
+</div></header>
+<main id="top">
+<section class="th"><div class="wrap thg"><div>
+<span class="tag">DOCUMENTO LEGAL</span>
+<h1 class="h">Términos y <span class="ul">condiciones<svg viewBox="0 0 600 50" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M4 34C140 14 330 12 596 26"/><path pathLength="1" d="M22 46C190 30 400 34 572 42"/><path pathLength="1" d="M60 20C240 28 440 8 590 16"/></svg></span>.</h1>
+<p class="l">Las reglas entre tú y ZIFRO, en un español que sí se entiende. Léelas completas o salta a lo que te importa.</p>
+<div class="mt"><span>Actualizado: 10 de noviembre de 2026</span><span id="rt">9 min de lectura</span></div>
+<div class="cta"><a class="btn b1" href="#s1">Empezar a leer</a><span class="hw">sin letra chiquita</span></div></div>
+<div class="thr">
+<div class="pc"><div class="ph"><i class="av" style="font-style:normal">AP</i><div><b>Andrés Pérez</b><small>WhatsApp · 4:12 p. m.</small></div></div><div class="pb2"><div class="m">¿Puedo cancelar cuando quiera?<small>4:12 p. m.</small></div><div class="m o">Sí. Sin permanencia ni multas: cancelas cuando quieras.<small>4:12 p. m. ✓✓</small></div></div></div>
+<div class="pi o" style="--r:-3deg"><span class="hw">tu número y tus datos son tuyos</span></div>
+<div class="pi" style="--r:2.5deg;margin-top:22px"><span class="hw">la IA ayuda, tú mandas</span></div>
+<div class="pi" style="--r:1.5deg"><span class="hw">sin permanencia ni multas</span></div>
+<div class="pi o" style="--r:-2deg;margin-top:18px"><span class="hw">todo con permiso de Meta</span></div>
+</div></div></section>
+
+<section class="wrap lw">
+<aside class="toc" aria-label="Contenido"><div class="tt"><b>Contenido</b><span id="cn"></span></div>
+<label class="sr"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg><input id="q" type="search" placeholder="Buscar en los términos…" aria-label="Buscar en los términos"></label>
+<ol id="tl"></ol><button class="btn b2 pr" onclick="print()">Imprimir o guardar PDF</button></aside>
+<div class="doc">
+<p id="none" hidden class="hw" style="padding:30px 0">no encontramos eso… prueba con otra palabra</p>
+
+<article class="cl" id="s1" data-t="Qué es ZIFRO"><span class="no">01</span><div><h2>Qué es ZIFRO y a quién aplican estos términos</h2>
+<p class="k"><b>1.1</b><span>ZIFRO S.A.S. («ZIFRO», «nosotros») ofrece agentes de inteligencia artificial para WhatsApp: una IA que atiende tu línea con tus precios, tus horarios y tu forma de hablar, junto con una bandeja de conversaciones, calendario de citas, flujos de envío de archivos, el asistente Ziff para reuniones y recordatorios con IA.</span></p>
+<p class="k"><b>1.2</b><span>Estos términos son el contrato entre tú («el Cliente») y ZIFRO. Los aceptas al crear tu cuenta, firmar una propuesta o usar el servicio, lo que ocurra primero. Si contratas en nombre de una empresa, declaras que puedes obligarla.</span></p>
+<p class="k"><b>1.3</b><span>Debes ser mayor de 18 años. Llamamos «Contactos» a las personas que escriben a tu WhatsApp y con quienes la IA conversa en tu nombre. Si firmamos un contrato aparte, ese contrato manda en lo que contradiga estos términos.</span></p>
+<dl class="lx-gloss">
+<div><dt>Cliente</dt><dd>Quien contrata ZIFRO y acepta estos términos.</dd></div>
+<div><dt>Contacto</dt><dd>Persona que escribe a tu WhatsApp y habla con la IA.</dd></div>
+<div><dt>IA</dt><dd>Agente que responde en tu nombre con tus datos.</dd></div>
+<div><dt>Ziff</dt><dd>Asistente que entra a tus reuniones, toma notas y resume.</dd></div>
+<div><dt>Coexistencia</dt><dd>Tu app de WhatsApp Business y la IA en el mismo número.</dd></div>
+<div><dt>Plantilla</dt><dd>Mensaje preaprobado por Meta para iniciar conversaciones.</dd></div>
+<div><dt>Ciclo</dt><dd>Periodo mensual que ya pagaste y que se usa completo.</dd></div>
+<div><dt>Encargado</dt><dd>ZIFRO tratando datos de tus Contactos por tu cuenta.</dd></div>
+</dl>
+<div class="pi cr" style="--r:-1.5deg"><span class="hw">en cristiano</span><p>Esto es el contrato. Si usas ZIFRO, lo aceptas.</p></div></div></article>
+
+<article class="cl" id="s2" data-t="El servicio y la IA"><span class="no">02</span><div><h2>El servicio y los límites de la IA</h2>
+<p class="k"><b>2.1</b><span>La IA responde con la información que tú nos das: precios, horarios, políticas y tono. También consulta tu disponibilidad, propone horarios, crea citas, envía archivos por flujos y clasifica a tus Contactos por etapas.</span></p>
+<p class="k"><b>2.2</b><span><mark>La IA puede equivocarse.</mark> Tú defines qué puede responder y cuándo debe pasarte el chat. Puedes intervenir en cualquier conversación y apagarla por chat o en toda la cuenta.</span></p>
+<p class="k"><b>2.3</b><span>La IA no diagnostica, no da asesoría médica, legal ni financiera, y no debe tomar decisiones con efectos legales sobre personas sin revisión humana. Si tu normativa lo exige, debes avisar a tus Contactos que hablan con una IA; puedes incluirlo en el saludo.</span></p>
+<p class="k"><b>2.4</b><span>Podemos mejorar, cambiar o retirar funciones. Si retiramos una función esencial de tu plan, te avisamos con 30 días de anticipación.</span></p>
+<div class="pi cr o" style="--r:1.5deg"><span class="hw">en cristiano</span><p>La IA ayuda, pero puede fallar. Tú tienes el volante.</p></div></div></article>
+
+<article class="cl" id="s3" data-t="Tu número y Meta"><span class="no">03</span><div><h2>Tu número, Meta y la coexistencia</h2>
+<p class="k"><b>3.1</b><span>ZIFRO es partner de Meta y conecta tu número por la plataforma oficial de WhatsApp Business, con los permisos que Meta otorga. Tu número y tu cuenta son tuyos: la conexión se hace con tu autorización y puedes desconectarla cuando quieras.</span></p>
+<p class="k"><b>3.2</b><span>Con la coexistencia sigues usando la app de WhatsApp Business en tu celular mientras la IA responde en ese mismo número.</span></p>
+<div class="cx"><span>Tu celular<small>app WhatsApp Business</small></span><em>mismo número</em><span class="z">ZIFRO IA<small>contesta cuando tú no</small></span></div>
+<p class="k"><b>3.3</b><span>Meta puede cambiar sus reglas, tarifas o límites, y aprobar o rechazar plantillas y cuentas. Son decisiones suyas: te ayudamos a cumplirlas, pero no podemos garantizarlas.</span></p>
+<p class="k"><b>3.4</b><span>Cuida tus credenciales y la actividad de tu equipo. Si sospechas un acceso no autorizado, avísanos de inmediato.</span></p>
+<div class="pi cr" style="--r:-1.5deg"><span class="hw">en cristiano</span><p>Tu número es tuyo. Lo conectamos por la vía oficial de Meta.</p></div></div></article>
+
+<article class="cl" id="s4" data-t="Uso aceptable"><span class="no">04</span><div><h2>Uso aceptable</h2>
+<div class="yn"><div><h3>Sí, adelante</h3><ul><li>Atender a quienes te escribieron o te dieron su permiso</li><li>Enviar plantillas aprobadas por Meta</li><li>Dar información real de tu negocio</li><li>Pasar el chat a una persona cuando lo piden</li></ul></div>
+<div class="no2"><h3>No, por favor</h3><ul><li>Spam o envíos masivos sin consentimiento</li><li>Hacerte pasar por otra persona o empresa</li><li>Vender lo que Meta o la ley prohíben</li><li>Engaños, fraudes, odio o violencia</li></ul></div></div>
+<p class="k"><b>4.1</b><span>Si incumples estas reglas podemos suspender la cuenta para proteger tu número, a tus Contactos y al servicio. Cuando sea posible, te avisamos antes.</span></p>
+<div class="pi cr" style="--r:1.5deg"><span class="hw">en cristiano</span><p>Úsalo con gente que quiere hablar contigo. Nada de spam.</p></div></div></article>
+
+<article class="cl" id="s5" data-t="Planes y pagos"><span class="no">05</span><div><h2>Planes, precios y pagos</h2>
+<p class="k"><b>5.1</b><span>El plan y su precio están en tu propuesta o en tu cuenta, en pesos colombianos (COP). El IVA y otros impuestos se suman cuando apliquen, y emitimos factura electrónica.</span></p>
+<table class="tbl"><thead><tr><th>Concepto</th><th>Cómo se cobra</th><th>Quién lo cobra</th></tr></thead><tbody>
+<tr><td>Suscripción ZIFRO</td><td data-l="Cómo se cobra">Por adelantado, cada mes</td><td data-l="Quién lo cobra">ZIFRO</td></tr>
+<tr><td>Conversaciones de WhatsApp</td><td data-l="Cómo se cobra">Según la tarifa vigente de Meta, sin recargos ocultos</td><td data-l="Quién lo cobra">Meta, a través de ZIFRO</td></tr>
+<tr><td>Desarrollo a la medida</td><td data-l="Cómo se cobra">Cotización aparte, por hitos</td><td data-l="Quién lo cobra">ZIFRO</td></tr></tbody></table>
+<p class="k"><b>5.2</b><span>Si superas el uso incluido en tu plan, te avisamos antes de cobrar algo extra. Avisamos cualquier cambio de precio con 30 días de anticipación y aplica desde el siguiente ciclo.</span></p>
+<p class="k"><b>5.3</b><span>Si un pago no llega, te escribimos. Tras 10 días de mora podemos suspender el servicio, y lo reactivamos al ponerte al día. Se causan intereses de mora a la tasa máxima legal vigente.</span></p>
+<p class="k"><b>5.4</b><span><mark>Garantía de 7 días:</mark> si en la primera semana el servicio no funciona como te prometimos, te devolvemos ese primer pago.</span></p>
+<div class="pi cr o" style="--r:-1.5deg"><span class="hw">en cristiano</span><p>Pagas por adelantado. Los mensajes los cobra Meta. Nada escondido.</p></div></div></article>
+
+<article class="cl" id="s6" data-t="Cancelación"><span class="no">06</span><div><h2>Cancelación y terminación</h2>
+<p class="k"><b>6.1</b><span><mark>Sin permanencia ni multas.</mark> Cancelas cuando quieras desde tu cuenta o escribiéndonos; el servicio sigue hasta el final del ciclo que ya pagaste.</span></p>
+<p class="k"><b>6.2</b><span>Podemos terminar el servicio si incumples estos términos, lo usas de forma ilegal o pones en riesgo la cuenta de Meta. Si se puede corregir, te damos 5 días para hacerlo.</span></p>
+<p class="k"><b>6.3</b><span>Al terminar, tienes 30 días para exportar tu información. Después se elimina según la sección 7.</span></p>
+<div class="pi cr" style="--r:1.5deg"><span class="hw">en cristiano</span><p>Te vas cuando quieras, sin multas ni drama.</p></div></div></article>
+
+<article class="cl" id="s7" data-t="Datos y privacidad"><span class="no">07</span><div><h2>Tus datos y privacidad</h2>
+<p class="k"><b>7.1</b><span>Tú eres responsable del tratamiento de los datos de tus Contactos y ZIFRO actúa como encargado: los procesa en tu nombre para prestarte el servicio. De los datos de tu cuenta y facturación, ZIFRO es responsable. Cumplimos la Ley 1581 de 2012 y sus normas reglamentarias.</span></p>
+<table class="tbl"><thead><tr><th>Dato</th><th>Para qué</th><th>Cuánto tiempo</th></tr></thead><tbody>
+<tr><td>Conversaciones y archivos de tus Contactos</td><td data-l="Para qué">Que la IA responda y tú las veas en la bandeja</td><td data-l="Cuánto tiempo">Mientras tu cuenta esté activa y 90 días después</td></tr>
+<tr><td>Cuenta y facturación</td><td data-l="Para qué">Crear tu cuenta, cobrar y cumplir la ley</td><td data-l="Cuánto tiempo">Lo que dure la relación y lo que exija la ley</td></tr>
+<tr><td>Reuniones de Ziff</td><td data-l="Para qué">Resúmenes, pendientes y tus preguntas</td><td data-l="Cuánto tiempo">Hasta que las borres o 90 días tras cancelar</td></tr></tbody></table>
+<p class="k"><b>7.2</b><span><mark>No vendemos datos</mark> ni usamos tus conversaciones para entrenar modelos de terceros. Usamos proveedores de nube e IA bajo acuerdos de confidencialidad y seguridad, con cifrado y control de accesos. Meta procesa los mensajes de WhatsApp según sus propias políticas.</span></p>
+<p class="k"><b>7.3</b><span>Debes contar con la autorización de tus Contactos para que una IA procese sus mensajes. Ellos y tú pueden conocer, actualizar, rectificar o pedir la supresión de sus datos en legal@zifro.co: respondemos consultas en 10 días hábiles y reclamos en 15.</span></p>
+<div class="pi cr o" style="--r:-1.5deg"><span class="hw">en cristiano</span><p>Los datos de tus clientes son tuyos. Los cuidamos y no los vendemos.</p></div></div></article>
+
+<article class="cl" id="s8" data-t="Ziff y Recordatorios"><span class="no">08</span><div><h2>Ziff y Recordatorios</h2>
+<p class="k"><b>8.1</b><span>Ziff se une a las llamadas de Meet, Zoom o Teams que le indiques, toma notas, transcribe y genera resumen, decisiones y pendientes. ZIFRO no está afiliado ni respaldado por Google, Zoom ni Microsoft.</span></p>
+<div class="al"><span class="tag">ANTES DE GRABAR</span><p>Eres responsable de avisar a todos los participantes y de obtener su consentimiento cuando la ley lo exija. Ziff aparece como un participante más en la llamada. No lo uses donde esté prohibido grabar.</p></div>
+<p class="k"><b>8.2</b><span>El asistente de recordatorios anota lo que le dices por texto o audio, te lo recuerda y, si se lo pides, escribe a tu equipo y a tus clientes por ti. Revisa lo que envía en tu nombre: tú respondes por esos mensajes.</span></p>
+<p class="k"><b>8.3</b><span>Los resúmenes y recordatorios pueden tener errores y su entrega depende de WhatsApp y de la conexión. No los uses para emergencias, salud o seguridad.</span></p>
+<div class="pi cr" style="--r:1.5deg"><span class="hw">en cristiano</span><p>Ziff toma notas por ti. Avisa a los demás antes de grabar.</p></div></div></article>
+
+<article class="cl" id="s9" data-t="Responsabilidad"><span class="no">09</span><div><h2>Propiedad, disponibilidad y responsabilidad</h2>
+<p class="k"><b>9.1</b><span>ZIFRO conserva los derechos sobre la plataforma, el código, la marca y los modelos, y te da una licencia limitada para usarlos mientras tengas plan activo. Lo tuyo (marca, precios, textos, archivos y conversaciones) es tuyo, y solo lo procesamos para prestarte el servicio.</span></p>
+<p class="k"><b>9.2</b><span>Buscamos una disponibilidad mensual de 99,5 %, sin contar mantenimientos avisados ni fallas de Meta, WhatsApp o proveedores de nube. Soporte por WhatsApp y correo, de lunes a viernes de 8:00 a. m. a 6:00 p. m. (hora de Colombia).</span></p>
+<p class="k"><b>9.3</b><span><mark>No garantizamos resultados comerciales</mark> como ventas o citas. No respondemos por daños indirectos, lucro cesante ni decisiones de Meta (bloqueos, límites o tarifas). Nuestra responsabilidad total se limita a lo que pagaste a ZIFRO en los 3 meses anteriores al hecho, salvo dolo, culpa grave o lo que la ley no permita limitar.</span></p>
+<div class="pi cr o" style="--r:-1.5deg"><span class="hw">en cristiano</span><p>Hacemos bien el trabajo, pero no prometemos ventas.</p></div></div></article>
+
+<article class="cl" id="s10" data-t="Casos reales"><span class="no">10</span><div><h2>Casos reales: cómo se aplican las reglas</h2>
+<p class="k"><b>10.1</b><span>Estas son las situaciones que más nos consultan. Cada una muestra qué dice el contrato, qué haces tú y qué hacemos nosotros. Si tu caso no está aquí, escríbenos: lo revisamos con nombre y apellido.</span></p>
+<div class="lx-cases">
+<article class="lx-case">
+<div class="lx-ctop"><span class="lx-num"></span><span class="lx-tag2">Cancelar</span></div>
+<h3 class="lx-q">“Quiero cancelar mañana.”</h3>
+<p class="lx-body">No hay permanencia ni multa. El servicio sigue activo hasta el final del ciclo que ya pagaste y no se renueva solo.</p>
+<div class="lx-rows">
+<div class="lx-row"><b>Qué haces</b><span>Cancelas desde tu cuenta o nos escribes por WhatsApp.</span></div>
+<div class="lx-row"><b>Qué pasa</b><span>Tienes 30 días para exportar; luego se elimina según la <a href="#s7">sección 7</a>.</span></div>
+</div></article>
+
+<article class="lx-case">
+<div class="lx-ctop"><span class="lx-num"></span><span class="lx-tag2">IA</span></div>
+<h3 class="lx-q">“La IA cotizó un precio equivocado.”</h3>
+<p class="lx-body">La IA responde con la información que tú cargas. Puedes corregirla, entrar al chat o apagarla; los precios y las políticas del negocio son tu responsabilidad.</p>
+<div class="lx-rows">
+<div class="lx-row"><b>Qué haces</b><span>Corriges la información y retomas la conversación.</span></div>
+<div class="lx-row"><b>Qué hacemos</b><span>Te ayudamos a ajustar instrucciones y a revisar el flujo.</span></div>
+</div></article>
+
+<article class="lx-case">
+<div class="lx-ctop"><span class="lx-num"></span><span class="lx-tag2">Pagos</span></div>
+<h3 class="lx-q">“Este mes no pude pagar.”</h3>
+<p class="lx-body">Te escribimos antes de suspender. Tras 10 días de mora podemos pausar el servicio; tus datos no se borran por esto y lo reactivamos cuando te pongas al día.</p>
+<div class="lx-rows">
+<div class="lx-row"><b>Qué haces</b><span>Nos avisas o pones al día el pago.</span></div>
+<div class="lx-row"><b>Qué pasa</b><span>Reactivas sin perder historial ni configuración.</span></div>
+</div></article>
+
+<article class="lx-case">
+<div class="lx-ctop"><span class="lx-num"></span><span class="lx-tag2">Equipo</span></div>
+<h3 class="lx-q">“Se fue mi community manager.”</h3>
+<p class="lx-body">Tú controlas los usuarios de tu cuenta. Al retirar a esa persona, su acceso se corta; el número, la bandeja y los contactos siguen siendo de tu negocio.</p>
+<div class="lx-rows">
+<div class="lx-row"><b>Qué haces</b><span>Revocas su usuario en la configuración de tu cuenta.</span></div>
+<div class="lx-row"><b>Qué hacemos</b><span>Aplicamos el cambio y conservamos el registro de accesos.</span></div>
+</div></article>
+
+<article class="lx-case lx-case--ink">
+<div class="lx-ctop"><span class="lx-num"></span><span class="lx-tag2">Meta</span></div>
+<h3 class="lx-q">“Meta bloqueó mi número.”</h3>
+<p class="lx-body">La decisión es de Meta. Te ayudamos a revisar el caso, preparar la apelación y cumplir sus reglas, pero no podemos garantizar la reactivación ni asumir esa decisión.</p>
+<div class="lx-rows">
+<div class="lx-row"><b>Qué haces</b><span>Nos cuentas qué pasó y qué mensajes enviaste.</span></div>
+<div class="lx-row"><b>Qué hacemos</b><span>Revisamos, apelamos y te decimos qué ajustar.</span></div>
+</div></article>
+
+<article class="lx-case">
+<div class="lx-ctop"><span class="lx-num"></span><span class="lx-tag2">Datos</span></div>
+<h3 class="lx-q">“Quiero llevarme mis conversaciones.”</h3>
+<p class="lx-body">Puedes exportar mientras la cuenta esté activa. Si cancelas, tienes 30 días para descargar todo; después se elimina según la sección 7. Los datos de tus Contactos son tuyos.</p>
+<div class="lx-rows">
+<div class="lx-row"><b>Qué haces</b><span>Pides la exportación desde tu cuenta o por correo.</span></div>
+<div class="lx-row"><b>Qué hacemos</b><span>Te la entregamos en un formato legible y completo.</span></div>
+</div></article>
+</div>
+</div></article>
+
+<article class="cl" id="s11" data-t="Preguntas frecuentes"><span class="no">11</span><div><h2>Preguntas que nos hacen seguido</h2>
+<p class="k"><b>11.1</b><span>Respuestas cortas para las dudas que no deberían necesitar un abogado. Si tu pregunta no está, escríbenos y la respondemos como persona.</span></p>
+<div class="lx-faq">
+<details><summary>¿Hay permanencia o multa por cancelar?</summary><div class="lx-a">No. Cancelas cuando quieras y no hay multa. El servicio sigue hasta el final del ciclo que ya pagaste.</div></details>
+<details><summary>¿Qué pasa si cancelo a mitad de mes?</summary><div class="lx-a">No te devolvemos la parte proporcional del ciclo en curso, pero puedes usarlo completo hasta la fecha de corte. Después no se renueva.</div></details>
+<details><summary>¿El número de WhatsApp es mío?</summary><div class="lx-a">Sí. La conexión se hace con tu autorización y puedes desconectarla cuando quieras. Al terminar, el número sigue siendo tuyo.</div></details>
+<details><summary>¿Puedo usar la app de WhatsApp Business y la IA a la vez?</summary><div class="lx-a">Sí, es la coexistencia: tú sigues usando la app en tu celular mientras la IA atiende el mismo número cuando no estás.</div></details>
+<details><summary>¿La IA puede vender por mí?</summary><div class="lx-a">Ayuda a atender, responder y agendar, pero no garantizamos ventas ni resultados comerciales. La estrategia y la información del negocio son tuyas.</div></details>
+<details><summary>¿Qué hago si la IA se equivoca?</summary><div class="lx-a">Puedes intervenir la conversación, corregir la información o apagar la IA por chat o en toda la cuenta. Si el error viene de una instrucción, te ayudamos a ajustarla.</div></details>
+<details><summary>¿Cómo reporto un error, abuso o un mensaje sospechoso?</summary><div class="lx-a">Escríbenos por WhatsApp o a <a href="mailto:legal@zifro.co">legal@zifro.co</a>. Revisamos el caso y te confirmamos por el mismo canal.</div></details>
+</div>
+</div></article>
+
+<article class="cl" id="s12" data-t="Cambios y contacto"><span class="no">12</span><div><h2>Cambios, ley aplicable y contacto</h2>
+<p class="k"><b>12.1</b><span>Podemos actualizar estos términos. Publicamos la versión nueva aquí, con fecha, y si el cambio es importante te avisamos al menos 15 días antes. Si sigues usando el servicio, los aceptas; si no, puedes cancelar sin costo.</span></p>
+<p class="k"><b>12.2</b><span>Estos términos se rigen por las leyes de la República de Colombia. Antes de cualquier acción, nos escribes y buscamos resolverlo directamente durante 30 días; si no hay acuerdo, acudimos a conciliación y, de ser necesario, a los jueces competentes en Colombia.</span></p>
+<p class="k"><b>12.3</b><span>Si una parte de estos términos no se puede aplicar, el resto sigue vigente. No puedes ceder tu contrato sin autorización escrita de ZIFRO.</span></p>
+<div class="lx-change"><span class="lx-v">Actualizado</span><p><b>Qué cambió en esta edición:</b> agregamos seis casos reales, preguntas frecuentes y un glosario. También sumamos la sección de Google Calendar en la política de privacidad. No cambiamos tus derechos ni las condiciones económicas.</p></div>
+<div class="pi cr" style="--r:1.5deg"><span class="hw">en cristiano</span><p>Si cambiamos algo importante, te avisamos antes. Y antes de pelear, conversamos.</p></div></div></article>
+</div></section>
+
+<section class="fin"><div class="wrap fg"><div><h2 class="h">¿Algo no quedó claro?</h2><span class="hw">escríbenos y lo hablamos</span>
+<a class="btn b1 wa" href="#">Escribir por WhatsApp</a><a class="btn b2" href="mailto:legal@zifro.co">legal@zifro.co</a></div>
+<div class="fc"><h3>ZIFRO S.A.S.</h3><p><b>NIT</b> 000.000.000-0</p><p><b>Correo legal</b> legal@zifro.co</p><p><b>Soporte</b> Lun a vie, 8:00 a. m. a 6:00 p. m.</p><p><b>Novedades</b> Casos reales, preguntas frecuentes y glosario</p><p><b>Actualizado</b> 10 de noviembre de 2026</p></div></div></section>
+</main>
+<footer id="zf-foot">
+  <div class="zf-wrap zf-fmain">
+    <div class="zf-fbrand">
+      <a class="zf-logo zf-flogo" href="ventas.html" aria-label="ZIFRO">
+        <svg width="34" height="34" viewBox="0 0 100 100" style="--sq:#f3eee3;--l2:#111"><use href="#zi"/></svg>
+        <svg class="zf-word" width="56" height="14" viewBox="0 0 404 100"><use href="#zw"/></svg>
+      </a>
+      <p>Agentes de IA que contestan, agendan y recuerdan por ti. Tú haces lo tuyo.</p>
+      <a class="zf-fcta wa" href="#">Escríbenos por WhatsApp <span aria-hidden="true">→</span></a>
+    </div>
+    <nav class="zf-fnav" aria-label="Footer">
+      <div>
+        <h4>Navegación</h4>
+        <a href="ventas.html">Inicio</a>
+        <a href="politica-de-privacidad.html">Políticas</a>
+        <a href="terminos-y-condiciones.html">Términos y condiciones</a>
+      </div>
+      <div>
+        <h4>Producto</h4>
+        <a href="ventas.html#dia">Un día con ZIFRO</a>
+        <a href="ventas.html#producto">Por dentro</a>
+        <a href="ventas.html#ziff">Ziff</a>
+        <a href="ventas.html#recordatorios">Recordatorios</a>
+      </div>
+      <div>
+        <h4>Contacto</h4>
+        <a class="wa" href="#">WhatsApp</a>
+        <a href="mailto:hola@zifro.co">hola@zifro.co</a>
+        <a href="mailto:privacidad@zifro.co">privacidad@zifro.co</a>
+      </div>
+    </nav>
+  </div>
+  <div class="zf-fbase">
+    <div class="zf-wrap zf-fbasein">
+      <span>© 2026 ZIFRO</span>
+      <span class="zf-fmeta">Partner de Meta · WhatsApp Business oficial</span>
+      <a href="#top">Volver arriba <span aria-hidden="true">↑</span></a>
+    </div>
+  </div>
+</footer>
+<script>
+const NUM='',url=t=>'https://wa.me/'+NUM+'?text='+encodeURIComponent(t),$=s=>document.querySelector(s);
+document.documentElement.classList.add('js');
+document.querySelectorAll('.wa').forEach(a=>{a.href=url('Hola ZIFRO, tengo una duda sobre los términos y condiciones');a.target='_blank';a.rel='noopener'});
+const A=[...document.querySelectorAll('.cl')],tl=$('#tl'),hd=$('#hd'),pg=$('#pg'),toc=$('.toc');
+tl.innerHTML=A.map((a,i)=>'<li><a href="#'+a.id+'"><i>'+String(i+1).padStart(2,'0')+'</i>'+a.dataset.t+'</a></li>').join('');
+const L=[...tl.querySelectorAll('a')];$('#cn').textContent=A.length+' secciones';
+$('#rt').textContent=Math.max(1,Math.round($('.doc').textContent.split(/\s+/).length/190))+' min de lectura';
+addEventListener('scroll',()=>{hd.classList.toggle('s',scrollY>8);pg.style.width=scrollY/Math.max(1,document.documentElement.scrollHeight-innerHeight)*100+'%'},{passive:true});
+const ioA=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){const i=A.indexOf(e.target);L.forEach((l,j)=>l.classList.toggle('on',i==j));if(innerWidth<1001)toc.scrollTo({left:L[i].offsetLeft-28,behavior:'smooth'})}}),{rootMargin:'-30% 0px -60% 0px'});
+const ioV=new IntersectionObserver((es,o)=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('v');o.unobserve(e.target)}}),{threshold:.06});
+A.forEach(a=>{ioA.observe(a);ioV.observe(a)});
+const nz=t=>t.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
+$('#q').addEventListener('input',e=>{const v=nz(e.target.value.trim());let c=0;A.forEach((a,i)=>{const ok=!v||nz(a.textContent).includes(v);a.hidden=!ok;L[i].parentElement.hidden=!ok;c+=ok;if(ok)a.classList.add('v')});$('#none').hidden=c>0});
+</script></body></html>

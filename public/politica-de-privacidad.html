@@ -1,0 +1,350 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Zifro - Agentes IA para tu negocio</title>
+<link rel="icon" type="image/x-icon" href="ZIFRO_isotipo.ico">
+<meta name="description" content="Qué datos tocamos, para qué, por cuánto tiempo y cómo mandas tú sobre ellos.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,200..800&family=Caveat:wght@600;700&family=Inter:wght@400;500;600;700&display=swap">
+<style>
+
+:root{--cr:#F3EEE3;--ink:#111;--or:#D9541E;--w:#FBF8F1;--ln:#DDD6C6;--pp:#E8DEC6;--mut:#5f5a52;--hw:'Caveat',cursive}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:92px}
+body{margin:0;background:var(--cr);color:var(--ink);font:460 17px/1.5 'Bricolage Grotesque',system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+h1,h2,h3,p,ul,ol{margin:0}ul,ol{padding:0;list-style:none}a{color:inherit;text-decoration:none}[hidden]{display:none!important}
+:focus-visible{outline:2px solid var(--or);outline-offset:3px}
+.wrap{max-width:1320px;margin:0 auto;padding:0 max(28px,env(safe-area-inset-left,0px))}
+.h{font-size:clamp(46px,8vw,120px);line-height:.9;letter-spacing:-.045em;font-weight:560;font-stretch:90%;text-wrap:balance}
+.hw{font-family:var(--hw);font-size:30px;line-height:1;font-weight:700;color:var(--or)}
+.btn{display:inline-flex;align-items:center;gap:10px;min-height:52px;padding:0 24px;border-radius:99px;border:1.5px solid var(--ink);font:inherit;font-weight:600;cursor:pointer;background:none;color:var(--ink);transition:transform .15s,background .2s,color .2s}
+.btn:active{transform:scale(.97)}.b1{background:var(--or);border-color:var(--or);color:#fff}.b1:hover{background:var(--ink);border-color:var(--ink)}.b2{background:var(--cr)}.b2:hover{background:var(--ink);color:var(--cr)}
+.pi{position:relative;background:var(--pp);padding:20px 18px 14px;transform:rotate(var(--r,0deg));box-shadow:4px 4px 0 var(--ink);border:1.5px solid var(--ink)}
+.pi::before{content:"";position:absolute;top:-13px;left:50%;width:70px;height:22px;background:var(--or);opacity:.88;transform:translateX(-50%) rotate(-3deg)}
+.pi .hw{color:var(--ink);font-size:27px;display:block}.pi.o{background:var(--or)}.pi.o .hw,.pi.o p{color:#fff}.pi.o::before{background:var(--ink)}
+.tag{display:inline-block;font-weight:700;font-size:13px;letter-spacing:.05em;color:var(--or);border:2px solid var(--or);border-radius:6px;padding:2px 8px;transform:rotate(-3deg)}
+#pg{position:fixed;top:0;left:0;height:3px;width:0;background:var(--or);z-index:50}
+header{position:sticky;top:0;z-index:20;padding-top:env(safe-area-inset-top,0px);background:rgba(243,238,227,.85);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid transparent;transition:border-color .2s}header.s{border-color:var(--ln)}
+.nv{display:flex;align-items:center;justify-content:space-between;height:68px}.lg{display:flex;align-items:center;gap:10px}.lg svg{display:block}
+.nv nav{display:flex;gap:30px;font-weight:540}.nv nav a:hover{color:var(--or)}.nv .btn{min-height:42px;padding:0 20px;font-size:15px}
+
+.sec{padding:84px 0}.eb{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;margin-bottom:40px}
+.h2{font-size:clamp(36px,5vw,68px);line-height:.94;letter-spacing:-.035em;font-weight:560;font-stretch:90%;text-wrap:balance}
+.rv{opacity:0;transform:translateY(22px);transition:opacity .6s,transform .6s}.rv.v{opacity:1;transform:none}
+/* hero */
+.pv{padding:44px 0 64px}.pv-body{width:100%}.pvg{display:grid;grid-template-columns:1.1fr .9fr;gap:56px;align-items:center}
+.pv .h{margin:16px 0 0}.hl{background:linear-gradient(transparent 58%,rgba(217,84,30,.4) 58%) 0 0/0 100% no-repeat;animation:hl .9s .35s ease-out forwards;padding:0 .06em;margin:0 -.06em}@keyframes hl{to{background-size:100% 100%}}
+.pv .l{font-size:21px;color:#3d3a35;max-width:42ch;margin:26px 0 20px}
+.mt{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:26px}.mt span{border:1.5px solid var(--ink);border-radius:99px;padding:5px 14px;font-size:14.5px;font-weight:560;background:var(--w)}
+.cta{display:flex;gap:14px;flex-wrap:wrap;align-items:center}.cta .hw{transform:rotate(-4deg)}
+.rcp{position:relative;background:#fff;padding:32px 30px 44px;max-width:460px;margin-left:auto;transform:rotate(2deg);box-shadow:0 18px 40px rgba(17,17,17,.18);font:500 15px/1.4 Inter,system-ui,sans-serif;color:#1c1b19}
+.rcp::after{content:"";position:absolute;left:0;right:0;bottom:-8px;height:8px;background:conic-gradient(from 135deg at top,#0000,#fff 1deg 90deg,#0000 91deg) 0 0/16px 8px}
+.rcp h3{text-align:center;font-size:13px;letter-spacing:.14em;font-weight:700;margin-bottom:4px}.rcp small{display:block;text-align:center;color:#8a8377;margin-bottom:12px}
+.rr{display:flex;gap:8px;align-items:baseline;padding:7px 0}.rr i{flex:1;border-bottom:2px dotted #c9c3b6;transform:translateY(-4px)}.rr b{font-weight:700;text-align:right}
+.rt{display:flex;justify-content:space-between;align-items:baseline;border-top:2px solid #1c1b19;margin-top:10px;padding-top:12px;font-weight:700}.rt b{font-size:38px;color:var(--or)}
+.rcp .tag{position:absolute;right:-14px;top:-16px;background:#fff;transform:rotate(8deg)}
+.pv-jump{display:flex;align-items:center;gap:26px;flex-wrap:wrap;margin-top:44px;padding-top:18px;border-top:1.5px solid var(--ink);font-weight:560;font-size:13.5px}
+.pv-jump-t{font:700 10px/1 Inter,system-ui,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--or)}
+.pv-jump a{display:inline-flex;align-items:center;gap:6px;color:#47433c;transition:color .2s}
+.pv-jump a:hover{color:var(--or)}
+.pv-jump a svg{color:var(--or)}
+.pv-right{display:flex;flex-direction:column;align-items:flex-end;gap:22px}
+.pv-note{position:relative;max-width:290px;padding:18px 20px 14px;background:var(--pp);border:1.5px solid var(--ink);box-shadow:4px 4px 0 var(--ink);transform:rotate(-2deg)}
+.pv-note::before{content:"";position:absolute;top:-11px;left:50%;width:64px;height:18px;background:var(--or);opacity:.9;transform:translateX(-50%) rotate(3deg)}
+.pv-note .hw{display:block;color:var(--ink);font-size:28px}
+/* viaje */
+.sp{display:grid;grid-template-columns:repeat(5,1fr);position:relative}.sp::before{content:"";position:absolute;left:10%;right:10%;top:27px;height:3px;background:var(--ln)}
+.sp button{position:relative;z-index:1;background:none;border:0;font:inherit;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:10px;padding:0 6px;color:var(--mut);font-weight:600;text-align:center;line-height:1.15}
+.sp b{width:56px;height:56px;border-radius:50%;border:2px solid var(--ink);background:var(--w);display:grid;place-items:center;font-size:20px;color:var(--ink);transition:.25s}
+.sp .on{color:var(--ink)}.sp .on b{background:var(--or);color:#fff;border-color:var(--or);transform:scale(1.12);box-shadow:4px 4px 0 var(--ink)}
+.dt{position:absolute;z-index:2;top:21px;left:10%;width:15px;height:15px;margin-left:-7px;border-radius:50%;background:var(--ink);transition:left .55s cubic-bezier(.6,0,.3,1);pointer-events:none}
+.pnl{margin-top:36px;background:var(--w);border:1.5px solid var(--ink);border-radius:20px;padding:30px 34px;box-shadow:7px 7px 0 var(--ink);display:grid;grid-template-columns:1.3fr 1fr;gap:30px;min-height:210px}
+.pnl h3{font-size:30px;letter-spacing:-.02em;font-weight:600;margin-bottom:10px}.pnl p{color:#3d3a35;max-width:52ch}.pnl small{display:block;font-weight:700;font-size:12.5px;letter-spacing:.06em;color:var(--or);margin-bottom:10px}
+.chp{display:flex;flex-wrap:wrap;gap:8px}.chp span{border:1.5px solid var(--ink);border-radius:99px;padding:5px 13px;font-size:14.5px;background:var(--pp);font-weight:560}
+/* datos (oscuro) */
+.dk{background:var(--ink);color:var(--cr);position:relative}.dk::before{content:'';position:absolute;left:0;right:0;top:-13px;height:14px;background:conic-gradient(from -45deg at bottom,#0000,#111 1deg 90deg,#0000 91deg) 0 0/26px 14px}
+.tbs{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:28px}.tbs button{font:inherit;font-weight:600;cursor:pointer;color:var(--cr);background:none;border:1.5px solid var(--cr);border-radius:99px;padding:9px 20px;transition:.2s}.tbs button:hover{background:#2a2824}.tbs .on{background:var(--or);border-color:var(--or);color:#fff}
+.dp{display:grid;grid-template-columns:1fr 1.1fr;gap:48px;align-items:center}.dp h3{font-size:34px;letter-spacing:-.025em;font-weight:580;margin-bottom:14px}.dp p{color:#cfc9bd;font-size:18px;max-width:46ch;margin-bottom:12px}.dp p b{color:var(--cr)}
+.mtr{display:flex;height:54px;border:2px solid var(--cr);border-radius:99px;overflow:hidden}.mtr i{transition:flex .7s cubic-bezier(.6,0,.3,1);font-style:normal}.mtr .a{background:var(--or)}.mtr .b{background:repeating-linear-gradient(45deg,var(--cr) 0 6px,transparent 6px 12px)}
+.lb{display:flex;margin-top:12px;font-size:15px;color:#cfc9bd;gap:10px}.lb span{transition:flex .7s cubic-bezier(.6,0,.3,1);min-width:0}.lb span:last-child{text-align:right}.lb b{display:block;color:var(--cr)}
+/* semaforo */
+.sm{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}.sm>div{background:var(--w);border:1.5px solid var(--ink);border-radius:20px;padding:26px 24px 20px;box-shadow:6px 6px 0 var(--ink)}
+.ld{width:30px;height:30px;border-radius:50%;background:var(--c);border:2px solid var(--ink);box-shadow:0 0 0 7px color-mix(in srgb,var(--c) 26%,transparent);margin-bottom:20px}
+.sm h3{font-size:26px;letter-spacing:-.02em;font-weight:600;margin-bottom:12px}.sm li{display:grid;grid-template-columns:24px 1fr;padding:7px 0;border-top:1.5px dashed var(--ln);line-height:1.38;font-size:16.5px}.sm li::before{content:var(--m);font-weight:800;color:var(--c)}
+/* derechos (naranja) */
+.or{background:var(--or);color:var(--ink)}.dg{display:grid;grid-template-columns:1.25fr .75fr;gap:40px;align-items:start}
+.dr{display:grid;grid-template-columns:1fr 1fr;gap:18px}.dr button{font:inherit;text-align:left;cursor:pointer;color:var(--ink);background:var(--w);border:1.5px solid var(--ink);border-radius:16px;padding:18px 18px 16px;box-shadow:5px 5px 0 var(--ink);transform:rotate(var(--r,0deg));transition:transform .2s,box-shadow .2s,background .2s}
+.dr button:hover{transform:rotate(0) translateY(-3px)}.dr button.on{background:var(--ink);color:var(--cr);box-shadow:5px 5px 0 #fff}.dr em{display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:var(--or);color:#fff;font-style:normal;font-weight:700;margin-bottom:10px}
+.dr b{display:block;font-size:21px;letter-spacing:-.02em}.dr span{display:block;font-size:15px;line-height:1.35;margin-top:4px;opacity:.85}
+.gf{position:sticky;top:90px;background:var(--cr);border:1.5px solid var(--ink);border-radius:20px;padding:24px;box-shadow:7px 7px 0 var(--ink)}.gf h3{font-size:24px;letter-spacing:-.02em;margin-bottom:4px}.gf p{font-size:15px;color:var(--mut);margin-bottom:14px}
+.gf label{display:block;font-size:13px;font-weight:700;letter-spacing:.04em;margin:12px 0 5px}.gf select,.gf input,.gf textarea{width:100%;font:inherit;font-size:16px;padding:11px 14px;border:1.5px solid var(--ink);border-radius:12px;background:var(--w);color:var(--ink);outline:0}.gf textarea{min-height:76px;resize:vertical}.gf :is(select,input,textarea):focus{outline:2px solid var(--or)}
+.gf .btn{width:100%;justify-content:center;margin-top:16px}.gf .b2{margin-top:10px;min-height:46px}
+/* letra completa */
+.ac{border-top:1.5px solid var(--ink)}.ac:last-of-type{border-bottom:1.5px solid var(--ink)}.ac summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:20px;padding:24px 0;font-size:clamp(22px,2.6vw,32px);letter-spacing:-.025em;font-weight:580}
+.ac summary::-webkit-details-marker{display:none}.ac summary::after{content:"+";flex:none;width:40px;height:40px;border-radius:50%;border:1.5px solid var(--ink);display:grid;place-items:center;font-size:26px;font-weight:400;transition:transform .3s,background .2s}.ac[open] summary::after{transform:rotate(45deg);background:var(--or);border-color:var(--or);color:#fff}
+.ac summary:hover{color:var(--or)}.ac>div{padding:0 60px 26px 0;max-width:78ch;color:#2c2a26;line-height:1.65}
+.btn.t{min-height:44px;font-size:15px}
+/* contacto */
+.ct{display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:center}.dk .h2{color:var(--cr)}.dk .hw{display:block;margin:18px 0 28px;font-size:34px;transform:rotate(-2deg)}.dk .btn{margin:0 10px 10px 0}.dk .b2{background:none;color:var(--cr);border-color:var(--cr)}.dk .b2:hover{background:var(--cr);color:var(--ink)}
+.cc{background:var(--cr);color:var(--ink);border:1.5px solid var(--ink);border-radius:18px;padding:24px 26px;box-shadow:7px 7px 0 var(--or);transform:rotate(1.2deg)}.cc h3{font-size:24px;letter-spacing:-.02em;margin-bottom:8px}.cc p{font-size:16px;padding:8px 0;border-top:1.5px dashed var(--ln);color:#3d3a35}.cc p:first-of-type{border-top:0}.cc b{color:var(--ink)}
+/* puntos laterales */
+.dn{position:fixed;right:16px;top:50%;transform:translateY(-50%);z-index:30;display:flex;flex-direction:column;gap:14px}.dn a{position:relative;width:14px;height:14px;border-radius:50%;background:var(--cr);border:2px solid var(--ink);transition:.2s}.dn a.on{background:var(--or);transform:scale(1.3)}
+.dn a::before{content:attr(data-t);position:absolute;right:26px;top:50%;transform:translateY(-50%);background:var(--ink);color:var(--cr);font-size:13px;font-weight:600;padding:4px 10px;border-radius:99px;white-space:nowrap;opacity:0;pointer-events:none;transition:.2s}.dn a:hover::before{opacity:1}
+footer{background:var(--ink);color:#a8a299;padding:34px 0 calc(34px + env(safe-area-inset-bottom,0px));font-size:14px}.fr{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}.mfo{display:inline-flex;align-items:center;gap:8px;color:#f3eee3;font-weight:600}
+@media(max-width:1100px){.dn{display:none}}
+@media(max-width:1000px){.nv nav{display:none}.sec{padding:60px 0}.pvg,.pnl,.dp,.dg,.ct{grid-template-columns:minmax(0,1fr);gap:34px}.pvg>*{min-width:0}.pv{min-height:0;padding:34px 0 26px}.pv-jump{margin-top:30px;gap:12px 20px;font-size:12.5px}.rcp{width:100%;max-width:420px;margin:0 auto;transform:rotate(1.2deg);padding:26px 22px 36px;font-size:15px}.sm{grid-template-columns:1fr}.gf{position:static}.pnl{padding:24px 22px}}
+@media(max-width:640px){.pv-note{display:none}.sp b{width:44px;height:44px;font-size:17px}.sp::before{top:21px}.dt{top:15px}.sp button{font-size:12.5px;padding:0 2px}.dr{grid-template-columns:1fr}.ac>div{padding-right:0}.pv .l{font-size:19px}.rt b{font-size:28px}}
+@media(prefers-reduced-motion:reduce){.hl{animation:none;background-size:100% 100%}.rv{opacity:1;transform:none;transition:none}html{scroll-behavior:auto}.lv,.dt,.mtr i{transition:none}}
+
+</style><link rel="stylesheet" href="zf-shared.css"><link rel="stylesheet" href="zf-legal.css">
+</head><body>
+<div id="pg"></div>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<symbol id="zi" viewBox="0 0 100 100"><rect width="100" height="100" rx="26" fill="var(--sq,#111)"/><path d="M76.8 20 L50.7 32.6 L35 32.6 L35.7 74.7 L66.8 64.2 L50.7 32.6" fill="none" stroke="var(--l2,#fff)" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/><g fill="var(--l2,#fff)"><circle cx="76.8" cy="20" r="6"/><circle cx="35.7" cy="74.7" r="6"/><circle cx="66.8" cy="64.2" r="6"/></g><circle cx="50.7" cy="32.6" r="9.3" fill="#ff7a2b"/></symbol>
+<symbol id="zw" viewBox="0 0 404 100"><g fill="none" stroke-width="24" stroke-linecap="round" stroke-linejoin="round"><path d="M14 14H64L14 86H66"/><path d="M100 14V86"/><path d="M134 86V14H184M134 50H176"/><path d="M220 86V14H250C282 14 282 52 250 52H220M250 52L280 86"/><circle cx="350" cy="50" r="38"/></g></symbol>
+<symbol id="i-home" viewBox="0 0 24 24"><path d="M3 11l9-8 9 8v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/></symbol><symbol id="i-chat" viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-4-7.5L21 3l-1.5 4A9 9 0 0 1 21 12z"/></symbol><symbol id="i-trend" viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8M15 7h6v6"/></symbol><symbol id="i-cal" viewBox="0 0 24 24"><path d="M4 5h16v16H4zM4 10h16M8 3v4M16 3v4"/></symbol><symbol id="i-mega" viewBox="0 0 24 24"><path d="M4 10v4h3l6 4V6L7 10zM17 9a4 4 0 0 1 0 6"/></symbol><symbol id="i-msg" viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/></symbol><symbol id="i-check" viewBox="0 0 24 24"><path d="M4 5h16v14H4zM8 12l3 3 5-6"/></symbol><symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 9a6 6 0 0 1 12 0c0 6 2 7 2 7H4s2-1 2-7M10 20a2 2 0 0 0 4 0"/></symbol><symbol id="i-video" viewBox="0 0 24 24"><path d="M3 7h11v10H3zM14 11l7-4v10l-7-4"/></symbol><symbol id="i-bot" viewBox="0 0 24 24"><path d="M8 8h8a3 3 0 0 1 3 3v5H5v-5a3 3 0 0 1 3-3zM12 4v4M9 13h.01M15 13h.01"/></symbol></defs></svg>
+<header id="hd"><div class="zf-wrap">
+<a class="zf-logo zf-logo--anim" href="ventas.html" aria-label="ZIFRO"><iframe class="zf-logo-anim" src="logo.html?embed=1" title="ZIFRO" loading="eager" scrolling="no" tabindex="-1" aria-hidden="true"></iframe></a>
+<nav class="zf-nav" aria-label="Principal"><a href="ventas.html">Inicio</a><a href="politica-de-privacidad.html" aria-current="page">Políticas</a><a href="terminos-y-condiciones.html">Términos y condiciones</a></nav>
+<a class="zf-cta wa" href="#">Escríbenos</a>
+</div></header>
+<nav class="dn" aria-label="Secciones"><a href="#top" data-t="Inicio"></a><a href="#viaje" data-t="El viaje"></a><a href="#casos" data-t="Casos reales"></a><a href="#datos" data-t="Tus datos"></a><a href="#semaforo" data-t="Semáforo"></a><a href="#google" data-t="Google Calendar"></a><a href="#derechos" data-t="Tus derechos"></a><a href="#pqr" data-t="Preguntas"></a><a href="#letra" data-t="La letra completa"></a><a href="#contacto" data-t="Contacto"></a></nav>
+<main id="top">
+<section class="pv"><div class="pv-body"><div class="wrap pvg"><div>
+<span class="tag">POLÍTICA DE PRIVACIDAD</span>
+<h1 class="h">Tus datos, <span class="hl">sin misterio.</span></h1>
+<p class="l">Qué datos tocamos, para qué, por cuánto tiempo y cómo mandas tú sobre ellos. Aplica a ZIFRO y a todo lo que hace tu IA.</p>
+<div class="mt"><span>Actualizada: 10 de noviembre de 2026</span><span>Google Calendar</span><span>Ley 1581 de 2012</span></div>
+<div class="cta"><a class="btn b1" href="#derechos">Ejercer mis derechos</a><span class="hw">te lo explicamos con peras y manzanas</span></div></div>
+<div class="pv-right"><div class="rcp"><span class="tag">SIN LETRA CHIQUITA</span><h3>RECIBO DE PRIVACIDAD</h3><small>N.º 0001 · ZIFRO S.A.S.</small>
+<div class="rr"><span>Nombre y correo</span><i></i><b>tu cuenta</b></div>
+<div class="rr"><span>Chats de tus clientes</span><i></i><b>solo atenderlos</b></div>
+<div class="rr"><span>Venta de datos</span><i></i><b>$0 · nunca</b></div>
+<div class="rr"><span>Entrenar IA ajena</span><i></i><b>nunca</b></div>
+<div class="rr"><span>Borrar tus datos</span><i></i><b>cuando pidas</b></div>
+<div class="rt"><span>TOTAL DE SORPRESAS</span><b>0</b></div></div>
+<div class="pv-note"><span class="hw">borrar es tu derecho.</span></div></div>
+</div></div>
+<nav class="wrap pv-jump" aria-label="Atajos de la pol�tica"><span class="pv-jump-t">En esta p�gina</span><a href="#viaje">El viaje de un mensaje <svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true" style="fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"><path d="M12 5v14M6 13l6 6 6-6"/></svg></a><a href="#casos">Casos reales</a><a href="#google">Google Calendar</a><a href="#pqr">Preguntas</a></nav>
+</section>
+
+<section class="sec" id="viaje" style="padding-top:20px"><div class="wrap">
+<div class="eb"><h2 class="h2 rv">El viaje de un mensaje.</h2><span class="hw">toca cada paso</span></div>
+<div class="sp rv" id="sp"><i class="dt" id="dt"></i></div>
+<div class="pnl rv" id="pn"></div></div></section>
+
+<section class="lx-sec" id="casos"><div class="wrap">
+<div class="lx-hd"><div><span class="lx-kick">Casos reales</span><h2 class="lx-h2">Lo que pasa<br>en la vida real.</h2><p class="lx-sub">Situaciones que nos llegan cada semana, con lo que hacemos y lo que te toca a ti. Sin supuestos raros ni respuestas de manual.</p></div><span class="lx-hw">casos, no letra muerta</span></div>
+<div class="lx-cases rv">
+<article class="lx-case">
+<div class="lx-ctop"><span class="lx-num"></span><span class="lx-tag2">Borrar</span></div>
+<h3 class="lx-q">“Mi cliente me pide que borre su conversación.”</h3>
+<p class="lx-body">Puede pedirlo por correo o directamente en tu bandeja. Verificamos que la solicitud venga del titular o de ti como responsable, y eliminamos el hilo junto con sus archivos y metadatos asociados.</p>
+<div class="lx-rows">
+<div class="lx-row"><b>Qué haces</b><span>Nos escribes a privacidad@zifro.co con el número o correo del cliente.</span></div>
+<div class="lx-row"><b>Qué hacemos</b><span>Confirmamos, borramos y respondemos en máximo 15 días hábiles.</span></div>
+</div></article>
+
+<article class="lx-case">
+<div class="lx-ctop"><span class="lx-num"></span><span class="lx-tag2">Acceso</span></div>
+<h3 class="lx-q">“Quiero saber exactamente qué datos tienen de mí.”</h3>
+<p class="lx-body">Te entregamos una copia legible de tu cuenta, conversaciones, citas y metadatos. No incluimos información de otros titulares ni secretos comerciales de terceros.</p>
+<div class="lx-rows">
+<div class="lx-row"><b>Qué haces</b><span>Pides acceso desde la sección de derechos o por correo.</span></div>
+<div class="lx-row"><b>Qué hacemos</b><span>Respondemos en máximo 10 días hábiles, sin costo.</span></div>
+</div></article>
+
+<article class="lx-case">
+<div class="lx-ctop"><span class="lx-num"></span><span class="lx-tag2">Google</span></div>
+<h3 class="lx-q">“Conecté Google Calendar y ahora quiero desconectarlo.”</h3>
+<p class="lx-body">Puedes revocar el acceso desde ZIFRO o desde tu cuenta de Google. Al hacerlo dejamos de leer y escribir en tu calendario; los eventos que ya existen siguen siendo tuyos y se quedan donde están.</p>
+<div class="lx-rows">
+<div class="lx-row"><b>Qué haces</b><span>Configuración → Integraciones → Desconectar, o en myaccount.google.com/permissions.</span></div>
+<div class="lx-row"><b>Qué hacemos</b><span>Borramos los tokens de inmediato y los metadatos en máximo 30 días.</span></div>
+</div></article>
+
+<article class="lx-case">
+<div class="lx-ctop"><span class="lx-num"></span><span class="lx-tag2">Equipo</span></div>
+<h3 class="lx-q">“Un empleado sale de mi equipo.”</h3>
+<p class="lx-body">Tú controlas quién entra a tu cuenta. Al retirar a una persona, su acceso se corta y queda el registro de lo que hizo mientras estuvo activo. Nadie se lleva la bandeja ni los contactos.</p>
+<div class="lx-rows">
+<div class="lx-row"><b>Qué haces</b><span>Revocas su usuario desde la configuración de tu cuenta.</span></div>
+<div class="lx-row"><b>Qué hacemos</b><span>Aplicamos el cambio, conservamos la auditoría y te ayudamos con la entrega.</span></div>
+</div></article>
+
+<article class="lx-case lx-case--ink">
+<div class="lx-ctop"><span class="lx-num"></span><span class="lx-tag2">Seguridad</span></div>
+<h3 class="lx-q">“Me llegó un mensaje raro diciendo ser de ZIFRO.”</h3>
+<p class="lx-body">No pedimos contraseñas, códigos de verificación ni pagos por WhatsApp. Si un mensaje te pide eso, desconfía, no hagas clic y repórtalo. Verifica siempre el dominio zifro.co y escríbenos por un canal que ya conozcas.</p>
+<div class="lx-rows">
+<div class="lx-row"><b>Qué haces</b><span>Nos reenvías el mensaje y no compartes datos ni códigos.</span></div>
+<div class="lx-row"><b>Qué hacemos</b><span>Revisamos el caso, bloqueamos el intento y te confirmamos por correo.</span></div>
+</div></article>
+
+<article class="lx-case">
+<div class="lx-ctop"><span class="lx-num"></span><span class="lx-tag2">Número</span></div>
+<h3 class="lx-q">“Quiero cambiar el número de mi negocio.”</h3>
+<p class="lx-body">Te acompañamos en la migración a otro número autorizado para no perder la bandeja ni las citas. La aprobación final depende de Meta y del cumplimiento de sus requisitos.</p>
+<div class="lx-rows">
+<div class="lx-row"><b>Qué haces</b><span>Nos das el número nuevo y validas que sea tuyo.</span></div>
+<div class="lx-row"><b>Qué hacemos</b><span>Migramos la conexión y probamos el flujo contigo.</span></div>
+</div></article>
+</div>
+</div></section>
+
+<section class="sec dk" id="datos"><div class="wrap">
+<div class="eb"><h2 class="h2 rv">Qué guardamos, y hasta cuándo.</h2><span class="hw">elige un tipo de dato</span></div>
+<div class="tbs" id="tb"></div><div class="dp rv" id="dpn"></div></div></section>
+
+<section class="sec" id="semaforo"><div class="wrap">
+<div class="eb"><h2 class="h2 rv">El semáforo de tus datos.</h2><span class="hw">tres colores, cero dudas</span></div>
+<div class="sm rv">
+<div style="--c:#3f9d62;--m:'✓'"><i class="ld"></i><h3>Lo que sí hacemos</h3><ul><li>Procesar conversaciones solo para atender a tus clientes</li><li>Cifrar los datos en tránsito y en reposo</li><li>Dejarte exportar y borrar tu información</li><li>Registrar quién accede y cuándo</li></ul></div>
+<div style="--c:#d2432a;--m:'✕'"><i class="ld"></i><h3>Lo que nunca hacemos</h3><ul><li>Vender o alquilar datos</li><li>Entrenar modelos de terceros con tus conversaciones</li><li>Leer tus chats sin un motivo de soporte autorizado</li><li>Usar tus contactos para publicidad propia</li></ul></div>
+<div style="--c:#e7a02a;--m:'◐'"><i class="ld"></i><h3>Lo que tú decides</h3><ul><li>Qué puede responder la IA y qué no</li><li>Cuánto historial guardas (puedes borrar antes)</li><li>Quién de tu equipo ve cada conversación</li><li>Si grabas reuniones con Ziff</li></ul></div></div></div></section>
+
+<section class="lx-sec lx-sec--alt" id="google"><div class="wrap">
+<div class="lx-hd"><div>
+<div class="lx-ghead"><span class="lx-gicon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-cal"/></svg></span><span class="lx-kick" style="margin:0">Integración opcional</span></div>
+<h2 class="lx-h2" style="margin-top:12px">Google Calendar,<br>sin letra chiquita.</h2>
+<p class="lx-sub">Solo accedemos a tu calendario si tú lo conectas. Esto es exactamente qué permisos pedimos, qué guardamos y cómo lo desconectas cuando quieras.</p>
+</div><span class="lx-hw">tú decides cuándo se conecta</span></div>
+<p class="lx-body" style="max-width:74ch;margin:6px 0 26px">Cuando una reserva se agenda por WhatsApp, ZIFRO consulta la disponibilidad, crea el evento con enlace de Meet y lo comparte con el asesor y el cliente. Desde ese momento ambos pueden verlo, editarlo o cancelarlo en su propio calendario, y los cambios se reflejan en ZIFRO.</p>
+<div class="rv">
+<table class="lx-tbl"><thead><tr><th>Permiso</th><th>Qué permite</th><th>Para qué lo usamos</th></tr></thead><tbody>
+<tr><td>Lectura de calendarios</td><td data-l="Qué permite">Ver tu lista de calendarios y sus eventos</td><td data-l="Para qué">Conocer tu disponibilidad y evitar cruces de horarios</td></tr>
+<tr><td>Crear y editar eventos</td><td data-l="Qué permite">Crear eventos, invitar personas y generar enlaces de Meet</td><td data-l="Para qué">Agendar la cita y reflejar cambios o reprogramaciones</td></tr>
+<tr><td>Eliminar eventos</td><td data-l="Qué permite">Borrar eventos que ZIFRO creó o sincronizó</td><td data-l="Para qué">Cancelar la cita cuando se cancela en ZIFRO</td></tr>
+<tr><td>Datos básicos de la cuenta</td><td data-l="Qué permite">Nombre y correo de la cuenta de Google</td><td data-l="Para qué">Vincular la cuenta correcta y mostrarte cuál está conectada</td></tr>
+<tr><td>Acceso continuo</td><td data-l="Qué permite">Mantener la conexión sin pedir autorización cada vez</td><td data-l="Para qué">Sincronizar en segundo plano mientras la integración esté activa</td></tr>
+</tbody></table>
+<p class="lx-body" style="max-width:76ch;margin-top:20px">Guardamos los tokens de acceso cifrados, los identificadores de calendario y evento, los metadatos de cada cita (título, fecha, hora, invitados y enlace de Meet) y el correo de la cuenta conectada. Los tokens se borran al desconectar; los metadatos, en máximo 30 días. No guardamos copias completas de tu calendario ni leemos eventos que no tengan relación con citas gestionadas en ZIFRO.</p>
+</div>
+<div class="lx-steps">
+<div class="lx-step rv"><h4>Desde ZIFRO</h4><p>Configuración → Integraciones → Desconectar Google Calendar. El acceso se revoca al instante.</p></div>
+<div class="lx-step rv"><h4>Desde Google</h4><p>Entra a <a href="https://myaccount.google.com/permissions" target="_blank" rel="noopener">myaccount.google.com/permissions</a>, busca ZIFRO y elige “Quitar acceso”.</p></div>
+<div class="lx-step rv"><h4>Por correo</h4><p>Escríbenos a privacidad@zifro.co y eliminamos los datos de Google asociados a tu cuenta.</p></div>
+</div>
+<div class="lx-note"><b>Uso limitado</b><span>No accedemos a Gmail, Drive, Contactos ni a otros servicios de Google. No usamos estos datos para publicidad ni para entrenar modelos. Cumplimos la Política de Datos de Usuario de las API de Google y sus requisitos de Uso Limitado.</span></div>
+</div></section>
+
+<section class="sec or" id="derechos"><div class="wrap">
+<div class="eb"><h2 class="h2 rv">Tus datos, tus reglas.</h2><span class="hw" style="color:var(--ink)">elige un derecho y arma tu solicitud</span></div>
+<div class="dg"><div class="dr rv" id="dr"></div>
+<form class="gf rv" id="gf" onsubmit="return false"><h3>Prepara tu solicitud</h3><p>Te armamos el correo; tú solo lo envías.</p>
+<label for="sel">¿QUÉ QUIERES HACER?</label><select id="sel"></select>
+<label for="em">TU CORREO</label><input id="em" type="email" placeholder="tu@correo.com" autocomplete="email">
+<label for="tx">DETALLE (OPCIONAL)</label><textarea id="tx" placeholder="Cuéntanos qué dato o qué conversación"></textarea>
+<a class="btn b1" id="mk" href="#">Preparar mi correo</a><button class="btn b2" id="cp" type="button">Copiar el texto</button></form></div></div></section>
+
+<section class="lx-sec" id="pqr"><div class="wrap">
+<div class="lx-faqwrap">
+<div><span class="lx-kick">Preguntas seguidas</span><h2 class="lx-h2">Las que nos hacen<br>cada semana.</h2><p class="lx-sub">Respuestas cortas, sin mandarte a la letra completa. Si falta la tuya, escríbenos y la respondemos como persona.</p><p class="lx-body" style="margin-top:16px"><a href="mailto:privacidad@zifro.co">privacidad@zifro.co</a></p></div>
+<div class="lx-faq">
+<details><summary>¿Venden o alquilan mis datos?</summary><div class="lx-a">No. Tampoco los compartimos para publicidad. Solo pasan por los proveedores que necesitamos para operar el servicio, bajo contrato y con acceso limitado.</div></details>
+<details><summary>¿La IA entrena con mis conversaciones?</summary><div class="lx-a">No. Usamos los proveedores de inteligencia artificial en modo de no entrenamiento cuando está disponible y con acuerdos de confidencialidad. Tus conversaciones no se usan para mejorar modelos de terceros.</div></details>
+<details><summary>¿Puedo exportar todo lo que tienen de mí?</summary><div class="lx-a">Sí. Pides la exportación y te entregamos una copia legible de tu cuenta, conversaciones, citas y metadatos. Respondemos en máximo 10 días hábiles y no tiene costo.</div></details>
+<details><summary>¿Cuánto tardan en borrar mis datos?</summary><div class="lx-a">La eliminación de los sistemas activos se completa en máximo 15 días hábiles. Las copias de seguridad se purgan en el ciclo habitual de 30 días. Si hay una obligación legal de conservar algo, te decimos exactamente qué y por qué.</div></details>
+<details><summary>¿Dónde se alojan los datos?</summary><div class="lx-a">En proveedores de infraestructura en la nube con cifrado en tránsito y en reposo. Algunos pueden estar fuera de Colombia; en esos casos exigimos garantías equivalentes y cláusulas contractuales de protección.</div></details>
+<details><summary>¿Google Calendar es obligatorio?</summary><div class="lx-a">No. Es una integración opcional. Si no conectas tu cuenta, ZIFRO no accede a tu calendario y el resto del servicio sigue funcionando. Puedes conectarla y desconectarla cuando quieras.</div></details>
+<details><summary>¿Qué pasa si hay un incidente de seguridad?</summary><div class="lx-a">Te avisamos sin demora indebida, te contamos qué pasó y qué hicimos, y lo reportamos a la Superintendencia de Industria y Comercio cuando corresponda. También revisamos el origen y ajustamos controles.</div></details>
+</div>
+</div>
+</div></section>
+
+<section class="sec" id="letra"><div class="wrap">
+<div class="eb"><h2 class="h2 rv">La letra completa.</h2><button class="btn b2 t" id="all" type="button">Abrir todo</button></div>
+<div class="rv">
+<details class="ac"><summary>Responsable y encargado</summary><div>Para los datos de tus Contactos, tú eres el responsable y ZIFRO es el encargado: los procesamos en tu nombre y solo para prestarte el servicio. Para los datos de tu cuenta y facturación, ZIFRO es el responsable (ZIFRO S.A.S., NIT 000.000.000-0, privacidad@zifro.co).</div></details>
+<details class="ac"><summary>Con quién compartimos datos</summary><div>Con Meta (WhatsApp) para entregar los mensajes; con proveedores de nube, inteligencia artificial y pagos, solo lo necesario; y con autoridades cuando una ley o una orden judicial lo exija. Si conectas Google Calendar, accedemos a tu calendario con tu permiso y solo para lo descrito en la <a href="#google" style="color:var(--or);text-decoration:underline">sección de Google Calendar</a>; Google trata esos datos según sus propias políticas. Algunos proveedores están fuera de Colombia y les exigimos garantías equivalentes. No vendemos ni alquilamos datos.</div></details>
+<details class="ac"><summary>Seguridad</summary><div>Cifrado en tránsito y en reposo, accesos por rol con autenticación, registros de auditoría, copias de seguridad y revisiones periódicas. Si ocurre un incidente que afecte tus datos, te avisamos sin demora y lo reportamos a la Superintendencia de Industria y Comercio (SIC) cuando corresponda.</div></details>
+<details class="ac"><summary>Cookies y analítica del sitio</summary><div>Usamos cookies necesarias para que el sitio funcione y analítica anónima para mejorarlo. Puedes bloquearlas desde tu navegador; algunas funciones podrían dejar de funcionar.</div></details>
+<details class="ac"><summary>Menores de edad</summary><div>ZIFRO no está dirigido a menores de 18 años. Si tu negocio atiende menores, debes tratar sus datos con autorización de su representante y respetando su interés superior.</div></details>
+<details class="ac"><summary>Autorización y revocatoria</summary><div>Obtenemos tu autorización al crear la cuenta; la de tus Contactos la obtienes tú. Puedes revocarla en cualquier momento, salvo cuando exista un deber legal o contractual de conservar los datos.</div></details>
+<details class="ac"><summary>Cambios a esta política</summary><div>Publicamos la versión nueva aquí, con fecha. Si el cambio es importante, te avisamos al menos 15 días antes.</div></details></div></div></section>
+
+<section class="sec dk" id="contacto"><div class="wrap ct"><div><h2 class="h2">Habla con quien cuida tus datos.</h2><span class="hw">una persona real, no un formulario eterno</span>
+<a class="btn b1 wa" href="#">Escribir por WhatsApp</a><a class="btn b2" href="mailto:privacidad@zifro.co">privacidad@zifro.co</a><a class="btn b2" href="terminos-y-condiciones.html">Leer los términos</a></div>
+<div class="cc"><h3>Oficial de protección de datos</h3><p><b>Consultas</b> las respondemos en 10 días hábiles</p><p><b>Reclamos</b> los resolvemos en 15 días hábiles</p><p><b>¿Sigues sin respuesta?</b> Puedes acudir a la Superintendencia de Industria y Comercio (SIC)</p><p><b>Novedades</b> Casos reales, integración con Google Calendar y preguntas frecuentes</p><p><b>Actualizada</b> 10 de noviembre de 2026</p></div></div></section>
+</main>
+<footer id="zf-foot">
+  <div class="zf-wrap zf-fmain">
+    <div class="zf-fbrand">
+      <a class="zf-logo zf-flogo" href="ventas.html" aria-label="ZIFRO">
+        <svg width="34" height="34" viewBox="0 0 100 100" style="--sq:#f3eee3;--l2:#111"><use href="#zi"/></svg>
+        <svg class="zf-word" width="56" height="14" viewBox="0 0 404 100"><use href="#zw"/></svg>
+      </a>
+      <p>Agentes de IA que contestan, agendan y recuerdan por ti. Tú haces lo tuyo.</p>
+      <a class="zf-fcta wa" href="#">Escríbenos por WhatsApp <span aria-hidden="true">→</span></a>
+    </div>
+    <nav class="zf-fnav" aria-label="Footer">
+      <div>
+        <h4>Navegación</h4>
+        <a href="ventas.html">Inicio</a>
+        <a href="politica-de-privacidad.html">Políticas</a>
+        <a href="terminos-y-condiciones.html">Términos y condiciones</a>
+      </div>
+      <div>
+        <h4>Producto</h4>
+        <a href="ventas.html#dia">Un día con ZIFRO</a>
+        <a href="ventas.html#producto">Por dentro</a>
+        <a href="ventas.html#ziff">Ziff</a>
+        <a href="ventas.html#recordatorios">Recordatorios</a>
+      </div>
+      <div>
+        <h4>Contacto</h4>
+        <a class="wa" href="#">WhatsApp</a>
+        <a href="mailto:hola@zifro.co">hola@zifro.co</a>
+        <a href="mailto:privacidad@zifro.co">privacidad@zifro.co</a>
+      </div>
+    </nav>
+  </div>
+  <div class="zf-fbase">
+    <div class="zf-wrap zf-fbasein">
+      <span>© 2026 ZIFRO</span>
+      <span class="zf-fmeta">Partner de Meta · WhatsApp Business oficial</span>
+      <a href="#top">Volver arriba <span aria-hidden="true">↑</span></a>
+    </div>
+  </div>
+</footer>
+<script>
+const NUM='',url=t=>'https://wa.me/'+NUM+'?text='+encodeURIComponent(t),$=s=>document.querySelector(s);
+document.querySelectorAll('.wa').forEach(a=>{a.href=url('Hola ZIFRO, tengo una duda sobre mi privacidad y mis datos');a.target='_blank';a.rel='noopener'});
+const hd=$('#hd'),pg=$('#pg');addEventListener('scroll',()=>{hd.classList.toggle('s',scrollY>8);pg.style.width=scrollY/Math.max(1,document.documentElement.scrollHeight-innerHeight)*100+'%'},{passive:true});
+/* viaje */
+const J=[['Tu cliente escribe','Escribe','Tu Contacto manda un mensaje a tu WhatsApp. Viaja cifrado por WhatsApp.',['Teléfono','Nombre de perfil','Mensaje']],
+['Meta lo entrega','Meta','Meta recibe el mensaje y nos lo entrega por la plataforma oficial de WhatsApp Business. Meta trata esos datos según sus propias políticas.',['Mensaje','Datos de entrega']],
+['La IA responde','La IA','La IA lee el mensaje con las instrucciones que tú configuraste y prepara la respuesta. Nuestros proveedores de IA trabajan bajo acuerdos de confidencialidad y no entrenan modelos con tus datos.',['Mensaje','Tus instrucciones']],
+['Tú lo ves','Tu bandeja','La conversación aparece en tu bandeja con los datos del cliente. Solo ve lo que tu equipo tenga permitido ver.',['Historial','Etiquetas','Citas']],
+['Se guarda o se borra','Borrado','Se conserva mientras tu cuenta esté activa y hasta 90 días después de cancelar. Luego se elimina o se anonimiza.',['90 días tras cancelar','Borrado a pedido']]];
+const sp=$('#sp'),dt=$('#dt'),pn=$('#pn');let cur=0,auto;
+J.forEach((j,i)=>{const b=document.createElement('button');b.type='button';b.innerHTML='<b>'+(i+1)+'</b>'+j[1];b.onclick=()=>{clearInterval(auto);go(i)};sp.appendChild(b)});
+function go(i){cur=i;[...sp.querySelectorAll('button')].forEach((b,k)=>b.classList.toggle('on',k==i));dt.style.left=(10+20*i)+'%';const j=J[i];pn.innerHTML='<div><small>PASO '+(i+1)+' DE 5</small><h3>'+j[0]+'</h3><p>'+j[2]+'</p></div><div><small>DATOS QUE PASAN POR AQUÍ</small><div class="chp">'+j[3].map(x=>'<span>'+x+'</span>').join('')+'</div></div>'}
+go(0);auto=setInterval(()=>go((cur+1)%5),5200);
+/* datos */
+const D=[['Conversaciones','Chats y archivos de tus Contactos','Que la IA responda y tú las veas en la bandeja.','Mientras tu cuenta esté activa','+ 90 días',70,30],
+['Cuenta y facturación','Nombre, correo, NIT y facturas','Crear tu cuenta, cobrar y cumplir la ley.','Mientras dure la relación','Lo que exija la ley',45,55],
+['Reuniones de Ziff','Grabaciones, transcripciones y resúmenes','Generar resúmenes y pendientes, y responder tus preguntas.','Hasta que las borres','+ 90 días',60,40],
+['Google Calendar','Tokens, identificadores y metadatos de la cita','Sincronizar tu agenda y crear el evento de Meet.','Mientras esté conectado','+ 30 días',65,35],
+['Uso del servicio','Métricas anónimas de uso','Mejorar el servicio y detectar errores.','24 meses','Luego se elimina',100,0]];
+const tb=$('#tb'),dp=$('#dpn');
+D.forEach((d,i)=>{const b=document.createElement('button');b.type='button';b.textContent=d[0];b.onclick=()=>sd(i);tb.appendChild(b)});
+function sd(i){[...tb.children].forEach((b,k)=>b.classList.toggle('on',k==i));const d=D[i];
+const m=dp.querySelector('.mtr');if(m){m.children[0].style.flex=d[5];m.children[1].style.flex=d[6]||.001;const l=dp.querySelectorAll('.lb span');l[0].style.flex=d[5];l[1].style.flex=d[6]||.001;l[0].innerHTML='<b>'+d[3]+'</b>';l[1].innerHTML=d[6]?'<b>'+d[4]+'</b>':'';dp.querySelector('h3').textContent=d[1];dp.querySelector('.q').innerHTML='<b>Para qué:</b> '+d[2];return}
+dp.innerHTML='<div><h3>'+d[1]+'</h3><p class="q"><b>Para qué:</b> '+d[2]+'</p></div><div><div class="mtr"><i class="a" style="flex:'+d[5]+'"></i><i class="b" style="flex:'+(d[6]||.001)+'"></i></div><div class="lb"><span style="flex:'+d[5]+'"><b>'+d[3]+'</b></span><span style="flex:'+(d[6]||.001)+'">'+(d[6]?'<b>'+d[4]+'</b>':'')+'</span></div></div>'}
+sd(0);
+/* derechos */
+const R=[['Conocer','Saber qué datos tuyos tenemos y de dónde salieron','Conocer mis datos'],['Actualizar','Ponerlos al día si cambiaron','Actualizar mis datos'],['Rectificar','Corregirlos si están mal','Rectificar mis datos'],['Suprimir','Pedir que los borremos','Suprimir mis datos'],['Revocar','Retirar tu autorización','Revocar mi autorización'],['Reclamar','Quejarte si no te respondemos bien','Presentar un reclamo']];
+const sel=$('#sel'),em=$('#em'),tx=$('#tx'),mk=$('#mk'),dr=$('#dr');
+R.forEach((r,i)=>{const b=document.createElement('button');b.type='button';b.style.setProperty('--r',(i%2?1.2:-1.2)+'deg');b.innerHTML='<em>'+r[0][0]+'</em><b>'+r[0]+'</b><span>'+r[1]+'</span>';b.onclick=()=>{sel.selectedIndex=i;up()};dr.appendChild(b);sel.add(new Option(r[2],r[2]))});
+const msg=()=>'Hola ZIFRO,\n\nEn ejercicio de mi derecho de habeas data (Ley 1581 de 2012), quiero: '+sel.value.toLowerCase()+'.\n\nMi correo de contacto: '+(em.value||'[tu correo]')+'\nDetalle: '+(tx.value||'—')+'\n\nGracias.';
+function up(){[...dr.children].forEach((b,k)=>b.classList.toggle('on',k==sel.selectedIndex));mk.href='mailto:privacidad@zifro.co?subject='+encodeURIComponent('Solicitud: '+sel.value)+'&body='+encodeURIComponent(msg())}
+[sel,em,tx].forEach(e=>e.addEventListener('input',up));up();
+$('#cp').onclick=e=>{navigator.clipboard&&navigator.clipboard.writeText(msg()).then(()=>{e.target.textContent='¡Copiado!';setTimeout(()=>e.target.textContent='Copiar el texto',1800)})};
+/* letra completa */
+const ds=[...document.querySelectorAll('.ac')],all=$('#all');all.onclick=()=>{const o=ds.some(d=>!d.open);ds.forEach(d=>d.open=o);all.textContent=o?'Cerrar todo':'Abrir todo'};
+/* aparición y puntos laterales */
+const io=new IntersectionObserver((es,o)=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('v');o.unobserve(e.target)}}),{threshold:.1});document.querySelectorAll('.rv').forEach(e=>io.observe(e));
+const dl=[...document.querySelectorAll('.dn a')],secs=dl.map(a=>$(a.getAttribute('href')));
+const so=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){const i=secs.indexOf(e.target);dl.forEach((a,k)=>a.classList.toggle('on',k==i))}}),{rootMargin:'-40% 0px -55% 0px'});secs.forEach(s=>so.observe(s));
+</script></body></html>

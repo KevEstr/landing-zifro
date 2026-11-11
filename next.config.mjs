@@ -14,6 +14,18 @@ const nextConfig = {
   experimental: {
     optimizeCss: true,
   },
+  async rewrites() {
+    return {
+      beforeFiles: [
+        {
+          source: "/",
+          destination: "/ventas.html",
+        },
+      ],
+      afterFiles: [],
+      fallback: [],
+    }
+  },
 }
 
 export default nextConfig
