@@ -220,8 +220,9 @@ html[data-embed] .hint{display:none}
     try{tileRGB=hexRGB(v)}catch(e){}
     if(reduce){frame(1e5);return}
     var st=null;
-    var off=document.documentElement.dataset.embed?(A[4]+1100):0;
-    raf=requestAnimationFrame(function f(n){if(st===null)st=n;if(frame((n-st)+off))raf=requestAnimationFrame(f);else if(document.documentElement.dataset.embed)replayTimer=setTimeout(replay,9000)});
+    var embed=document.documentElement.dataset.embed;
+    var sp=embed?2.4:1;
+    raf=requestAnimationFrame(function f(n){if(st===null)st=n;if(frame((n-st)*sp))raf=requestAnimationFrame(f);else if(embed)replayTimer=setTimeout(replay,9000)});
   }
   document.body.addEventListener('click',play);
   if(document.documentElement.dataset.embed){
