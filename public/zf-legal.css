@@ -211,6 +211,13 @@
   line-height: 1.44;
 }
 
+.lx-row span,
+.lx-body,
+.lx-body a {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
 .lx-row b {
   color: var(--or);
   font: 700 9.5px/1.7 "Inter", system-ui, sans-serif;
